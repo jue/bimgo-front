@@ -4,6 +4,6 @@ const name = ref('World')
 
 <template>
   <h1 class="text-3xl font-bold underline">
-    Hello {{ name }}!
+    Hello {{ name }}! <span class="icon-[mdi--bell-outline] hover:icon-hover-[mdi--bell-off]" />
   </h1>
 </template>

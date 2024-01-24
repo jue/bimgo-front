@@ -1,9 +1,7 @@
 <template>
-  <div class="min-h-screen flex bg-white">
-    <div class="flex items-center justify-center w-56 bg-gray-50">
-      Side
-    </div>
-    <div class="flex-1">
+  <div class="min-h-screen flex bg-[#f7f7f7]">
+    <Sidebar />
+    <div class="flex-1 rounded-l-2xl bg-white">
       <RouterView />
     </div>
   </div>

@@ -24,7 +24,7 @@ export default defineConfig({
     }),
     AutoImport({
       dts: true,
-      dirs: ['./src/utils'],
+      dirs: ['./src/lib', './src/api', './src/store/modules'],
       imports: [
         'vue',
         'vue-router',
@@ -34,7 +34,7 @@ export default defineConfig({
       ],
     }),
     Components({
-      resolvers: [],
+      dirs: ['src/components/', 'src/shadcn/ui/*/'],
       directoryAsNamespace: true,
     }),
   ],
