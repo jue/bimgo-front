@@ -1,5 +1,5 @@
 <template>
-  <div class="w-64 shrink-0 bg-[#f7f7f7] flex flex-col h-screen">
+  <div class="w-64 shrink-0 flex flex-col h-screen">
     <div class="h-14 flex items-center justify-between px-2">
       <Logo class="w-12" />
     </div>
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="px-2 space-y-[1px] py-2">
-          <div class="flex items-center text-neutral-400 px-2 h-8 mb-2">
+          <div class="flex items-center text-neutral-400 px-2 h-6 mb-2 text-xs">
             收藏
           </div>
           <div
@@ -34,8 +34,8 @@
         </div>
 
         <div class="px-2 space-y-[1px] py-2">
-          <div class="flex items-center text-neutral-400 px-2 h-8 mb-2">
-            数据分析
+          <div class="flex items-center text-neutral-400 px-2 h-6 mb-2 text-xs">
+            功能
           </div>
           <div
             class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
@@ -64,14 +64,18 @@
         </div>
 
         <div class="px-2 space-y-[1px] py-2">
-          <div class="flex items-center text-neutral-400 px-2 h-8 mb-2">
-            成员权限
+          <div class="flex items-center text-neutral-400 px-2 h-6 mb-2 text-xs">
+            承包商
           </div>
           <div
             class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
           >
-            <span class="icon-[lucide--star]" />
-            <div>成员用户</div>
+            <span class="icon-[lucide--users]" />
+            <div>
+              <RouterLink to="/contractors">
+                承包单位
+              </RouterLink>
+            </div>
           </div>
         </div>
       </div>

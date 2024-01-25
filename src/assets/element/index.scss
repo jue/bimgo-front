@@ -1,17 +1,11 @@
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   $colors: (
     'primary': (
-      'base': rgba(4, 120, 87, 1),
+      'base': #2563eb,
     ),
-    // 'black': (
-    //   'base': rgba(9, 9, 11, 1),
-    // )
   ),
-  // $colors-black: (
-  //   'regular': '#09090b',
-  // ),
   $text-color: (
-    'regular': '#09090b',
+    'regular': '#1d1e20',
   ),
   $border-radius: (
     'base': 6px,
@@ -46,10 +40,13 @@
     'button-height': 28px,
   ),
   $input: (
-    'bg-color': '#edf1f6',
+    'bg-color': '#fff',
   ),
   $dropdown: (
     'menuItem-hover-color': '#00021bf8',
     'menuItem-hover-fill': '#edf1f6',
   ),
+  $overlay-color: (
+    'lighter': rgba(0, 0, 0, 0),
+  )
 );

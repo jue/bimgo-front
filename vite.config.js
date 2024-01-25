@@ -26,6 +26,7 @@ export default defineConfig({
       dirs: 'src/views',
       exclude: ['**/components/*.vue'],
       importMode: 'async',
+      routeStyle: 'nuxt',
     }),
     Layouts({
       layoutsDirs: 'src/layout', // 布局文件存放目录

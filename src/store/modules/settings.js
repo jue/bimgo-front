@@ -8,6 +8,21 @@ export const useSettingsStore = defineStore('settings', {
         appid: 'wx696779f3aa33a37f',
       },
     },
+    // 系统默认用户分组
+    defaultUserGroup: [
+      {
+        label: '管理员',
+        value: 1,
+      },
+      {
+        label: '普通用户',
+        value: 2,
+      },
+      {
+        label: '合作者',
+        value: 3,
+      },
+    ],
   }),
   actions: {
     setTitle(title) {

@@ -5,16 +5,16 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 220 4.92% 11.96%;
  
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
  
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 4.92% 11.96%;
  
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 4.92% 11.96%;
  
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -31,22 +31,22 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
  
-    --ring: 222.2 84% 4.9%;
+    --ring: 220 4.92% 11.96%;
  
     --radius: 0.5rem;
   }
  
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 4.92% 11.96%;
     --foreground: 210 40% 98%;
  
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
  
-    --popover: 222.2 84% 4.9%;
+    --popover: 220 4.92% 11.96%;
     --popover-foreground: 210 40% 98%;
  
-    --card: 222.2 84% 4.9%;
+    --card: 220 4.92% 11.96%;
     --card-foreground: 210 40% 98%;
  
     --border: 217.2 32.6% 17.5%;
@@ -106,9 +106,18 @@
   color: #09090b !important;
   @apply rounded-full hover:bg-gray-200 p-[2px] w-6 h-6;
 }
-/* 以下为修改element-plus样式 结束 */
-body {
-  color: #09090b;
+
+.el-table th.el-table__cell>.cell {
+  @apply text-xs;
 }
+.el-table {
+  @apply border-y-[1px];
+}
+.el-table__header thead tr th:not(:first-child):before {
+  @apply absolute h-full top-0 left-0 w-[1px];
+  background-image: linear-gradient(0deg,#ebeef5,#fff);
+  content: '';
+}
+/* 以下为修改element-plus样式 结束 */
 
 
