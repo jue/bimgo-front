@@ -1,8 +1,6 @@
 import axios from 'axios'
-import { useToast } from '@/shadcn/ui/toast/use-toast'
+import { ElMessage } from 'element-plus'
 import { getToken } from '@/lib/token'
-
-const { toast } = useToast()
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -11,9 +9,7 @@ const http = axios.create({
 
 function handleError(response) {
   const err = (text) => {
-    toast({
-      description: response?.data?.message ?? text,
-    })
+    ElMessage.error(response?.data?.message ?? text)
   }
   if (!response.data) {
     err('请求超时，服务器无响应！')
@@ -54,13 +50,12 @@ http.interceptors.response.use(
   (error) => {
     const { response } = error
     if (response) {
+      // ElMessage.error(response.statusText)
       handleError(response)
       return response
     }
     else {
-      toast({
-        description: 'Network error',
-      })
+      ElMessage.error('Network error')
     }
   },
 )

@@ -20,7 +20,7 @@ const route = useRoute()
       </div>
     </div>
     <div class="text-center text-xs text-neutral-400">
-      版权所有 ©2023 Juyir, Ltd. 保留所有权利
+      版权所有 ©2024 Juyir, Ltd. 保留所有权利
     </div>
   </div>
 </template>

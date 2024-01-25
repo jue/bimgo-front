@@ -1,8 +1,9 @@
 <script setup>
-import { ToastDescription } from "radix-vue";
+import { Label } from "radix-vue";
 import { cn } from "@/lib/utils";
 
 const props = defineProps({
+  for: { type: String, required: false },
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
   class: { type: String, required: false },
@@ -10,10 +11,15 @@ const props = defineProps({
 </script>
 
 <template>
-  <ToastDescription
-    :class="cn('text-sm opacity-90', props.class)"
+  <Label
     v-bind="props"
+    :class="
+      cn(
+        'block text-sm tracking-tight font-medium text-foreground text-left',
+        props.class
+      )
+    "
   >
     <slot />
-  </ToastDescription>
+  </Label>
 </template>

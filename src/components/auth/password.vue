@@ -50,16 +50,16 @@ onMounted(() => {
 <template>
   <el-form ref="formRef" :model="form" :rules="rules" :inline-message="true">
     <el-form-item prop="mobile">
-      <el-input v-model="form.mobile" size="large" class="!rounded-lg h-11 w-full" placeholder="请输入手机号码">
+      <el-input v-model="form.mobile" size="large" class="!rounded-lg h-11 w-full" placeholder="请输入手机号码" clearable>
         <template #prefix>
-          <icon-ic:baseline-phone-iphone class="text-gray-400 text-base" />
+          <span class="icon-[lucide--smartphone] text-gray-400 text-base" />
         </template>
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="form.password" size="large" class="!rounded-lg h-11 w-full" placeholder="请输入密码">
+      <el-input v-model="form.password" size="large" class="!rounded-lg h-11 w-full" placeholder="请输入密码" clearable>
         <template #prefix>
-          <icon-ic:baseline-key class="text-gray-400 text-base" />
+          <span class="icon-[lucide--key] text-gray-400 text-base" />
         </template>
       </el-input>
     </el-form-item>

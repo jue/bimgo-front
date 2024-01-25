@@ -8,9 +8,9 @@ const countDown = ref(null)
 async function getQRCode() {
   loading.value = true
   const { data: res } = await http.post('/wechat/mp/create_qrcode')
-  if (res.code === 200) {
+  if (res.code === 200)
     Object.assign(qrInfo, res.data)
-  }
+
   loading.value = false
 }
 
@@ -35,9 +35,9 @@ async function checkQrcode() {
 
 function setExpireSeconds(time) {
   qrInfo.expire_seconds = time
-  if (time === 0) {
+  if (time === 0)
     qrInfo.qrcode = ''
-  }
+
   checkQrcode()
 }
 
