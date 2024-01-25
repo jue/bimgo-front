@@ -3,12 +3,18 @@
     'primary': (
       'base': rgba(4, 120, 87, 1),
     ),
+    // 'black': (
+    //   'base': rgba(9, 9, 11, 1),
+    // )
   ),
+  // $colors-black: (
+  //   'regular': '#09090b',
+  // ),
   $text-color: (
-    'regular': '#181f38',
+    'regular': '#09090b',
   ),
   $border-radius: (
-    'base': 8px,
+    'base': 6px,
   ),
   $button: (
     'font-weight': 400,
@@ -20,10 +26,10 @@
     'level-padding': 29px,
   ),
   $dialog: (
-    'title-font-size': 16px,
-    'padding-primary': 16px,
-    'border-radius': 0px,
-    'font-line-height': 48px,
+    'title-font-size': 18px,
+    'padding-primary': 24px,
+    'border-radius': 8px,
+    'font-line-height': 0,
 
   ),
   $upload: (

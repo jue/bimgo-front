@@ -1,7 +1,8 @@
 <template>
   <div class="min-h-screen flex bg-[#f7f7f7]">
     <Sidebar />
-    <div class="flex-1 rounded-l-2xl bg-white">
+    <div class="flex flex-col flex-1 rounded-l-2xl bg-white">
+      <Topbar />
       <RouterView />
     </div>
   </div>

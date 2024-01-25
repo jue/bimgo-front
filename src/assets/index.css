@@ -77,12 +77,38 @@
   }
   
   button {
-    @apply !font-normal;
+    @apply !font-normal rounded-md;
   }
   [class^="icon-"] {
     @apply text-base;
   }
   
+}
+
+/* 以下为修改element-plus样式 开始 */
+.el-dropdown-menu {
+  @apply !p-1 min-w-32;
+}
+.el-dropdown-menu__item {
+  @apply !py-[6px] !px-2 rounded !leading-5;
+}
+.el-dropdown-menu__item--divided {
+  @apply !-mx-1 !my-1;
+}
+
+.el-dialog__header {
+  @apply text-lg font-semibold text-foreground;
+}
+.el-dialog__body {
+  @apply !py-0;
+}
+.el-dialog__headerbtn .el-dialog__close {
+  color: #09090b !important;
+  @apply rounded-full hover:bg-gray-200 p-[2px] w-6 h-6;
+}
+/* 以下为修改element-plus样式 结束 */
+body {
+  color: #09090b;
 }
 
 

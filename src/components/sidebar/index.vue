@@ -28,19 +28,51 @@
           <div
             class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
           >
-            <icon-ic:outline-more-horiz class="text-base" />
-            <div>收件箱</div>
+            <span class="icon-[lucide--star]" />
+            <div>收藏内容</div>
           </div>
         </div>
-        <div class="px-2 space-y-[1px] py-2">
-          <div class="flex items-center justify-between text-neutral-400 px-2 h-8">
-            <div>空间</div>
-            <div class="flex items-center space-x-1">
-              <SpaceAdd />
-            </div>
-          </div>
 
-          <SpaceMenu />
+        <div class="px-2 space-y-[1px] py-2">
+          <div class="flex items-center text-neutral-400 px-2 h-8 mb-2">
+            数据分析
+          </div>
+          <div
+            class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
+          >
+            <span class="icon-[lucide--list-todo]" />
+            <div>工程进度</div>
+          </div>
+          <div
+            class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
+          >
+            <span class="icon-[lucide--circle-dot]" />
+            <div>质量风险</div>
+          </div>
+          <div
+            class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
+          >
+            <span class="icon-[lucide--file-spreadsheet]" />
+            <div>工程报告</div>
+          </div>
+          <div
+            class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
+          >
+            <span class="icon-[lucide--file-box]" />
+            <div>文档管理</div>
+          </div>
+        </div>
+
+        <div class="px-2 space-y-[1px] py-2">
+          <div class="flex items-center text-neutral-400 px-2 h-8 mb-2">
+            成员权限
+          </div>
+          <div
+            class="flex items-center space-x-2 text-neutral-500 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-gray-200"
+          >
+            <span class="icon-[lucide--star]" />
+            <div>成员用户</div>
+          </div>
         </div>
       </div>
     </el-scrollbar>
