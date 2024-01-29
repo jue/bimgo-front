@@ -96,6 +96,10 @@
   @apply !-mx-1 !my-1;
 }
 
+.el-dialog {
+  @apply pb-6;
+}
+
 .el-dialog__header {
   @apply text-lg font-semibold text-foreground;
 }
@@ -105,6 +109,9 @@
 .el-dialog__headerbtn .el-dialog__close {
   color: #09090b !important;
   @apply rounded-full hover:bg-gray-200 p-[2px] w-6 h-6;
+}
+.el-dialog__footer {
+  @apply !pb-1;
 }
 
 .el-table th.el-table__cell>.cell {

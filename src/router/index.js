@@ -14,8 +14,6 @@ const router = createRouter({
   routes: defaultRouter,
 })
 
-console.log(defaultRouter)
-
 const whiteList = ['/login', '/signup', '/wechat/login']
 
 router.beforeEach(async (to, from, next) => {

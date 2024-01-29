@@ -21,7 +21,7 @@ function handleError(response) {
     403: () => err('没有权限访问该资源'),
     401: () => {
       err('登录状态已过期，需要重新登录')
-      // removeToken()
+      removeToken()
       // TODO 跳转实际登录页
       router.push(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`)
     },

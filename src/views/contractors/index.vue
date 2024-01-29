@@ -48,6 +48,7 @@ function handleSelectionChange() {
       <div class="h-11 flex items-center justify-between">
         <div class="text-xl font-bold">
           <span>管理员</span> <span class="text-zinc-500">(3)</span>
+          <user-invitation />
         </div>
       </div>
       <div class="mt-3 flex items-center space-x-4">

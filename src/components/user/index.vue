@@ -13,10 +13,14 @@ function openInvitation() {
     </Avatar>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item @click="openInvitation">
-          <span class="icon-[lucide--user-plus] mr-2" />
-          <span>邀请成员</span>
-        </el-dropdown-item>
+        <UserInvitation class="w-full">
+          <template #default="{ toggleDialog }">
+            <el-dropdown-item @click="toggleDialog">
+              <span class="icon-[lucide--user-plus] mr-2" />
+              <span>邀请用户</span>
+            </el-dropdown-item>
+          </template>
+        </UserInvitation>
         <el-dropdown-item divided>
           <span class="icon-[lucide--user] mr-2" />
           <span>我的信息</span>
@@ -33,5 +37,5 @@ function openInvitation() {
     </template>
   </el-dropdown>
 
-  <UserInvitation ref="invitationRef" />
+  <!-- <UserInvitation ref="invitationRef" /> -->
 </template>

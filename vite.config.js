@@ -12,13 +12,6 @@ import Layouts from 'vite-plugin-vue-layouts'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@use "~/assets/element/index.scss" as *;',
-      },
-    },
-  },
   plugins: [
     vue(),
     vueJsx(),
@@ -38,11 +31,14 @@ export default defineConfig({
       imports: [
         'vue',
         'vue-router',
+        '@vueuse/core',
         {
           pinia: ['storeToRefs'],
         },
       ],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({
+        importStyle: 'sass',
+      })],
     }),
     Components({
       dirs: ['src/components/', 'src/shadcn/ui/*/'],

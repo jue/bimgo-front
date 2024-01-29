@@ -3,9 +3,47 @@ const settingsStore = useSettingsStore()
 const defaultUserGroup = settingsStore.defaultUserGroup
 
 const activeGroup = ref(0)
+
+const contractorsAddRef = ref(null)
+const contractors = ref([])
 function selectGroup(id) {
   activeGroup.value = id
 }
+
+async function getcontractorList() {
+  const { data: res } = await http.post('/contractor/list')
+  if (res.code === 200)
+    contractors.value = res.data
+}
+
+function editContractor(data = null) {
+  contractorsAddRef.value.open(data)
+}
+
+function deleteContractor(data) {
+  ElMessageBox.confirm(
+    `确定删除 ${data.contractor_name} 吗？`,
+    '提示',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning',
+    },
+  )
+    .then(async () => {
+      const { data: res } = await http.post('/contractor/delete', {
+        contractor_id: data.contractor_id,
+      })
+      if (res.code === 200)
+        getcontractorList()
+    })
+    .catch(() => {
+    })
+}
+
+onMounted(() => {
+  getcontractorList()
+})
 </script>
 
 <template>
@@ -46,7 +84,7 @@ function selectGroup(id) {
             承包单位
           </div>
           <el-tooltip content="添加承包单位">
-            <el-button circle size="small">
+            <el-button circle size="small" @click="editContractor('')">
               <span class="icon-[lucide--plus]" />
             </el-button>
           </el-tooltip>
@@ -56,12 +94,31 @@ function selectGroup(id) {
         </div>
         <div class="space-y-1">
           <div
-            v-for="item in defaultUserGroup" :key="item.value"
-            class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-            :class="{ 'bg-gray-100 text-blue-600': item.value === activeGroup }"
-            @click="selectGroup(item.value)"
+            v-for="item in contractors" :key="item.value"
+            class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md group"
+            :class="{ 'bg-gray-100 text-blue-600': item.contractor_id === activeGroup }"
+            @click="selectGroup(item.contractor_id)"
           >
-            {{ item.label }}
+            <div class="flex-1">
+              {{ item.contractor_name }}
+            </div>
+            <div class="opacity-0 group-hover:opacity-100 flex items-center">
+              <el-dropdown trigger="click">
+                <span class="icon-[lucide--more-vertical]" />
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="editContractor(item)">
+                      <span class="icon-[lucide--edit] mr-2" /> 编辑
+                    </el-dropdown-item>
+                    <el-dropdown-item @click="deleteContractor(item)">
+                      <div class="flex items-center text-red-500">
+                        <span class="icon-[lucide--trash] mr-2" /> 删除
+                      </div>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+            </div>
           </div>
         </div>
       </div>
@@ -70,4 +127,6 @@ function selectGroup(id) {
       <RouterView />
     </div>
   </div>
+
+  <ContractorsAdd ref="contractorsAddRef" @refresh="getcontractorList" />
 </template>

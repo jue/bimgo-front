@@ -1,6 +1,6 @@
-import './assets/index.css'
 import 'element-plus/es/components/message/style/index'
 import 'element-plus/es/components/message-box/style/index'
+import './assets/index.css'
 
 import { createApp } from 'vue'
 import pinia from './store'

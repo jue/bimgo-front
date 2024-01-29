@@ -95,5 +95,12 @@ module.exports = {
       prefix: 'icon-hover',
       overrideOnly: true,
     }),
+    function ({ addBase }) {
+      addBase({
+        '.el-button': {
+          'background-color': 'var(--el-button-bg-color,val(--el-color-white))',
+        },
+      })
+    },
   ],
 }
