@@ -4,6 +4,8 @@ const url = ref('')
 const source = ref('')
 const { copy, copied } = useClipboard({ source })
 
+const projectName = useSettingsStore().project.name
+
 function toggleDialog() {
   visible.value = !visible.value
 }
@@ -13,7 +15,7 @@ defineExpose({ open: toggleDialog })
 const userStore = useUserStore()
 
 onMounted(() => {
-  url.value = `${location.origin}/auth/invitation/${userStore.user.uid}`
+  url.value = `${location.origin}/invitation/${userStore.user.uid}`
   source.value = `点击链接一起加入BIMGO ${url.value}`
 })
 </script>
@@ -26,7 +28,7 @@ onMounted(() => {
         邀请新的使用者
       </el-button>
     </slot>
-    <el-dialog v-model="url" title="邀请人员加入BIMGO" append-to-body width="300px">
+    <el-dialog v-model="visible" :title="`邀请人员加入${projectName}`" append-to-body width="300px">
       <div class="space-y-3 py-5">
         <div class="w-40 mx-auto">
           <Qrcode :text="url" class="mx-auto block text-center" size="160" />

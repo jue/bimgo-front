@@ -8,6 +8,9 @@ export const useSettingsStore = defineStore('settings', {
         appid: 'wx696779f3aa33a37f',
       },
     },
+    project: {
+      name: '聚怡信息',
+    },
     // 系统默认用户分组
     defaultUserGroup: [
       {

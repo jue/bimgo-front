@@ -23,6 +23,14 @@ async function checkQrcode() {
     if (res.code === 'no-qrcode') {
       countDown.value.stop()
       qrInfo.expire_seconds = 0
+      return false
+    }
+
+    if (res.code === 200 && res.data?.loginStatus && res.data?.loginStatus === 'not-registered-or-inactive') {
+      countDown.value.stop()
+      qrInfo.expire_seconds = 0
+      ElMessage.warning('您不是系统用户或已被禁用，请联系管理员')
+      return false
     }
 
     if (res.code === 200 && res.data?.loginStatus && res.data?.loginStatus !== 'generated') {

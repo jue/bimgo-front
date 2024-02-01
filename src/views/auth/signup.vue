@@ -70,6 +70,7 @@ async function submit(formEl) {
     meta: {
       title: '用户注册',
       layout: 'auth',
-    }
+    },
+    name: 'signup'
   }
 </route>

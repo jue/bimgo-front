@@ -20,6 +20,7 @@ onMounted(() => {
   {
     meta: {
       layout: 'wechat',
-    }
+    },
+    name: 'wechat-login',
   }
 </route>

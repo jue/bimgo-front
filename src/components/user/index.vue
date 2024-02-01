@@ -1,7 +1,21 @@
 <script setup>
-const invitationRef = ref(null)
-function openInvitation() {
-  invitationRef.value.open()
+const router = useRouter()
+
+function logout() {
+  ElMessageBox.confirm(
+    '确定退出登陆吗？',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    },
+  ).then(async () => {
+    await useUserStore().logout()
+    router.push({ path: '/login' })
+  }).catch(() => {
+
+  })
 }
 </script>
 
@@ -29,7 +43,7 @@ function openInvitation() {
           <span class="icon-[lucide--settings] mr-2" />
           <span>设置</span>
         </el-dropdown-item>
-        <el-dropdown-item>
+        <el-dropdown-item @click="logout()">
           <span class="icon-[lucide--log-out] mr-2" />
           <span>退出登陆</span>
         </el-dropdown-item>

@@ -30,10 +30,16 @@ export const useUserStore = defineStore('token', {
 
     async userInfo() {
       const { data: res } = await http.post('/user/info')
-      if (res.code === 200)
+      if (res?.code === 200)
         this.user = res.data
 
       return res
+    },
+
+    async logout() {
+      const { data: res } = await http.post('/user/logout')
+      if (res.code === 200)
+        removeToken()
     },
   },
 })

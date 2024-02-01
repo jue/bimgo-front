@@ -23,7 +23,7 @@ function handleError(response) {
       err('登录状态已过期，需要重新登录')
       removeToken()
       // TODO 跳转实际登录页
-      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`)
+      location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`
     },
   }
   handleMap[response.status] ? handleMap[response.status]() : err('未知错误！')

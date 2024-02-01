@@ -14,12 +14,22 @@ const router = createRouter({
   routes: defaultRouter,
 })
 
-const whiteList = ['/login', '/signup', '/wechat/login']
+const whiteList = ['login', 'signup', 'wechat-login', 'wechat-error']
 
 router.beforeEach(async (to, from, next) => {
+  // 如果url里携带token，保存下来
+  if (to.query.token && isWeixin())
+    setToken(to.query.token)
+
+  // 邀请页面特殊处理
+  if (to.name === 'wechat-invitation') {
+    next()
+    return false
+  }
+
   const userStore = useUserStore()
 
-  if (whiteList.includes(to.path)) {
+  if (whiteList.includes(to.name)) {
     next()
     return
   }

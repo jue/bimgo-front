@@ -33,6 +33,7 @@ function jump() {
     meta: {
       title: '用户登陆',
       layout: 'auth',
-    }
+    },
+    name: 'login',
   }
 </route>
