@@ -57,6 +57,7 @@ jobs:
           git commit -m "${{ steps.get_commit_message.outputs.message }}" || echo "No changes to commit."
           echo "Pushing changes..."
           git push
+          echo "done !"
 
       # - name: Deploy to Server
       #   uses: easingthemes/ssh-deploy@main
