@@ -57,7 +57,7 @@ function handleSelectionChange() {
             <i class="icon-[lucide--search]" />
           </template>
         </el-input>
-        <el-dropdown>
+        <np-dropdown>
           <div class="flex items-center space-x-1 hover:text-blue-500">
             <span class="icon-[lucide--filter]" />
             <span class="shrink-0">筛选</span>
@@ -67,7 +67,7 @@ function handleSelectionChange() {
               <span class="icon-[lucide--user-plus] mr-2" />jjj
             </el-dropdown-item>
           </template>
-        </el-dropdown>
+        </np-dropdown>
         <el-dropdown>
           <div class="flex items-center space-x-1 hover:text-blue-500">
             <span class="icon-[lucide--flip-horizontal]" />

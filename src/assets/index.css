@@ -126,5 +126,7 @@
   content: '';
 }
 /* 以下为修改element-plus样式 结束 */
-
+:focus-visible {
+  outline: none;
+}
 

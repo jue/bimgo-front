@@ -64,6 +64,7 @@ declare module 'vue' {
     Label: typeof import('./src/shadcn/ui/label/Label.vue')['default']
     Loading: typeof import('./src/components/Loading.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']
+    NpDropdown: typeof import('./src/components/np/dropdown/index.vue')['default']
     Qrcode: typeof import('./src/components/Qrcode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
