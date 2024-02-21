@@ -1,5 +1,6 @@
 <script setup>
 const emits = defineEmits(['refresh'])
+const { getContractors } = useSettingsStore()
 const type = ref('add')
 const visible = ref(false)
 const formRef = ref(null)
@@ -38,6 +39,7 @@ async function submit(formEl) {
       const { data: res } = await http.post(`/contractor/${type.value}`, form)
       if (res.code === 200) {
         emits('refresh')
+        getContractors()
         visible.value = false
         ElMessage.success('操作成功')
       }
@@ -52,7 +54,7 @@ defineExpose({
 
 <template>
   <el-dialog v-model="visible" :title="`${type === 'add' ? '添加' : '编辑'}承包单位`" width="500px">
-    <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" class="mt-5">
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" class="mt-5" label-position="top">
       <el-form-item prop="contractor_name" label="单位名称">
         <el-input v-model="form.contractor_name" placeholder="承包单位名称" clearable />
       </el-form-item>

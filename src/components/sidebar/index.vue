@@ -41,7 +41,11 @@
             class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
           >
             <span class="icon-[lucide--list-todo]" />
-            <div>工程进度</div>
+            <div>
+              <RouterLink to="/task">
+                工程进度
+              </RouterLink>
+            </div>
           </div>
           <div
             class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"

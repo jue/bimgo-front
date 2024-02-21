@@ -28,6 +28,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const userStore = useUserStore()
+  const { getContractors } = useSettingsStore()
 
   if (whiteList.includes(to.name)) {
     next()
@@ -36,14 +37,16 @@ router.beforeEach(async (to, from, next) => {
 
   const hasToken = getToken()
   if (hasToken) {
-    if (!userStore.user)
+    if (!userStore.user) {
       await userStore.userInfo()
+      await getContractors()
+    }
 
     next()
   }
   else {
     if (isWeixin())
-      location.href = `https://wx.jue.sh/wechat/mp/authorize?redirect_uri=${encodeURIComponent(to.fullPath)}`
+      location.href = `${useSettingsStore().project.api_url}/wechat/mp/authorize?redirect_uri=${encodeURIComponent(to.fullPath)}`
 
     else
       next(`/login?redirect=${encodeURIComponent(to.fullPath)}`)

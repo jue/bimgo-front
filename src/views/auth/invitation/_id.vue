@@ -7,6 +7,7 @@ const step = ref(1)
 
 const formRef = ref(null)
 const form = reactive({
+  id: route.params.id,
   openid: route.query.openid,
   realname: '',
   mobile: '',
@@ -52,7 +53,7 @@ onBeforeMount(() => {
     getUserInfo(route.query.openid)
   }
   else {
-    location.href = `https://wx.jue.sh/wechat/mp/authorize?redirect_uri=${encodeURIComponent(route.fullPath)}`
+    location.href = `${useSettingsStore().project.api_url}/wechat/mp/authorize?redirect_uri=${encodeURIComponent(route.fullPath)}`
   }
 })
 </script>
@@ -69,7 +70,7 @@ onBeforeMount(() => {
       <template v-if="step === 0">
         <div class="space-y-5">
           <div class="relative w-20 h-20 mx-auto">
-            <el-avatar class="relative z-10" :size="80" :src="info?.wechat_data.headimgurl" />
+            <el-avatar class="relative z-10" :size="80" :src="info?.avatar" />
             <span class="icon-[lucide--check-circle-2] bg-green-600 text-white text-2xl absolute bottom-0 right-0 z-20" />
           </div>
           <div class="text-gray-500/60">

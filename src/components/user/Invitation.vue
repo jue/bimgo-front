@@ -5,6 +5,7 @@ const source = ref('')
 const { copy, copied } = useClipboard({ source })
 
 const projectName = useSettingsStore().project.name
+const api_url = useSettingsStore().project.api_url
 
 function toggleDialog() {
   visible.value = !visible.value

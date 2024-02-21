@@ -4,7 +4,7 @@ import * as QRCode from 'easyqrcodejs'
 const props = defineProps({
   text: {
     type: String,
-    default: 'https://bimgo.ufollow.cn',
+    default: '',
   },
   size: {
     type: Number,

@@ -34,6 +34,8 @@
     --ring: 220 4.92% 11.96%;
  
     --radius: 0.5rem;
+
+    --el-font-weight-primary: 400;
   }
  
   .dark {
@@ -125,6 +127,10 @@
   background-image: linear-gradient(0deg,#ebeef5,#fff);
   content: '';
 }
+.el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+  @apply mb-1 !important;
+}
+
 /* 以下为修改element-plus样式 结束 */
 :focus-visible {
   outline: none;

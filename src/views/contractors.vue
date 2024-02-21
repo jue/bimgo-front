@@ -1,19 +1,27 @@
 <script setup>
 const settingsStore = useSettingsStore()
-const defaultUserGroup = settingsStore.defaultUserGroup
+const { defaultUserGroup, getContractors } = settingsStore
+const { contractors } = storeToRefs(settingsStore)
 
-const activeGroup = ref(0)
+const router = useRouter()
+const route = useRoute()
+
+const activeGroup = ref(route.query.group || route.query.contractor || 'all')
 
 const contractorsAddRef = ref(null)
-const contractors = ref([])
+// const contractors = ref([])
 function selectGroup(id) {
+  if (id === activeGroup.value)
+    return
   activeGroup.value = id
+  router.push({ name: 'contractors', query: { group: id } })
 }
 
-async function getcontractorList() {
-  const { data: res } = await http.post('/contractor/list')
-  if (res.code === 200)
-    contractors.value = res.data
+function selectContractor(val) {
+  if (val !== activeGroup.value) {
+    activeGroup.value = val
+    router.push({ name: 'contractors', query: { contractor: val } })
+  }
 }
 
 function editContractor(data = null) {
@@ -34,21 +42,19 @@ function deleteContractor(data) {
       const { data: res } = await http.post('/contractor/delete', {
         contractor_id: data.contractor_id,
       })
-      if (res.code === 200)
-        getcontractorList()
+      if (res.code === 200) {
+        getContractors()
+        ElMessage.success('删除成功')
+      }
     })
     .catch(() => {
     })
 }
-
-onMounted(() => {
-  getcontractorList()
-})
 </script>
 
 <template>
   <div class="flex flex-1 px-4 space-x-4">
-    <div class="w-60">
+    <div class="w-60 shrink-0">
       <div class="flex items-center justify-between h-12 px-3">
         <div class="font-bold text-base">
           用户组
@@ -58,8 +64,8 @@ onMounted(() => {
       <div>
         <div
           class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-          :class="{ 'bg-gray-100 text-blue-600': activeGroup === 0 }"
-          @click="selectGroup(0)"
+          :class="{ 'bg-gray-100 text-blue-600': activeGroup === 'all' }"
+          @click="selectGroup('all')"
         >
           所有使用者
         </div>
@@ -97,7 +103,7 @@ onMounted(() => {
             v-for="item in contractors" :key="item.value"
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md group"
             :class="{ 'bg-gray-100 text-blue-600': item.contractor_id === activeGroup }"
-            @click="selectGroup(item.contractor_id)"
+            @click="selectContractor(item.contractor_id)"
           >
             <div class="flex-1">
               {{ item.contractor_name }}
@@ -128,5 +134,5 @@ onMounted(() => {
     </div>
   </div>
 
-  <ContractorsAdd ref="contractorsAddRef" @refresh="getcontractorList" />
+  <ContractorsAdd ref="contractorsAddRef" />
 </template>
