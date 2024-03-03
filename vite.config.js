@@ -56,6 +56,13 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "~/assets/element/index.scss" as *;`,
+      },
+    },
+  },
   server: {
     host: '0.0.0.0',
   },

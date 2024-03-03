@@ -43,7 +43,7 @@ function logout() {
           <span class="icon-[lucide--settings] mr-2" />
           <span>设置</span>
         </el-dropdown-item>
-        <el-dropdown-item @click="logout()">
+        <el-dropdown-item class="!text-red-500" @click="logout()">
           <span class="icon-[lucide--log-out] mr-2" />
           <span>退出登陆</span>
         </el-dropdown-item>

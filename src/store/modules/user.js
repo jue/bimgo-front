@@ -5,6 +5,19 @@ export const useUserStore = defineStore('token', {
     type: 'vue3',
     token: 'aa--00',
     user: null,
+    config: {
+      task_table: {
+        stripe: false,
+        border: false,
+        size: 'default',
+        column: {
+          title: {
+            minWidth: 300,
+          },
+        },
+
+      },
+    },
   }),
   actions: {
     async userLogin(params) {

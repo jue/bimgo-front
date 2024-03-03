@@ -127,12 +127,21 @@
   background-image: linear-gradient(0deg,#ebeef5,#fff);
   content: '';
 }
+
+.el-table__header-wrapper tr th.el-table-fixed-column--left.is-last-column::before { 
+  @apply w-[1px] !important;
+}
+
 .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
   @apply mb-1 !important;
 }
+
+.el-date-editor.el-input {
+  @apply w-full !important;
+}
+
 
 /* 以下为修改element-plus样式 结束 */
 :focus-visible {
   outline: none;
 }
-

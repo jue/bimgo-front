@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
     title: 'BIMGO',
+    sideWidth: 256,
+    sideCollapsed: false,
     wechat: {
       mp: {
         appid: 'wx696779f3aa33a37f',
@@ -48,6 +50,50 @@ export const useSettingsStore = defineStore('settings', {
         value: 3,
       },
     ],
+    taskStatus: [
+      {
+        label: '已删除',
+        color: '#bdc1bc',
+        value: 0,
+      },
+      {
+        label: '未开始',
+        color: '#e7ad02',
+        value: 1,
+      },
+      {
+        label: '进行中',
+        color: '#2563eb',
+        value: 2,
+      },
+      {
+        label: '已完成',
+        color: '#41ab37',
+        value: 3,
+      },
+    ],
+    taskPriority: [
+      {
+        label: '较低',
+        color: '#8c8c8c',
+        value: 0,
+      },
+      {
+        label: '普通',
+        color: '#1b9aee',
+        value: 1,
+      },
+      {
+        label: '紧急',
+        color: '#ffa941',
+        value: 2,
+      },
+      {
+        label: '非常紧急',
+        color: '#e62412',
+        value: 3,
+      },
+    ],
     contractors: [],
   }),
   getters: {
@@ -68,6 +114,15 @@ export const useSettingsStore = defineStore('settings', {
       const { data: res } = await http.post('/contractor/list')
       if (res.code === 200)
         this.contractors = res.data
+    },
+
+    changeSideCollapsed() {
+      this.sideCollapsed = !this.sideCollapsed
+
+      if (this.sideCollapsed)
+        this.sideWidth = 0
+      else
+        this.sideWidth = 256
     },
   },
 })

@@ -1,11 +1,15 @@
+<script setup>
+const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
+</script>
+
 <template>
-  <div class="w-64 shrink-0 flex flex-col h-screen bg-[#181f38]">
+  <div class="shrink-0 flex flex-col h-screen bg-[#181f38]" :style="{ width: `${sideWidth}px`, transition: 'width 0.3s' }">
     <div class="h-14 flex items-center justify-between px-2">
       <Logo class="w-12 fill-white" />
     </div>
 
     <el-scrollbar class="flex-1 h-full w-full">
-      <div class="divide-y divide-[#323f5e]">
+      <div v-if="!sideCollapsed" class="divide-y divide-[#323f5e]">
         <div class="px-2 space-y-[1px] py-2">
           <SearchButton />
           <div

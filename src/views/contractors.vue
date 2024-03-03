@@ -33,8 +33,8 @@ function deleteContractor(data) {
     `确定删除 ${data.contractor_name} 吗？`,
     '提示',
     {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
       type: 'warning',
     },
   )

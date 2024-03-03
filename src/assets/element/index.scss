@@ -33,7 +33,7 @@
     'font-weight': 400,
   ),
   $drawer: (
-    'padding-primary': 0
+    'padding-primary': 0px,
   ),
   $pagination: (
     'button-width': 28px,
@@ -45,8 +45,5 @@
   $dropdown: (
     'menuItem-hover-color': '#00021bf8',
     'menuItem-hover-fill': '#edf1f6',
-  ),
-  $font-weight: (
-    'primary': 400,
   ),
 );

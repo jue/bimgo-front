@@ -50,8 +50,8 @@ function deleteUser(data) {
     `确定删除 ${data.realname || data.nickname} 吗？`,
     '提示',
     {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
       type: 'warning',
     },
   )
@@ -91,7 +91,7 @@ onBeforeRouteUpdate((to, from, next) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full" style="width: calc(100vw - 544px);">
+  <div class="flex flex-col h-full">
     <div class="px-11">
       <div class="h-11 flex items-center justify-between">
         <div class="text-xl font-bold">
@@ -130,10 +130,19 @@ onBeforeRouteUpdate((to, from, next) => {
       </div>
     </div>
 
-    <div class="mt-5 flex-1 w-full overflow-x-auto">
+    <div class="mt-5 flex-1 w-full">
       <el-table ref="multipleTableRef" row-key="id" highlight-current-row height="100%" :data="userData" stripe @selection-change="handleSelectionChange" @current-change="handleCurrentChange">
         <el-table-column type="selection" width="40" />
-        <el-table-column prop="realname" label="姓名" width="100" />
+        <el-table-column prop="realname" label="姓名" width="100">
+          <template #default="scope">
+            <div class="flex items-center space-x-1">
+              <el-avatar :src="scope.row.avatar" :size="24">
+                {{ scope.row.realname?.charAt(0) }}
+              </el-avatar>
+              <span>{{ scope.row.realname || scope.row.nickname }}</span>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="mobile" label="手机号" width="120" />
 
         <el-table-column
