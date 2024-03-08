@@ -44,12 +44,18 @@ function disabledDateEnd(data) {
 </script>
 
 <template>
-  <el-drawer v-model="drawerVisible" title="用户信息" :with-header="false" :modal="true" :append-to-body="true" size="800" custom-class="np-drawer">
+  <el-drawer
+    v-model="drawerVisible" title="用户信息" :with-header="false" :modal="true" :append-to-body="true" size="800"
+    custom-class="np-drawer"
+  >
     <div class="flex flex-col h-full">
       <div class="flex items-center justify-between h-14 border-b px-4">
         <div>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item v-for="item in task.descendants.slice(0, -1)" :key="item.tid" class="!cursor-pointer" @click="getTaskDetail(item.tid)">
+            <el-breadcrumb-item
+              v-for="item in task.descendants.slice(0, -1)" :key="item.tid" class="!cursor-pointer"
+              @click="getTaskDetail(item.tid)"
+            >
               {{ item.title }}
             </el-breadcrumb-item>
           </el-breadcrumb>
@@ -146,11 +152,17 @@ function disabledDateEnd(data) {
           </div>
           <div class="flex items-center space-x-2">
             <div>
-              <NpDatapicker v-model="task.task.start_time" :disabled-date="disabledDateStart" :task="task.task" prop="start_time" class="-mx-2" placeholder="设置开始日期" />
+              <NpDatapicker
+                v-model="task.task.start_time" :disabled-date="disabledDateStart" :task="task.task"
+                prop="start_time" class="-mx-2" placeholder="设置开始日期"
+              />
             </div>
             <div>-</div>
             <div>
-              <NpDatapicker v-model="task.task.end_time" :disabled-date="disabledDateEnd" :task="task.task" prop="end_time" class="-mx-2" placeholder="设置结束日期" />
+              <NpDatapicker
+                v-model="task.task.end_time" :disabled-date="disabledDateEnd" :task="task.task"
+                prop="end_time" class="-mx-2" placeholder="设置结束日期"
+              />
             </div>
           </div>
         </div>
@@ -162,7 +174,10 @@ function disabledDateEnd(data) {
           </div>
           <div class="flex items-center space-x-2">
             <div>
-              <NpDatapicker v-model="task.task.done_time" :task="task.task" prop="done_time" class="-mx-2" placeholder="设置实际完工日期" />
+              <NpDatapicker
+                v-model="task.task.done_time" :task="task.task" prop="done_time" class="-mx-2"
+                placeholder="设置实际完工日期"
+              />
             </div>
           </div>
         </div>
@@ -184,8 +199,19 @@ function disabledDateEnd(data) {
             子任务
           </div>
         </div>
-        <div class="border border-gray-200 p-2 rounded-md">
+        <div class="border border-gray-200 px-2 py-1 rounded-md">
           <TaskSub :tid="task.task.tid" :task="task.task" :sub-task="task.children" @to="getTaskDetail" />
+        </div>
+      </div>
+
+      <div class="px-7 py-2 space-y-2">
+        <div class="flex items-center">
+          <div class="text-md font-medium">
+            文档资料
+          </div>
+        </div>
+        <div class="border border-gray-200 px-2 py-1 rounded-md">
+          <TaskDocs :tid="task.task.tid" :task="task.task" :files="task.files" />
         </div>
       </div>
     </div>

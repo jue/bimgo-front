@@ -29,29 +29,21 @@ onMounted(() => {
 <template>
   <div :style="{ width: `calc(100vw - ${sideWidth}px)` }" class="task-table-wrapper">
     <el-table
-      ref="taskTable"
-      :data="tasks"
-      row-key="tid"
-      tree-props="{children: 'children'}"
-      default-expand-all
-      :style="{ width: '100%' }"
-      :border="config.task_table.border"
-      :stripe="config.task_table.stripe"
-      :size="config.task_table.size"
-      flexible
-      scrollbar-always-on
-      highlight-current-row
+      ref="taskTable" :data="tasks" row-key="tid" tree-props="{children: 'children'}" default-expand-all
+      :style="{ width: '100%' }" :border="config.task_table.border" :stripe="config.task_table.stripe"
+      :size="config.task_table.size" flexible scrollbar-always-on highlight-current-row
       @current-change="handleCurrentChange"
     >
-      <el-table-column type="selection" width="42" />
-      <el-table-column prop="title" label="任务名" :min-width="config.task_table.column.title.minWidth" fixed="left" class-name="task-title">
+      <el-table-column type="index" width="42" fixed="left" />
+      <!-- <el-table-column type="selection" width="42" fixed="left" /> -->
+      <el-table-column
+        prop="title" label="任务名" :width="config.task_table.column.title.width" class-name="task-title"
+        fixed="left"
+      >
         <template #default="scope">
           <task-column-title
-            :title="scope.row.title"
-            :row="scope.row"
-            @click="openTaskDetail(scope.row)"
-            @edit="openTaskDetail(scope.row)"
-            @refresh="getTaskList"
+            v-if="scope.row.title" :title="scope.row.title" :row="scope.row"
+            @click="openTaskDetail(scope.row)" @edit="openTaskDetail(scope.row)" @refresh="getTaskList"
           />
         </template>
       </el-table-column>
@@ -63,12 +55,15 @@ onMounted(() => {
       <el-table-column prop="contractor_id" label="执行团队" />
       <el-table-column prop="status" label="状态" width="100">
         <template #default="scope">
-          <task-column-status v-model="scope.row.status" :row="scope.row" />
+          <task-column-status v-if="scope.row.tid" v-model="scope.row.status" :row="scope.row" />
         </template>
       </el-table-column>
       <el-table-column prop="start_time" label="开始日期" width="150">
         <template #default="scope">
-          <NpDatapicker v-model="scope.row.start_time" :task="scope.row" prop="start_time" placeholder="待设置" />
+          <NpDatapicker
+            v-if="scope.row.tid" v-model="scope.row.start_time" :task="scope.row" prop="start_time"
+            placeholder="待设置"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="end_time" label="结束日期" width="150">

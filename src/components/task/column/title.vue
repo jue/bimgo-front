@@ -1,4 +1,6 @@
 <script setup>
+import { v4 as uuidv4 } from 'uuid'
+
 const props = defineProps({
   title: {
     type: String,
@@ -9,7 +11,7 @@ const props = defineProps({
     default: () => {},
   },
 })
-const emit = defineEmits(['edit', 'refresh'])
+const emit = defineEmits(['edit', 'refresh', 'add'])
 
 const isExpanded = ref(false)
 
@@ -37,6 +39,21 @@ function deleteTask(data) {
     .catch(() => {
     })
 }
+
+function addSubTask() {
+  // emit('add', {
+  //   tid: uuidv4(),
+  //   title: '',
+  //   parent_id: props.row.tid,
+  // })
+  // if (!props.row.children)
+  //   props.row.children = []
+
+  // props.row.children.push({
+  //   tid: '',
+  //   title: '',
+  // })
+}
 </script>
 
 <template>
@@ -54,7 +71,7 @@ function deleteTask(data) {
             <span class="icon-[lucide--plus-circle] mr-2 opacity-0" />
             <span>查看任务详细</span>
           </el-dropdown-item>
-          <el-dropdown-item divided>
+          <el-dropdown-item divide @click="addSubTask">
             <span class="icon-[lucide--plus-circle] mr-2" />
             <span>添加子任务</span>
           </el-dropdown-item>

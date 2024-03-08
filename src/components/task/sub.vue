@@ -71,7 +71,7 @@ async function addSubTask() {
     <div v-if="subTask.length" class="space-y-1">
       <div v-for="item in subTask" :key="item.tid" class="flex items-center space-x-2">
         <TaskColumnStatus v-model="item.status" :row="item" />
-        <div class="flex-1 px-2 min-h-8 rounded-md flex items-center cursor-pointer hover:bg-gray-100">
+        <div class="flex-1 px-2 min-h-8 rounded-md flex items-center cursor-pointer hover:bg-gray-100" @click="emit('to', item.tid)">
           {{ item.title }}
         </div>
         <div class="flex items-center space-x-2 text-gray-400">
@@ -118,11 +118,11 @@ async function addSubTask() {
           </div>
         </div>
 
-        <el-tooltip content="设置工期">
+        <!-- <el-tooltip content="结束日期">
           <el-button type="primary" text class="h-8 w-8">
             <span class="icon-[lucide--calendar]" />
           </el-button>
-        </el-tooltip>
+        </el-tooltip> -->
       </div>
       <el-button type="primary" text class="px-1" @click="changeEdit">
         <div class="flex items-center">
