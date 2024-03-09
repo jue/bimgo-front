@@ -36,14 +36,43 @@ function initInput(visible) {
   if (visible)
     uploadInput.value.value = null
 }
+
+async function downloadFile(fid) {
+  const { data: res } = await http.post('/file/download', {
+    fid,
+  })
+  if (res.code === 200)
+    window.open(res.data)
+}
 </script>
 
 <template>
   <div>
     <div>
-      <el-table ref="filesTableRef" :data="files">
+      <el-table ref="filesTableRef" :data="files" :show-header="false" class="border-none">
         <el-table-column type="selection" width="45" />
-        <el-table-column prop="file_name" label="文件名" />
+        <el-table-column prop="file_name" label="文件名">
+          <template #default="scope">
+            <div class="flex items-center space-x-2 group">
+              <div class="w-14 h-10 border rounded-lg flex items-center justify-center bg-gray-100">
+                <Icon class="h-7" :type="scope.row.file_type" />
+              </div>
+              <div>
+                <div>{{ scope.row.file_name }}</div>
+                <div class="text-xs text-gray-500">
+                  {{ scope.row.file_size }}
+                </div>
+              </div>
+              <div class="invisible group-hover:visible">
+                <el-tooltip content="下载">
+                  <el-button text bg class="w-8 h-8" @click.stop="downloadFile(scope.row.fid)">
+                    <span class="icon-[lucide--download] cursor-pointer text-blue-500 text-lg" />
+                  </el-button>
+                </el-tooltip>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="realname" label="创建人" width="100">
           <template #default="scope">
             {{ scope.row.realname || scope.row.nickname }}

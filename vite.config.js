@@ -4,17 +4,21 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import svgLoader from 'vite-svg-loader'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    svgLoader(),
+    VueDevTools(),
     Pages({
       dirs: 'src/views',
       exclude: ['**/components/*.vue'],
@@ -32,6 +36,9 @@ export default defineConfig({
         'vue',
         'vue-router',
         '@vueuse/core',
+        {
+          'vue-request': ['useRequest'],
+        },
         {
           pinia: ['storeToRefs'],
         },

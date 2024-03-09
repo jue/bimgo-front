@@ -68,6 +68,7 @@ declare module 'vue' {
     FormItem: typeof import('./src/shadcn/ui/form/FormItem.vue')['default']
     FormLabel: typeof import('./src/shadcn/ui/form/FormLabel.vue')['default']
     FormMessage: typeof import('./src/shadcn/ui/form/FormMessage.vue')['default']
+    Icon: typeof import('./src/components/Icon.vue')['default']
     Input: typeof import('./src/shadcn/ui/input/Input.vue')['default']
     Label: typeof import('./src/shadcn/ui/label/Label.vue')['default']
     Loading: typeof import('./src/components/Loading.vue')['default']
@@ -116,5 +117,8 @@ declare module 'vue' {
     UserInvitation: typeof import('./src/components/user/Invitation.vue')['default']
     UserSelectContractor: typeof import('./src/components/user/select/contractor.vue')['default']
     UserSelectGroup: typeof import('./src/components/user/select/group.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
