@@ -196,7 +196,7 @@ function disabledDateEnd(data) {
       <div class="px-7 py-2 space-y-2">
         <div class="flex items-center">
           <div class="text-md font-medium">
-            子任务
+            子任务 ({{ task.children?.length || 0 }})
           </div>
         </div>
         <div class="border border-gray-200 px-2 py-1 rounded-md">
@@ -207,11 +207,22 @@ function disabledDateEnd(data) {
       <div class="px-7 py-2 space-y-2">
         <div class="flex items-center">
           <div class="text-md font-medium">
-            文档资料
+            文档资料({{ task.files?.length || 0 }})
           </div>
         </div>
         <div class="border border-gray-200 px-2 py-1 rounded-md">
-          <TaskDocs :tid="task.task.tid" :task="task.task" :files="task.files" />
+          <TaskDocs :tid="task.task.tid" :task="task.task" />
+        </div>
+      </div>
+
+      <div class="px-7 py-2 space-y-2">
+        <div class="flex items-center">
+          <div class="text-md font-medium">
+            模型构件({{ task.elements?.length || 0 }})
+          </div>
+        </div>
+        <div class="border border-gray-200 px-2 py-1 rounded-md">
+          <TaskElements :tid="task.task.tid" :task="task.task" :files="task.files" />
         </div>
       </div>
     </div>

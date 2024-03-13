@@ -23,6 +23,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        // 自定义主题色
+        // primary: '#f00',
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -27,12 +27,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <pre>
-    {{ loading }}
-  </pre>
   <div :style="{ width: `calc(100vw - ${sideWidth}px)` }" class="task-table-wrapper">
     <el-table
-      ref="taskTable" v-loading="loading" :data="tasks" row-key="tid" tree-props="{children: 'children'}"
+      ref="taskTable" v-loading="!tasks.length" :data="tasks" row-key="tid" tree-props="{children: 'children'}"
       default-expand-all :style="{ width: '100%' }" :border="config.task_table.border"
       :stripe="config.task_table.stripe" :size="config.task_table.size" flexible scrollbar-always-on
       highlight-current-row @current-change="handleCurrentChange"

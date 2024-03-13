@@ -116,6 +116,17 @@
   @apply !pb-1;
 }
 
+.el-dialog.is-fullscreen {
+  @apply flex flex-col;
+}
+.el-dialog.is-fullscreen .el-dialog__header{
+  @apply !pb-0 font-normal text-sm;
+}
+
+.el-dialog.is-fullscreen .el-dialog__body{
+  @apply h-full flex-1;
+}
+
 .el-table th.el-table__cell>.cell {
   @apply text-xs;
 }
@@ -140,6 +151,9 @@
   @apply w-full !important;
 }
 
+.el-message-box{
+  @apply p-6 !important;
+}
 
 /* 以下为修改element-plus样式 结束 */
 :focus-visible {

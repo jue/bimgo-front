@@ -23,40 +23,40 @@ jobs:
           npm install
           npm run build
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+      # - name: Setup SSH
+      #   uses: webfactory/ssh-agent@v0.5.3
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Clone Private Repository via SSH
-        run: |
-          git clone git@github.com:jue/bimgo-api.git
-          mkdir -p bimgo-api/app/public
-          rm -rf bimgo-api/app/public/*
+      # - name: Clone Private Repository via SSH
+      #   run: |
+      #     git clone git@github.com:jue/bimgo-api.git
+      #     mkdir -p bimgo-api/app/public
+      #     rm -rf bimgo-api/app/public/*
 
-          echo "Copying files from dist to bimgo-api/public"
-          cp -r dist/* bimgo-api/app/public/
-          cd bimgo-api
+      #     echo "Copying files from dist to bimgo-api/public"
+      #     cp -r dist/* bimgo-api/app/public/
+      #     cd bimgo-api
 
-          git config user.email "i@xiangjianfeng.com"
-          git config user.name "jue"
+      #     git config user.email "i@xiangjianfeng.com"
+      #     git config user.name "jue"
 
-          echo "Adding changes to git..."
-          git add app/public/
+      #     echo "Adding changes to git..."
+      #     git add app/public/
 
-      - name: Get commit message
-        id: get_commit_message
-        run: |
-          COMMIT_MSG=$(git log -1 --pretty=format:%s)
-          echo "::set-output name=message::$COMMIT_MSG"
+      # - name: Get commit message
+      #   id: get_commit_message
+      #   run: |
+      #     COMMIT_MSG=$(git log -1 --pretty=format:%s)
+      #     echo "::set-output name=message::$COMMIT_MSG"
 
-      - name: Deploy
-        run: |
-          cd bimgo-api
-          echo "Attempting to commit changes..."
-          git commit -m "${{ steps.get_commit_message.outputs.message }}" || echo "No changes to commit."
-          echo "Pushing changes..."
-          git push
+      # - name: Deploy
+      #   run: |
+      #     cd bimgo-api
+      #     echo "Attempting to commit changes..."
+      #     git commit -m "${{ steps.get_commit_message.outputs.message }}" || echo "No changes to commit."
+      #     echo "Pushing changes..."
+      #     git push
 
       # - name: Deploy to Server
       #   uses: easingthemes/ssh-deploy@main

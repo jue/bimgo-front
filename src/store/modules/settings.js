@@ -13,6 +13,7 @@ export const useSettingsStore = defineStore('settings', {
     project: {
       name: '聚怡信息',
       api_url: import.meta.env.VITE_API_URL,
+      file_url: 'https://bimgo-files.nipao.com',
     },
     // 系统默认用户分组
     defaultUserGroup: [

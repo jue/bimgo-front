@@ -1,3 +1,9 @@
+import FileSaver from 'file-saver'
+
+// import { useSettingsStore } from '@/store/modules/settings'
+
+// const { project } = useSettingsStore()
+
 export function isWeixin() {
   const ua = window.navigator.userAgent.toLowerCase()
   if (ua.match(/MicroMessenger/i) === 'micromessenger' || ua.match(/_SQ_/i) === '_sq_')
@@ -8,6 +14,9 @@ export function isWeixin() {
 }
 
 export function formatDate(dateString) {
+  if (!dateString)
+    return ''
+
   const date = new Date(dateString)
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
   // const now = new Date()
@@ -33,4 +42,12 @@ export function debounce(func, delay) {
       func(...args)
     }, delay)
   }
+}
+
+export async function downloadFile(fid) {
+  const { data: res } = await http.post('/file/url', {
+    fid,
+  })
+  if (res.code === 200)
+    FileSaver.saveAs(`https://bimgo-files.nipao.com${res.data.path}?_upt=${res.data.upt}`, res.data.name)
 }

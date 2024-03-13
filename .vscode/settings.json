@@ -23,7 +23,9 @@
     { "rule": "*-dangle", "severity": "off" },
     { "rule": "*-newline", "severity": "off" },
     { "rule": "*quotes", "severity": "off" },
-    { "rule": "*semi", "severity": "off" }
+    { "rule": "*semi", "severity": "off" },
+    { "rule": "vue/prop-name-casing", "severity": "off" },
+    { "rule": "vue/no-mutating-props", "severity": "off" }
   ],
 
   // Enable eslint for all supported languages
