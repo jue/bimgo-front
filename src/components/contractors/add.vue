@@ -57,7 +57,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-dialog v-model="visible" :title="`${type === 'add' ? '添加' : '编辑'}承包单位`" width="400px">
+  <el-dialog v-model="visible" :title="`${type === 'add' ? '添加' : '编辑'}承包单位`" width="400px" append-to-body draggable>
     <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" class="mt-5" label-position="top">
       <el-form-item prop="contractor_name" label="单位名称">
         <el-input v-model="form.contractor_name" placeholder="承包单位名称" clearable />

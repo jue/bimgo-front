@@ -110,16 +110,7 @@ function refreshPage() {
             @click="selectContractor(item.contractor_id)"
           >
             <div class="flex-1 flex items-center space-x-1">
-              <el-image :src="item.logo || ''" fit="cover" class="h-7 w-7">
-                <template #error>
-                  <div
-                    class="h-full w-full flex items-center justify-center text-white rounded-lg text-xs"
-                    :style="{ 'background-color': item.color }"
-                  >
-                    {{ item.contractor_name.slice(0, 2) }}
-                  </div>
-                </template>
-              </el-image>
+              <AvatarTeam :contractor_id="item.contractor_id" />
               <div>{{ item.contractor_name }}</div>
             </div>
             <div class="opacity-0 group-hover:opacity-100 flex items-center">

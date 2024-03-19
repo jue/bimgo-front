@@ -152,16 +152,4 @@ function disabledDate(date) {
     @apply ring-1 ring-blue-600;
   }
 }
-.btn {
-  @apply flex-1 h-9 text-[#1b9aee] border border-[#1b9aee]/40;
-  &:hover {
-    @apply bg-[#1b9aee]/10;
-  }
-  &-primary {
-    @apply bg-[#1b9aee] text-white;
-    &:hover {
-      @apply bg-[#0171c2];
-    }
-  }
-}
 </style>
