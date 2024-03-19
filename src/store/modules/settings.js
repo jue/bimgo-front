@@ -20,7 +20,7 @@ export const useSettingsStore = defineStore('settings', {
       {
         label: '管理员',
         value: 'admin',
-        description: '拥有所有权限',
+        description: '可以管理帐号设置等权限',
       },
       {
         label: '普通用户',
@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore('settings', {
       {
         label: '合作者',
         value: 'contractor',
-        description: '拥有部分权限，仅可读单位内部数据',
+        description: '只能发表评论，更改状态和附件文件',
       },
     ],
     userStatus: [

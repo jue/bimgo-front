@@ -1,16 +1,26 @@
 <script setup>
+const props = defineProps({
+  form: {
+    type: Object,
+    default: () => ({}),
+  },
+})
 const { sideWidth } = storeToRefs(useSettingsStore())
 const { config } = useUserStore()
 
+const loading = ref(false)
 const tasks = ref([])
 const taskDetail = ref(null)
 const taskTable = ref(null)
 
-async function getTaskList() {
-  const { data: res } = await http.post('/task/list')
+const getTaskList = debounce(async () => {
+  loading.value = true
+  const { data: res } = await http.post('/task/list', props.form)
   if (res.code === 200)
     tasks.value = res.data
-}
+
+  loading.value = false
+}, 800)
 
 function openTaskDetail(data) {
   taskTable.value.setCurrentRow(data)
@@ -24,12 +34,16 @@ function addNewTask(data) {
 onMounted(() => {
   getTaskList()
 })
+
+watch(() => props.form, () => {
+  getTaskList()
+}, { deep: true, immediate: true })
 </script>
 
 <template>
   <div :style="{ width: `calc(100vw - ${sideWidth}px)` }" class="task-table-wrapper">
     <el-table
-      ref="taskTable" v-loading="!tasks.length" :data="tasks" row-key="tid" tree-props="{children: 'children'}"
+      ref="taskTable" v-loading="loading" :data="tasks" row-key="tid" tree-props="{children: 'children'}"
       default-expand-all :style="{ width: '100%' }" :border="config.task_table.border"
       :stripe="config.task_table.stripe" :size="config.task_table.size" flexible scrollbar-always-on
       highlight-current-row @current-change="handleCurrentChange"
@@ -52,7 +66,11 @@ onMounted(() => {
           <task-column-title :title="scope.row.title" @click="openTaskDetail(scope.row.tid)" />
         </template>
       </el-table-column> -->
-      <el-table-column prop="contractor_id" label="执行团队" />
+      <el-table-column prop="contractor_id" label="执行团队" width="200px">
+        <template #default="scope">
+          <task-column-team v-model="scope.row.contractor_id" :task="scope.row" />
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态" width="100">
         <template #default="scope">
           <task-column-status v-if="scope.row.tid" v-model="scope.row.status" :row="scope.row" />
@@ -60,15 +78,28 @@ onMounted(() => {
       </el-table-column>
       <el-table-column prop="start_time" label="开始日期" width="150">
         <template #default="scope">
-          <NpDatapicker
-            v-if="scope.row.tid" v-model="scope.row.start_time" :task="scope.row" prop="start_time"
-            placeholder="待设置"
-          />
+          <div v-if="scope.row.children?.length" class="text-gray-400 px-2">
+            {{ scope.row.start_time || '-' }}
+          </div>
+          <div v-else>
+            <NpDatapicker
+              v-if="scope.row.tid" v-model="scope.row.start_time" :task="scope.row" prop="start_time"
+              placeholder="待设置"
+            />
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="end_time" label="结束日期" width="150">
         <template #default="scope">
-          <NpDatapicker v-model="scope.row.end_time" :task="scope.row" prop="end_time" placeholder="待设置" />
+          <div v-if="scope.row.children?.length" class="text-gray-400 px-2">
+            {{ scope.row.end_time || '-' }}
+          </div>
+          <div v-else>
+            <NpDatapicker
+              v-if="scope.row.tid" v-model="scope.row.end_time" :task="scope.row" prop="end_time"
+              placeholder="待设置"
+            />
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="done_time" label="实际完工日期" width="150">

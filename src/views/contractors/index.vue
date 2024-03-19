@@ -5,6 +5,7 @@ const route = useRoute()
 const settingsStore = useSettingsStore()
 const { contractors } = storeToRefs(settingsStore)
 
+const loading = ref(false)
 const userData = ref([])
 const multipleTableRef = ref(null)
 
@@ -34,11 +35,22 @@ function handleSelectionChange() {
 }
 
 async function getUsers() {
+  loading.value = true
   const { data: res } = await http.post('/user/list', form)
   if (res.code === 200) {
     userData.value = res.data
     form.total = res.total
   }
+
+  loading.value = false
+}
+
+const contractor = ref({})
+async function getContractorDetail() {
+  const { data: res } = await http.post('/contractor/detail', {
+    contractor_id: route.query.contractor,
+  })
+  contractor.value = res.data
 }
 
 const searchByKey = debounce(async () => {
@@ -68,6 +80,9 @@ function deleteUser(data) {
 
 onMounted(() => {
   getUsers()
+
+  if (route.query.contractor)
+    getContractorDetail()
 })
 
 onBeforeRouteUpdate((to, from, next) => {
@@ -88,6 +103,10 @@ onBeforeRouteUpdate((to, from, next) => {
 
   next()
 })
+
+defineExpose({
+  getUsers,
+})
 </script>
 
 <template>
@@ -99,39 +118,32 @@ onBeforeRouteUpdate((to, from, next) => {
           <user-invitation />
         </div>
       </div>
-      <div class="mt-3 flex items-center space-x-4">
+      <!-- <div v-if="route.query.contractor">
+        <pre>
+          {{ contractor }}
+        </pre>
+      </div> -->
+      <div class="mt-3 flex items-center space-x-4 justify-between">
         <el-input v-model="form.key" placeholder="按名称或手机号搜索" clearable class="!w-80" @input="searchByKey">
           <template #prefix>
             <i class="icon-[lucide--search]" />
           </template>
         </el-input>
-        <!-- <np-dropdown>
-          <div class="flex items-center space-x-1 hover:text-blue-500">
-            <span class="icon-[lucide--filter]" />
-            <span class="shrink-0">筛选</span>
-          </div>
-          <template #dropdown>
-            <el-dropdown-item>
-              <span class="icon-[lucide--user-plus] mr-2" />jjj
-            </el-dropdown-item>
-          </template>
-        </np-dropdown>
-        <el-dropdown>
-          <div class="flex items-center space-x-1 hover:text-blue-500">
-            <span class="icon-[lucide--flip-horizontal]" />
-            <span class="shrink-0">字段</span>
-          </div>
-          <template #dropdown>
-            <el-dropdown-item>
-              <span class="icon-[lucide--user-plus] mr-2" />jjj
-            </el-dropdown-item>
-          </template>
-        </el-dropdown> -->
+        <div>
+          <el-tooltip content="重新获取数据">
+            <el-button text bg class="w-8 h-8" @click="getUsers()">
+              <span class="icon-[lucide--refresh-cw]" :class="{ 'animate-none': !loading }" />
+            </el-button>
+          </el-tooltip>
+        </div>
       </div>
     </div>
 
     <div class="mt-5 flex-1 w-full">
-      <el-table ref="multipleTableRef" row-key="id" highlight-current-row height="100%" :data="userData" stripe @selection-change="handleSelectionChange" @current-change="handleCurrentChange">
+      <el-table
+        ref="multipleTableRef" v-loading="loading" row-key="id" highlight-current-row height="100%"
+        :data="userData" stripe @selection-change="handleSelectionChange" @current-change="handleCurrentChange"
+      >
         <el-table-column type="selection" width="40" />
         <el-table-column prop="realname" label="姓名" width="100">
           <template #default="scope">
@@ -151,13 +163,14 @@ onBeforeRouteUpdate((to, from, next) => {
               return getStateLabel('defaultUserGroup', cellValue)
             }
             return '无'
-          }"
-          width="120"
+          }" width="120"
         />
         <el-table-column prop="group" label="承包单位" show-overflow-tooltip>
           <template #default="scope">
             <span v-for="(item, index) in scope.row.user_contractors" :key="item.contractor_id">
-              {{ getContractorsLabel(item.contractor_id)?.contractor_name }}<span v-if="index < scope.row.user_contractors.length - 1">, </span>
+              {{ getContractorsLabel(item.contractor_id)?.contractor_name }}<span
+                v-if="index < scope.row.user_contractors.length - 1"
+              >, </span>
             </span>
           </template>
         </el-table-column>
@@ -174,8 +187,11 @@ onBeforeRouteUpdate((to, from, next) => {
                   关联系统分组
                 </el-button>
               </user-select-group>
-              <user-select-contractor v-model="scope.row.user_contractors" :contractors="contractors" :uid="scope.row.uid">
-                <el-button size="small" text type="primary" class="px-1" :disabled="scope.row.group !== 'contractor'">
+              <user-select-contractor
+                v-model="scope.row.user_contractors" :contractors="contractors"
+                :uid="scope.row.uid"
+              >
+                <el-button size="small" text type="primary" class="px-1">
                   关联承包商
                 </el-button>
               </user-select-contractor>
@@ -198,17 +214,15 @@ onBeforeRouteUpdate((to, from, next) => {
     </div>
     <div class="py-1 flex justify-end">
       <el-pagination
-        v-model:current-page="form.page"
-        v-model:page-size="form.pageSize"
-        background
-        small
-        :total="form.total"
-        layout="total, prev, pager, next"
-        @current-change="getUsers"
+        v-model:current-page="form.page" v-model:page-size="form.pageSize" background small
+        :total="form.total" layout="total, prev, pager, next" @current-change="getUsers"
       />
     </div>
 
-    <el-drawer v-model="drawerVisible" title="用户信息" :with-header="false" :modal="true" @close="multipleTableRef.setCurrentRow()">
+    <el-drawer
+      v-model="drawerVisible" title="用户信息" :with-header="false" :modal="true"
+      @close="multipleTableRef.setCurrentRow()"
+    >
       <user-info :uid="currentRow?.uid || ''" />
     </el-drawer>
   </div>

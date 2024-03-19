@@ -1,7 +1,7 @@
 <script setup>
 const form = reactive({
   key: '',
-  sort: '',
+  sort: 'default',
 })
 </script>
 

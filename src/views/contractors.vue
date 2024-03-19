@@ -5,6 +5,7 @@ const { contractors } = storeToRefs(settingsStore)
 
 const router = useRouter()
 const route = useRoute()
+const routerViewRef = ref(null)
 
 const activeGroup = ref(route.query.group || route.query.contractor || 'all')
 
@@ -50,6 +51,11 @@ function deleteContractor(data) {
     .catch(() => {
     })
 }
+
+function refreshPage() {
+  console.log('refreshPage')
+  router.replace(router.currentRoute.value.fullPath)
+}
 </script>
 
 <template>
@@ -64,8 +70,7 @@ function deleteContractor(data) {
       <div>
         <div
           class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-          :class="{ 'bg-gray-100 text-blue-600': activeGroup === 'all' }"
-          @click="selectGroup('all')"
+          :class="{ 'bg-gray-100 text-blue-600': activeGroup === 'all' }" @click="selectGroup('all')"
         >
           所有使用者
         </div>
@@ -76,8 +81,7 @@ function deleteContractor(data) {
           <div
             v-for="item in defaultUserGroup" :key="item.value"
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-            :class="{ 'bg-gray-100 text-blue-600': item.value === activeGroup }"
-            @click="selectGroup(item.value)"
+            :class="{ 'bg-gray-100 text-blue-600': item.value === activeGroup }" @click="selectGroup(item.value)"
           >
             {{ item.label }}
           </div>
@@ -101,12 +105,22 @@ function deleteContractor(data) {
         <div class="space-y-1">
           <div
             v-for="item in contractors" :key="item.value"
-            class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md group"
+            class="pr-2 pl-1 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md group"
             :class="{ 'bg-gray-100 text-blue-600': item.contractor_id === activeGroup }"
             @click="selectContractor(item.contractor_id)"
           >
-            <div class="flex-1">
-              {{ item.contractor_name }}
+            <div class="flex-1 flex items-center space-x-1">
+              <el-image :src="item.logo || ''" fit="cover" class="h-7 w-7">
+                <template #error>
+                  <div
+                    class="h-full w-full flex items-center justify-center text-white rounded-lg text-xs"
+                    :style="{ 'background-color': item.color }"
+                  >
+                    {{ item.contractor_name.slice(0, 2) }}
+                  </div>
+                </template>
+              </el-image>
+              <div>{{ item.contractor_name }}</div>
             </div>
             <div class="opacity-0 group-hover:opacity-100 flex items-center">
               <el-dropdown trigger="click">
@@ -130,9 +144,9 @@ function deleteContractor(data) {
       </div>
     </div>
     <div class="flex-1">
-      <RouterView />
+      <RouterView ref="routerViewRef" />
     </div>
   </div>
 
-  <ContractorsAdd ref="contractorsAddRef" />
+  <ContractorsAdd ref="contractorsAddRef" @refresh="refreshPage" />
 </template>

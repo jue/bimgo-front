@@ -67,33 +67,36 @@ function close() {
       </div>
     </template>
     <div class="h-full flex overflow-auto">
-      <div class="flex-1 flex items-center justify-center">
+      <div class="flex-1 flex items-center justify-center p-10">
         <!-- 预览图片 -->
-        <el-image v-if="file.file_type.startsWith('image/')" class="w-1/2" :src="fileUrl" />
+        <el-image v-if="file.file_type.startsWith('image/')" class="h-full" :src="fileUrl" />
         <!-- 预览pdf -->
         <VuePdfEmbed
           v-else-if="file.file_type.startsWith('application/pdf')" :source="fileUrl" class="w-2/3"
           :text-layer="false"
         />
-        <div v-else class="w-1/3">
+        <div v-else>
           <div class="text-lg">
             没有可用预览
           </div>
           <div class="text-sm text-gray-400">
             下载并在您的电脑上打开此文件
           </div>
-          <div class="flex items-center mt-10 space-x-2">
-            <div
-              class="w-14 h-10 rounded-lg flex items-center justify-center bg-gray-100 bg-cover bg-center bg-no-repeat cursor-pointer preview"
-              :style="{ 'background-image': `url(${project.file_url}${file.path}?_upt=${file.upt})` }" @click="preview"
-            >
-              <span v-if="file.file_type === 'loading'" class="icon-[lucide--loader-2] animate-spin text-primary" />
-              <FileIcon v-else-if="!isImage(file)" class="h-7" :type="file.file_type" />
-            </div>
-            <div class="flex-1 shrink-0">
-              <div>{{ file.file_name }}</div>
-              <div class="text-xs text-gray-500">
-                {{ file.file_size }}
+          <div class="flex items-center mt-10 space-x-40">
+            <div class="flex items-center space-x-2">
+              <div
+                class="w-14 h-10 rounded-lg flex items-center justify-center bg-gray-100 bg-cover bg-center bg-no-repeat cursor-pointer preview"
+                :style="{ 'background-image': `url(${project.file_url}${file.path}?_upt=${file.upt})` }"
+                @click="preview"
+              >
+                <span v-if="file.file_type === 'loading'" class="icon-[lucide--loader-2] animate-spin text-primary" />
+                <FileIcon v-else-if="!isImage(file)" class="h-7" :type="file.file_type" />
+              </div>
+              <div class="flex-1 shrink-0">
+                <div>{{ file.file_name }}</div>
+                <div class="text-xs text-gray-500">
+                  {{ file.file_size }}
+                </div>
               </div>
             </div>
             <div>

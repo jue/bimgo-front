@@ -7,6 +7,8 @@ const formRef = ref(null)
 const form = reactive({
   contractor_name: '',
   contractor_desc: '',
+  color: '',
+  users: [],
 })
 const rules = reactive({
   contractor_name: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
@@ -21,6 +23,8 @@ function open(obj = null) {
     Object.assign(form, {
       contractor_name: '',
       contractor_desc: '',
+      color: '',
+      users: [],
     })
   }
   visible.value = true
@@ -53,13 +57,22 @@ defineExpose({
 </script>
 
 <template>
-  <el-dialog v-model="visible" :title="`${type === 'add' ? '添加' : '编辑'}承包单位`" width="500px">
+  <el-dialog v-model="visible" :title="`${type === 'add' ? '添加' : '编辑'}承包单位`" width="400px">
     <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" class="mt-5" label-position="top">
       <el-form-item prop="contractor_name" label="单位名称">
         <el-input v-model="form.contractor_name" placeholder="承包单位名称" clearable />
       </el-form-item>
+      <el-form-item prop="contractor_name" label="头像颜色">
+        <Color v-model="form.color" :text="form.contractor_name" />
+      </el-form-item>
+      <el-form-item label="成员">
+        <UserSelect v-model="form.users" />
+      </el-form-item>
       <el-form-item prop="contractor_desc" label="描述">
-        <el-input v-model="form.contractor_desc" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="描述" />
+        <el-input
+          v-model="form.contractor_desc" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }"
+          placeholder="描述"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
