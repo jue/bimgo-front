@@ -73,7 +73,7 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
 
         <div class="px-2 space-y-[1px] py-2">
           <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
-            承包商
+            人员管理
           </div>
           <div
             class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"

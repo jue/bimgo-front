@@ -14,22 +14,17 @@ const info = contractors.value.find(item => item.contractor_id === props.contrac
 </script>
 
 <template>
-  <el-image
-    :src="info.logo || ''" fit="cover"
-    :style="{ width: `${size}px`, height: `${size}px` }"
-    class="shrink-0"
-  >
+  <el-image :src="info?.logo || ''" fit="cover" :style="{ width: `${size}px`, height: `${size}px` }" class="shrink-0">
     <template #error>
       <div
-        class="h-full w-full flex items-center justify-center text-white rounded-lg select-none"
-        :style="{
-          'background-color': info.color,
+        class="h-full w-full flex items-center justify-center text-white rounded-lg select-none bg-black" :style="{
+          'background-color': info?.color,
           'font-size': `${size * 0.4}px`,
           'padding': `${size * 0.1}px`,
         }"
       >
-        <span v-if="info.contractor_name">{{ info.contractor_name.slice(0, 2) }}</span>
-        <span v-else class="icon-[lucide--users]" style="font-size: inherit;" />
+        <span v-if="info?.contractor_name">{{ info?.contractor_name.slice(0, 2) }}</span>
+        <span v-else class="icon-[lucide--users]" :style="{ 'font-size': `${size * 0.6}px` }" />
       </div>
     </template>
   </el-image>
