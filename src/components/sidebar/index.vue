@@ -3,7 +3,10 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
 </script>
 
 <template>
-  <div class="shrink-0 flex flex-col h-screen bg-[#181f38]" :style="{ width: `${sideWidth}px`, transition: 'width 0.3s' }">
+  <div
+    class="shrink-0 flex flex-col h-screen bg-[#181f38]"
+    :style="{ width: `${sideWidth}px`, transition: 'width 0.3s' }"
+  >
     <div class="h-14 flex items-center justify-between px-2">
       <Logo class="w-12 fill-white" />
     </div>
@@ -41,22 +44,22 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
           <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
             功能
           </div>
-          <div
-            class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-          >
-            <span class="icon-[lucide--list-todo]" />
-            <div>
-              <RouterLink to="/task">
-                工程进度
-              </RouterLink>
+          <RouterLink to="/task">
+            <div
+              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
+            >
+              <span class="icon-[lucide--list-todo]" />
+              <div>工程进度</div>
             </div>
-          </div>
-          <div
-            class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-          >
-            <span class="icon-[lucide--circle-dot]" />
-            <div>质量风险</div>
-          </div>
+          </RouterLink>
+          <RouterLink to="/issue">
+            <div
+              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
+            >
+              <span class="icon-[lucide--circle-dot]" />
+              <div>问题汇总</div>
+            </div>
+          </RouterLink>
           <div
             class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
           >
@@ -75,16 +78,16 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
           <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
             人员管理
           </div>
-          <div
-            class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-          >
-            <span class="icon-[lucide--users]" />
-            <div>
-              <RouterLink to="/contractors">
+          <RouterLink to="/contractors">
+            <div
+              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
+            >
+              <span class="icon-[lucide--users]" />
+              <div>
                 承包单位
-              </RouterLink>
+              </div>
             </div>
-          </div>
+          </RouterLink>
         </div>
       </div>
     </el-scrollbar>

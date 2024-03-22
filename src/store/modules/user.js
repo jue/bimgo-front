@@ -62,6 +62,7 @@ export const useUserStore = defineStore('token', {
 
       },
     },
+    issue_columns: {},
   }),
   actions: {
     async userLogin(params) {
@@ -87,8 +88,10 @@ export const useUserStore = defineStore('token', {
 
     async userInfo() {
       const { data: res } = await http.post('/user/info')
-      if (res?.code === 200)
+      if (res?.code === 200) {
         this.user = res.data
+        this.issue_columns = res.data.issue_columns
+      }
 
       return res
     },

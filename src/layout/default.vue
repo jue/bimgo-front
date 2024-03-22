@@ -5,7 +5,7 @@ const { sideWidth } = storeToRefs(useSettingsStore())
 <template>
   <div class="min-h-screen flex">
     <Sidebar />
-    <div class="bg-white flex flex-col" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
+    <div class=" min-h-screen" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <Topbar />
       <RouterView />
     </div>
