@@ -91,7 +91,7 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
         </div>
       </div>
     </el-scrollbar>
-    <div class="p-2 border-t border-t-[#323f5e]">
+    <div v-if="!sideCollapsed" class="p-2 border-t border-t-[#323f5e]">
       <UserInvitation class="w-full">
         <template #default="{ toggleDialog }">
           <el-button class="w-full text-xs" color="#2d3a59" @click="toggleDialog">

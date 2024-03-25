@@ -1,4 +1,5 @@
 <script setup>
+const { user } = useUserStore()
 const router = useRouter()
 
 function logout() {
@@ -21,12 +22,9 @@ function logout() {
 
 <template>
   <el-dropdown trigger="click">
-    <Avatar>
-      <AvatarImage src="/logo.svg" alt="@radix-vue" />
-      <AvatarFallback>向南</AvatarFallback>
-    </Avatar>
+    <UserAvatar :uid="user?.uid" size="32" />
     <template #dropdown>
-      <el-dropdown-menu>
+      <el-dropdown-menu class="w-52">
         <UserInvitation class="w-full">
           <template #default="{ toggleDialog }">
             <el-dropdown-item @click="toggleDialog">
