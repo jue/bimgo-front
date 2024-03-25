@@ -28,6 +28,12 @@ const isPassTime = computed(() => {
 })
 
 function calculateIsPassTime(date) {
+  // if (props.field === 'end_time' && date === null)
+  //   return false
+
+  if (!props.data.end_time)
+    return false
+
   const endTime = new Date(props.data.end_time).setHours(0, 0, 0, 0)
   const doneTime = new Date(date).setHours(0, 0, 0, 0)
   return doneTime > endTime

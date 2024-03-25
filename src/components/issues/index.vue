@@ -63,7 +63,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="overflow-x-auto w-full" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
+    <el-scrollbar :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <!-- header -->
       <div class="min-w-fit max-w-full">
         <div class="flex h-10 divide-x border-y">
@@ -138,7 +138,7 @@ onMounted(() => {
           <span class="text-gray-400">没有问题数据</span>
         </div>
       </div>
-    </div>
+    </el-scrollbar>
     <IssuesAdd @refresh="getIssues" />
   </div>
 </template>
