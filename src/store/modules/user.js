@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useSettingsStore } from './settings'
 
 export const useUserStore = defineStore('token', {
   state: () => ({
@@ -91,6 +92,12 @@ export const useUserStore = defineStore('token', {
       if (res?.code === 200) {
         this.user = res.data
         this.issue_columns = res.data.issue_columns
+
+        // 获取 settings store 实例
+        const settingsStore = useSettingsStore()
+
+        // 设置侧边栏折叠状态
+        settingsStore.setSideCollapsed(res.data.sideCollapsed)
       }
 
       return res

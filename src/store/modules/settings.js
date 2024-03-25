@@ -167,13 +167,22 @@ export const useSettingsStore = defineStore('settings', {
         this.users = res.data
     },
 
-    changeSideCollapsed() {
+    setSideCollapsed(value) {
+      this.sideCollapsed = value
+      this.sideWidth = value ? 0 : 256
+    },
+
+    async changeSideCollapsed() {
       this.sideCollapsed = !this.sideCollapsed
 
-      if (this.sideCollapsed)
-        this.sideWidth = 0
-      else
-        this.sideWidth = 256
+      const { data: res } = await http.post('/user/settings/set', {
+        key: 'sideCollapsed',
+        data: {
+          sideCollapsed: this.sideCollapsed,
+        },
+      })
+      if (res.code === 200)
+        this.setSideCollapsed(this.sideCollapsed)
     },
   },
 })
