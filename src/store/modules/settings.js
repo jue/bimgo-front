@@ -95,7 +95,51 @@ export const useSettingsStore = defineStore('settings', {
         value: 3,
       },
     ],
+
+    issueStatus: [
+      {
+        label: '新建',
+        desc: '该问题尚未开始',
+        color: '#20883d',
+        value: 'todo',
+      },
+      {
+        label: '进行中',
+        desc: '该工作正在积极进行中',
+        color: '#9a6701',
+        value: 'doing',
+      },
+      {
+        label: '已完成',
+        desc: '至此已经完成',
+        color: '#8250df',
+        value: 'done',
+      },
+    ],
+    issuePriority: [
+      {
+        label: '较低',
+        color: '#8c8c8c',
+        value: 0,
+      },
+      {
+        label: '普通',
+        color: '#1b9aee',
+        value: 1,
+      },
+      {
+        label: '紧急',
+        color: '#ffa941',
+        value: 2,
+      },
+      {
+        label: '非常紧急',
+        color: '#e62412',
+        value: 3,
+      },
+    ],
     contractors: [],
+    users: [],
   }),
   getters: {
     getStateLabel: state => (objectName, value) => {
@@ -115,6 +159,12 @@ export const useSettingsStore = defineStore('settings', {
       const { data: res } = await http.post('/contractor/list')
       if (res.code === 200)
         this.contractors = res.data
+    },
+
+    async getAllUsers() {
+      const { data: res } = await http.post('/user/all')
+      if (res.code === 200)
+        this.users = res.data
     },
 
     changeSideCollapsed() {

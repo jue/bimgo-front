@@ -18,7 +18,8 @@ export function formatDate(dateString) {
     return ''
 
   const date = new Date(dateString)
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+  return `${date.getMonth() + 1}月${date.getDate()}日, ${date.getFullYear()}`
+  // return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
   // const now = new Date()
   // const diffTime = now.getTime() - date.getTime()
   // const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))

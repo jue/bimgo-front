@@ -134,7 +134,7 @@ function deleteFiles() {
       </el-table-column>
     </el-table>
     <div class="flex items-center justify-between">
-      <el-dropdown trigger="click" :visible-change="initInput">
+      <el-dropdown trigger="click" @visible-change="initInput">
         <el-button type="primary" text class="px-1">
           <div class="flex items-center">
             <span class="icon-[lucide--plus]" />

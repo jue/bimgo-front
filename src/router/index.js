@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const userStore = useUserStore()
-  const { getContractors } = useSettingsStore()
+  const { getContractors, getAllUsers } = useSettingsStore()
 
   if (whiteList.includes(to.name)) {
     next()
@@ -40,6 +40,7 @@ router.beforeEach(async (to, from, next) => {
     if (!userStore.user) {
       await userStore.userInfo()
       await getContractors()
+      await getAllUsers()
     }
 
     next()

@@ -16,7 +16,7 @@ const { sideCollapsed } = storeToRefs(useSettingsStore())
       </el-tooltip>
     </div>
     <div>
-      <User />
+      <UserButton />
     </div>
   </div>
 </template>
