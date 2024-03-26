@@ -1,20 +1,21 @@
 <script setup>
 import dayjs from 'dayjs'
-import { formatDate } from '@/lib/index'
 
-const props = defineProps({
-  form: {
-    type: Object,
-    default: () => ({}),
-  },
-})
 const { sideWidth } = storeToRefs(useSettingsStore())
 const { issue_columns } = storeToRefs(useUserStore())
-const key = ref('')
+
+const form = reactive({
+  key: '',
+  key_value: '',
+  field: '',
+  sort: '',
+})
+
 const loading = ref(false)
 
 const tableRef = ref(null)
 const issuesData = ref([])
+const filterData = ref([])
 
 const selectedCell = ref({
   index: null, // Row index
@@ -30,9 +31,11 @@ onClickOutside(tableRef, (event) => {
 
 async function getIssues() {
   loading.value = true
-  const { data: res } = await http.post('/issue/list', props.form)
-  if (res.code === 200)
+  const { data: res } = await http.post('/issue/list', form)
+  if (res.code === 200) {
     issuesData.value = res.data
+    filterData.value = res.data
+  }
 
   setTimeout(() => {
     loading.value = false
@@ -46,21 +49,119 @@ function isDelay(data) {
 onMounted(() => {
   getIssues()
 })
+
+function filterAndSort(params) {
+  // 参数校验
+  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_value')
+    || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
+    throw new Error('参数错误')
+
+  // 根据 key_value 模糊筛选
+  const filteredIssues = issuesData.value.filter((issue) => {
+    if (!params.key_value)
+      return true
+    const keyValue = issue[params.key].toLowerCase()
+    return keyValue.includes(params.key_value.toLowerCase())
+  })
+
+  // 根据 field 排序
+  if (params.field && params.sort) {
+    filteredIssues.sort((a, b) => {
+      const valueA = a[params.field]
+      const valueB = b[params.field]
+      if (params.sort === 'asc')
+        return valueA > valueB ? 1 : -1
+      else if (params.sort === 'desc')
+        return valueA < valueB ? 1 : -1
+
+      return 0
+    })
+  }
+  filterData.value = filteredIssues
+  console.log(filteredIssues)
+
+  return filteredIssues
+}
+
+function getFieldType(field) {
+  // 判断字段类型
+  if (/[\u4E00-\u9FA5]/.test(field))
+    return 'chinese'
+  else if (/^[a-zA-Z]+$/.test(field))
+    return 'english'
+  else if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(field))
+    return 'date'
+  else if (/^\d+$/.test(field))
+    return 'number'
+
+  return 'string'
+}
+
+function filterAndSort2(params) {
+  // 参数校验
+  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_value')
+    || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
+    throw new Error('参数错误')
+
+  // 获取字段类型
+  const type = getFieldType(params.field)
+  console.log(type, params.field)
+
+  // 根据 key_value 模糊筛选
+  const filteredData = issuesData.value.filter((issue) => {
+    if (!params.key_value)
+      return true
+    const keyValue = issue[params.key].toLowerCase()
+    return keyValue.includes(params.key_value.toLowerCase())
+  })
+
+  // 根据字段类型进行排序
+  if (params.field && params.sort) {
+    filteredData.sort((a, b) => {
+      let valueA = a[params.field]
+      let valueB = b[params.field]
+
+      // 处理日期格式
+      if (type === 'date') {
+        valueA = new Date(valueA)
+        valueB = new Date(valueB)
+      }
+
+      // 处理数字格式
+      if (type === 'number') {
+        valueA = Number.parseFloat(valueA)
+        valueB = Number.parseFloat(valueB)
+      }
+
+      // 忽略大小写
+      if (type === 'chinese' || type === 'english') {
+        valueA = valueA.toLowerCase()
+        valueB = valueB.toLowerCase()
+      }
+
+      if (params.sort === 'asc')
+        return valueA > valueB ? 1 : -1
+      else if (params.sort === 'desc')
+        return valueA < valueB ? 1 : -1
+
+      return 0
+    })
+  }
+
+  filterData.value = filteredData
+
+  return filteredData
+}
 </script>
 
 <template>
   <div>
     <div class="py-3 px-4">
-      <div class="flex space-x-2">
-        <el-input v-model="key" placeholder="按问题关键字搜索" clearable>
-          <template #prefix>
-            <span class="icon-[lucide--list-filter]" />
-          </template>
-        </el-input>
-        <el-button type="primary">
-          搜索
-        </el-button>
-      </div>
+      <IssuesSearch v-model="form.key" @search="filterAndSort(form)" />
+    </div>
+    <div class="flex">
+      <pre>{{ form }}</pre>
+      <!-- <pre>{{ filterData }}</pre> -->
     </div>
 
     <el-scrollbar :style="{ width: `calc(100vw - ${sideWidth}px)` }">
@@ -70,8 +171,12 @@ onMounted(() => {
           <div class="shrink-0 w-16" />
           <template v-for="(column, index) in issue_columns" :key="index">
             <div v-if="column.show" :style="{ width: `${column.width}px` }" class="h-full shrink-0">
-              <div class="cell flex items-center px-2 text-[#485776] w-full h-full text-xs font-medium">
-                {{ column.label }}
+              <div class="cell flex items-center justify-between px-2 text-[#485776] w-full h-full text-xs font-medium">
+                <span>{{ column.label }}</span>
+                <IssuesColumnOption
+                  :data="{ ...column, value: index }" :form="form"
+                  @update:form="filterAndSort(form)"
+                />
               </div>
             </div>
           </template>
@@ -85,9 +190,9 @@ onMounted(() => {
 
       <!-- body -->
       <div class="min-w-fit max-w-full divide-y border-b">
-        <template v-if="issuesData.length > 0">
+        <template v-if="filterData.length > 0">
           <div
-            v-for="(item, index) in issuesData" :key="index" ref="tableRef"
+            v-for="(item, index) in filterData" :key="index" ref="tableRef"
             class="flex h-10 divide-x hover:bg-gray-100 group" :class="{ 'bg-red-100': isDelay(item) }"
             @click="deselectAllCells"
           >
@@ -134,8 +239,9 @@ onMounted(() => {
             <div class="flex-1 min-w-11" />
           </div>
         </template>
-        <div v-else class="h-20 flex items-center justify-center">
-          <span class="text-gray-400">没有问题数据</span>
+        <div v-else class="h-32 flex items-center justify-center">
+          <span v-if="loading" class="icon-[lucide--loader-circle] text-gray-400 text-3xl animate-spin" />
+          <span v-else class="text-gray-400">没有数据</span>
         </div>
       </div>
     </el-scrollbar>

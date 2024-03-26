@@ -23,6 +23,11 @@ async function changeValue(val) {
     value.value = props.data.title
   }
 }
+
+watch(() => props.data.status, (val) => {
+  value.value = val
+  itemValue.value = issueStatus.value.find(item => item.value === val)
+})
 </script>
 
 <template>
@@ -38,10 +43,7 @@ async function changeValue(val) {
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item
-          v-for="item in issueStatus" :key="item.value"
-          @click="changeValue(item.value)"
-        >
+        <el-dropdown-item v-for="item in issueStatus" :key="item.value" @click="changeValue(item.value)">
           <div class="flex space-x-2">
             <div class="w-4 h-4 flex items-center justify-center">
               <span v-if="value === item.value" class="icon-[lucide--check]" />

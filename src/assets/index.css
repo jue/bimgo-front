@@ -156,6 +156,6 @@
 }
 
 /* 以下为修改element-plus样式 结束 */
-:focus-visible {
-  outline: none;
+:focus, :focus-visible {
+  outline: none !important;
 }

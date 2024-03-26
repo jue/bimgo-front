@@ -52,6 +52,12 @@ async function handleChange(val) {
     isPassTime.value = calculateIsPassTime(value.value)
   }
 }
+
+watch(() => props.data[props.field], (val) => {
+  value.value = val
+  // 使用计算属性更新 isPassTime
+  isPassTime.value = calculateIsPassTime(value.value)
+})
 </script>
 
 <template>

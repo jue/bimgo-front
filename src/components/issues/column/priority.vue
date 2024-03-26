@@ -20,6 +20,11 @@ async function changeValue(val) {
     props.data.priority = val
   }
 }
+
+watch(() => props.data.priority, (val) => {
+  value.value = val
+  itemValue.value = issuePriority.value.find(item => item.value === val)
+})
 </script>
 
 <template>
