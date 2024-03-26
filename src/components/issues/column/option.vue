@@ -60,10 +60,10 @@ async function columnShow(val) {
     </div>
 
     <template #dropdown>
-      <pre>
+      <!-- <pre>
          {{ data }}
          {{ form }}
-      </pre>
+      </pre> -->
       <el-dropdown-menu class="w-48">
         <el-dropdown-item>
           <div class="flex items-center w-full">
