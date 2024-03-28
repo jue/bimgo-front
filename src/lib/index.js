@@ -52,3 +52,13 @@ export async function downloadFile(fid) {
   if (res.code === 200)
     FileSaver.saveAs(`https://bimgo-files.nipao.com${res.data.path}?_upt=${res.data.upt}`, res.data.name)
 }
+
+export function filterData(key, field, data) {
+  // key 关键字
+  // field 所有过滤的字段
+  // data 需要过滤的数据
+
+  return data.filter((item) => {
+    return item[field].includes(key)
+  })
+}

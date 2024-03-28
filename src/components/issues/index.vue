@@ -6,7 +6,7 @@ const { issue_columns } = storeToRefs(useUserStore())
 
 const form = reactive({
   key: '',
-  key_value: '',
+  key_field: '',
   field: '',
   sort: '',
 })
@@ -52,16 +52,16 @@ onMounted(() => {
 
 function filterAndSort(params) {
   // 参数校验
-  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_value')
+  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_field')
     || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
     throw new Error('参数错误')
 
-  // 根据 key_value 模糊筛选
+  // 根据 key_field 模糊筛选
   const filteredIssues = issuesData.value.filter((issue) => {
-    if (!params.key_value)
+    if (!params.key_field)
       return true
-    const keyValue = issue[params.key].toLowerCase()
-    return keyValue.includes(params.key_value.toLowerCase())
+    const keyValue = issue[params.key]
+    return keyValue.includes(params.key_field)
   })
 
   // 根据 field 排序
@@ -99,20 +99,19 @@ function getFieldType(field) {
 
 function filterAndSort2(params) {
   // 参数校验
-  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_value')
+  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_field')
     || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
     throw new Error('参数错误')
 
   // 获取字段类型
   const type = getFieldType(params.field)
-  console.log(type, params.field)
 
-  // 根据 key_value 模糊筛选
+  // 根据 key_field 模糊筛选
   const filteredData = issuesData.value.filter((issue) => {
-    if (!params.key_value)
+    if (!params.key_field)
       return true
     const keyValue = issue[params.key].toLowerCase()
-    return keyValue.includes(params.key_value.toLowerCase())
+    return keyValue.includes(params.key_field.toLowerCase())
   })
 
   // 根据字段类型进行排序
@@ -156,13 +155,9 @@ function filterAndSort2(params) {
 
 <template>
   <div>
-    <div class="py-3 px-4">
-      <IssuesSearch v-model="form.key" @search="filterAndSort(form)" />
-    </div>
-    <div class="flex">
-      <pre>{{ form }}</pre>
-      <!-- <pre>{{ filterData }}</pre> -->
-    </div>
+    <!-- <div class="py-3 px-4">
+      <IssuesSearch v-model="form.key" @input="filterAndSort(form)" />
+    </div> -->
 
     <el-scrollbar :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <!-- header -->

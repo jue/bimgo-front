@@ -9,6 +9,7 @@ const { users } = storeToRefs(useSettingsStore())
 
 const value = ref(props.data.uids)
 const input = ref('')
+const filteredData = computed(() => filterData(input.value, 'realname', users))
 
 const filterUsers = computed(() => {
   if (!input.value)
@@ -29,6 +30,10 @@ async function changeValue(uid) {
 // const handleInput = debounce(async () => {
 //   filterUsers.value = input.value ? users.value.filter(item => item.realname.includes(input.value)) : [...users.value]
 // }, 3000)
+
+watch(() => props.data.uids, (val) => {
+  value.value = val
+})
 </script>
 
 <template>
@@ -48,33 +53,41 @@ async function changeValue(uid) {
       <span class="icon-[lucide--chevron-down] text-gray-400 hover:bg-gray-800" />
     </div>
     <template #dropdown>
-      <el-dropdown-menu class="w-64">
+      <el-dropdown-menu class="w-56">
         <div class="py-1">
           <div class="text-xs font-semibold mb-1 px-1">
             选择用户
           </div>
           <div>
-            <el-input v-model="input" class="w-full" placeholder="搜索用户" clearable @input="filterUsers">
+            <el-input v-model="input" class="w-full" placeholder="搜索用户" clearable>
               <template #prefix>
                 <span class="icon-[lucide--search]" />
               </template>
             </el-input>
           </div>
         </div>
-        <div class="max-h-64 overflow-y-auto">
-          <el-checkbox-group v-model="value">
-            <el-dropdown-item v-for="item in filterUsers.filter(item => item.value !== 0)" :key="item.value">
-              <el-checkbox :label="item.uid" class="!h-6" @change="changeValue(item.uid)">
-                <div class="flex items-center space-x-1">
-                  <UserAvatar :uid="item.uid" :size="24" />
-                  <div class="text-stone-600">
-                    {{ item.realname }}
+        <template v-if="filterUsers.length > 0">
+          <div class="max-h-64 overflow-y-auto">
+            <el-checkbox-group v-model="value">
+              <el-dropdown-item v-for="item in filterUsers.filter(item => item.value !== 0)" :key="item.value">
+                <el-checkbox :label="item.uid" class="!h-6" @change="changeValue(item.uid)">
+                  <div class="flex items-center space-x-1">
+                    <UserAvatar :uid="item.uid" :size="24" />
+                    <div class="text-stone-600">
+                      {{ item.realname }}
+                    </div>
                   </div>
-                </div>
-              </el-checkbox>
-            </el-dropdown-item>
-          </el-checkbox-group>
-        </div>
+                </el-checkbox>
+              </el-dropdown-item>
+            </el-checkbox-group>
+          </div>
+        </template>
+        <el-dropdown-item v-else>
+          <div class="flex items-center text-gray-400 space-x-1">
+            <div class="icon-[lucide--circle-off]" />
+            <div>没有匹配项</div>
+          </div>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

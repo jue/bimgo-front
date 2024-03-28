@@ -95,27 +95,6 @@ export const useSettingsStore = defineStore('settings', {
         value: 3,
       },
     ],
-
-    issueStatus: [
-      {
-        label: '新建',
-        desc: '该问题尚未开始',
-        color: '#20883d',
-        value: 'todo',
-      },
-      {
-        label: '进行中',
-        desc: '该工作正在积极进行中',
-        color: '#9a6701',
-        value: 'doing',
-      },
-      {
-        label: '已完成',
-        desc: '至此已经完成',
-        color: '#8250df',
-        value: 'done',
-      },
-    ],
     issuePriority: [
       {
         label: '较低',

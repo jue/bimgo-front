@@ -5,7 +5,7 @@ const props = defineProps({
     default: '',
   },
 })
-const emit = defineEmits(['update:modelValue', 'search'])
+const emit = defineEmits(['update:modelValue', 'search', 'input'])
 const { issue_columns } = storeToRefs(useUserStore())
 const value = ref(props.modelValue)
 const inputRef = ref(null)
@@ -34,6 +34,7 @@ function getValue() {
 
 function handleInput() {
   emit('update:modelValue', value.value)
+  emit('input', value.value)
 }
 
 watch(() => props.modelValue, (val) => {
@@ -56,7 +57,7 @@ watch(() => props.modelValue, (val) => {
         </div>
         <input
           ref="inputRef" v-model="value" class="w-full h-full bg-transparent outline-none relative z-0 caret-black"
-          placeholder="按问题名或按字段搜索" @input="handleInput" @focus="isFocus = true" @blur="isFocus = false"
+          placeholder="按问题名搜索" @input="handleInput" @focus="isFocus = true" @blur="isFocus = false"
         >
       </div>
       <div class="flex items-center">
@@ -65,13 +66,13 @@ watch(() => props.modelValue, (val) => {
         </el-tooltip>
       </div>
     </div>
-    <div class="flex items-center space-x-2">
+    <!-- <div class="flex items-center space-x-2">
       <np-button :size="32" class="px-4">
         取消
       </np-button>
       <np-button :size="32" class="px-4 !bg-blue-600 text-white" @click="emit('search')">
         搜索
       </np-button>
-    </div>
+    </div> -->
   </div>
 </template>

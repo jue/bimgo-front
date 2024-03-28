@@ -27,8 +27,14 @@ function handleSort(sort) {
 }
 
 function handleFilter() {
-  props.form.key = `${props.data.label}:`
-  props.form.key_value = props.data.value
+  if (props.form.key === `${props.data.label}:` && props.form.key_field === props.data.value) {
+    props.form.key = ''
+    props.form.key_field = ''
+  }
+  else {
+    props.form.key = `${props.data.label}:`
+    props.form.key_field = props.data.value
+  }
 
   emit('update:form')
 }
@@ -46,59 +52,59 @@ async function columnShow(val) {
 </script>
 
 <template>
-  <el-dropdown trigger="click" @visible-change="(v) => (show = v)">
-    <div class="flex items-center space-x-[1px]">
-      <span
-        v-if="form.field === data.value && form.sort === 'asc'"
-        class="icon-[lucide--arrow-up-narrow-wide] text-zinc-600"
-      />
-      <span
-        v-if="form.field === data.value && form.sort === 'desc'"
-        class="icon-[lucide--arrow-down-wide-narrow] mr-2 text-zinc-600"
-      />
+  <div class="flex items-center space-x-0.5">
+    <np-button
+      v-if="form.field === data.value && form.sort === 'asc'" size="24" shape="square"
+      icon="arrow-up-narrow-wide" text @click="handleSort('desc')"
+    />
+    <np-button
+      v-if="form.field === data.value && form.sort === 'desc'" size="24" shape="square"
+      icon="arrow-down-wide-narrow" text @click="handleSort('asc')"
+    />
+    <el-dropdown trigger="click" @visible-change="(v) => (show = v)">
       <np-button size="24" shape="square" icon="ellipsis" text :class="{ 'bg-gray-100': show }" />
-    </div>
 
-    <template #dropdown>
-      <!-- <pre>
+      <template #dropdown>
+        <!-- <pre>
          {{ data }}
          {{ form }}
       </pre> -->
-      <el-dropdown-menu class="w-48">
-        <el-dropdown-item>
-          <div class="flex items-center w-full">
-            <span class="icon-[lucide--list] mr-2 text-zinc-600" />
-            <span class="flex-1">选择列</span>
-          </div>
-        </el-dropdown-item>
-        <el-dropdown-item divided @click="handleSort('asc')">
-          <div class="flex items-center w-full">
-            <span class="icon-[lucide--arrow-up-narrow-wide] mr-2 text-zinc-600" />
-            <span class="flex-1">升序排列</span>
-            <span v-if="form.sort === 'asc' && form.field === data.value" class="icon-[lucide--x]" />
-          </div>
-        </el-dropdown-item>
-        <el-dropdown-item @click="handleSort('desc')">
-          <div class="flex items-center w-full">
-            <span class="icon-[lucide--arrow-down-wide-narrow] mr-2 text-zinc-600" />
-            <span class="flex-1">降序排列</span>
-            <span v-if="form.sort === 'desc' && form.field === data.value" class="icon-[lucide--x]" />
-          </div>
-        </el-dropdown-item>
-        <el-dropdown-item divided @click="handleFilter">
-          <div class="flex items-center w-full">
-            <span class="icon-[lucide--list-filter] mr-2 text-zinc-600" />
-            <span class="flex-1">按值过滤…</span>
-            <span v-if="form.key_value === data.value" class="icon-[lucide--x]" />
-          </div>
-        </el-dropdown-item>
-        <el-dropdown-item divided @click="columnShow(data.value)">
-          <div class="flex items-center w-full">
-            <span class="icon-[lucide--eye-off] mr-2 text-zinc-600" />
-            <span class="flex-1">隐藏字段</span>
-          </div>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+        <el-dropdown-menu class="w-48">
+          <el-dropdown-item>
+            <div class="flex items-center w-full">
+              <span class="icon-[lucide--list] mr-2 text-zinc-600" />
+              <span class="flex-1">选择列</span>
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item divided @click="handleSort('asc')">
+            <div class="flex items-center w-full">
+              <span class="icon-[lucide--arrow-up-narrow-wide] mr-2 text-zinc-600" />
+              <span class="flex-1">升序排列</span>
+              <span v-if="form.sort === 'asc' && form.field === data.value" class="icon-[lucide--x]" />
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item @click="handleSort('desc')">
+            <div class="flex items-center w-full">
+              <span class="icon-[lucide--arrow-down-wide-narrow] mr-2 text-zinc-600" />
+              <span class="flex-1">降序排列</span>
+              <span v-if="form.sort === 'desc' && form.field === data.value" class="icon-[lucide--x]" />
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item divided @click="handleFilter">
+            <div class="flex items-center w-full">
+              <span class="icon-[lucide--list-filter] mr-2 text-zinc-600" />
+              <span class="flex-1">按值过滤…</span>
+              <span v-if="form.key_field === data.value" class="icon-[lucide--x]" />
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item divided @click="columnShow(data.value)">
+            <div class="flex items-center w-full">
+              <span class="icon-[lucide--eye-off] mr-2 text-zinc-600" />
+              <span class="flex-1">隐藏字段</span>
+            </div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
 </template>
