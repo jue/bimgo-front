@@ -14,18 +14,14 @@ const props = defineProps({
     type: String as PropType<'circle' | 'square'>,
     default: '',
   },
-  text: {
-    type: Boolean,
-    default: false,
-  },
 })
 
+const iconSize = computed(() => Math.min(props.size * 0.667, 16))
+
 const buttonClasses = computed(() => ({
-  'rounded-full overflow-hidden': props.shape === 'circle',
-  'rounded-lg px-1': !props.shape || props.shape === 'square',
-  'bg-none': props.text,
-  'bg-gray-100': !props.text,
-  'hover:bg-gray-100': props.text,
+  'px-0': props.shape,
+  'rounded-full': props.shape === 'circle',
+  'px-2': !props.shape,
 }))
 
 const buttonStyle = computed(() => ({
@@ -35,13 +31,11 @@ const buttonStyle = computed(() => ({
 </script>
 
 <template>
-  <div
-    class="inline-flex items-center justify-center cursor-pointer active:bg-opacity-75 select-none"
-    :class="[buttonClasses, $attrs.class]" :style="buttonStyle"
+  <button
+    class="inline-flex items-center justify-center rounded-lg active:bg-opacity-75 select-none overflow-hidden space-x-1"
+    :class="[buttonClasses]" :style="buttonStyle"
   >
-    <Icon v-if="icon" :name="icon" />
-    <span class="shrink-0">
-      <slot />
-    </span>
-  </div>
+    <Icon v-if="icon" :name="icon" :size="iconSize" />
+    <slot />
+  </button>
 </template>

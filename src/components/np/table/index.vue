@@ -1,73 +1,93 @@
 <script setup>
+import TableHeader from './TableHeader.vue'
+import Row from './Row.vue'
+import TreeItem from './TreeItem.vue'
+
 const props = defineProps({
   columns: {
     type: Array,
     default: () => [],
   },
-  data: {
+  rows: {
     type: Array,
     default: () => [],
   },
-
+  size: {
+    type: Number,
+    default: 40,
+  },
+  border: {
+    type: Boolean,
+    default: false,
+  },
+  id: {
+    type: Boolean,
+    default: false,
+  },
+  tree: {
+    type: Boolean,
+    default: false,
+  },
+  options: {
+    type: Object,
+    default: () => {
+      return {
+        label: 'label',
+        value: 'value',
+      }
+    },
+  },
 })
 
-// 默认宽度
-const defaultWidth = 100
-
-// function startResize(index, event) {
-//   isResizing.value = true
-//   resizeIndex.value = index
-//   startX.value = event.pageX
-//   startWidth.value = props.columns[index].width || 100
-// }
-
-// function handleResize(event) {
-//   if (!isResizing.value)
-//     return
-
-//   const widthDelta = event.pageX - startX.value
-//   props.columns[resizeIndex.value].width = startWidth.value + widthDelta
-// }
-
-// function stopResize() {
-//   isResizing.value = false
-// }
+const colspan = computed(() => {
+  return props.columns.length + (props.id ? 1 : 0)
+})
 </script>
 
 <template>
-  <div class="table">
-    <!-- 表头 -->
-    <div class="thead">
-      <div class="tr">
-        <div
-          v-for="(column, index) in columns" :key="index" :style="{ width: `${column.width}px` }"
-          class="th"
-        >
-          {{ column.label }}
-        </div>
-      </div>
-    </div>
+  <div class="relative overflow-x-auto">
+    <table class="min-w-full border-collapse divide-y table-fixed">
+      <!-- 表头部分 -->
+      <thead>
+        <TableHeader :id="id" :columns="columns" :size="size" :border="border" :options="options">
+          <template #id-th>
+            <slot name="id-th" />
+          </template>
+          <template v-for="column in columns" #[`${column[options.value]}-header`]>
+            <slot :name="`${column[options.value]}-header`" />
+          </template>
+        </TableHeader>
+      </thead>
+      <tbody class="divide-y">
+        <tr v-if="!rows.length" class="h-8 text-center text-gray-300">
+          <td :colspan="colspan">
+            <slot name="empty">
+              <div class="flex items-center justify-center text-gray-400 min-h-20">
+                暂无数据
+              </div>
+            </slot>
+          </td>
+        </tr>
+        <template v-else>
+          <template v-if="tree">
+            <TreeItem />
+          </template>
 
-    <!-- 表体 -->
-    <template v-for="item in data" :key="item.tid">
-      <np-table-row :columns="columns" :item="item" />
-    </template>
+          <template v-else>
+            <Row
+              v-for="(row, index) in rows" :id="id" :key="index" :row="row" :columns="columns" :index="index"
+              :options="options" :size="size" :border="border" class="hover:bg-gray-100"
+            >
+              <template #id="{ row, column, index }">
+                <slot name="id-td" :column="column" :row="row" :index="index" />
+              </template>
+              <template v-for="column in columns" #[`${column[options.value]}-data`]="{ row, column, index }">
+                <slot :name="`${column[options.value]}-data`" :column="column" :row="row" :index="index" />
+              </template>
+            </Row>
+          </template>
+        </template>
+      </tbody>
+    </table>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.table {
-  display: grid;
-}
-
-.tr {
-  display: contents;
-}
-
-/* 让.tr作为虚拟容器，不实际生成盒模型 */
-.th,
-.td {
-  display: block;
-  /* 或者其他必要的样式 */
-}
-</style>

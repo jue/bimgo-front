@@ -34,7 +34,7 @@ function getValue() {
 
 function handleInput() {
   emit('update:modelValue', value.value)
-  emit('input', value.value)
+  emit('input', getValue().value)
 }
 
 watch(() => props.modelValue, (val) => {

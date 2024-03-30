@@ -1,5 +1,15 @@
 <script setup>
-const input = ref('')
+import GroupBy from './components/GroupBy.vue'
+
+const issuesRef = ref(null)
+
+const form = reactive({
+  key: '',
+  key_field: '',
+  sort_field: '',
+  sort: '',
+  groupby_field: '',
+})
 </script>
 
 <template>
@@ -25,31 +35,38 @@ const input = ref('')
             </div>
           </el-tooltip>
         </div>
-        <el-input v-model="input" placeholder="按问题名搜索" clearable class="w-80">
+        <div class="flex items-center">
+          <np-button icon="plus" text class="bg-none hover:text-blue-500" size="32">
+            <span>添加问题</span>
+          </np-button>
+          <GroupBy />
+          <el-dropdown>
+            <np-button icon="more-horizontal" text class="bg-none hover:text-blue-500" size="32" />
+            <template #dropdown>
+              <el-dropdown-menu class="w-48">
+                <el-dropdown-item>
+                  <div class="flex items-center w-full">
+                    <span class="icon-[lucide--plus-circle] mr-2" />
+                    <span>添加问题</span>
+                  </div>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <el-input v-model="form.key" placeholder="按问题名搜索" clearable class="w-80">
           <template #prefix>
             <span class="icon-[lucide--list-filter] text-gray-500" />
           </template>
         </el-input>
       </div>
-      <div class="flex items-center space-x-4">
-        <el-tooltip content="添加问题">
-          <np-button icon="plus" shape="square" />
-        </el-tooltip>
-        <el-dropdown>
-          <span class="icon-[lucide--more-horizontal]" />
-          <template #dropdown>
-            <el-dropdown-menu class="w-48">
-              <el-dropdown-item>
-                <div class="flex items-center w-full">
-                  <span class="icon-[lucide--plus-circle] mr-2" />
-                  <span>添加问题</span>
-                </div>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
     </div>
-    <Issues />
+
+    <pre>
+      {{ form }}
+    </pre>
+    <Issues ref="issuesRef" :form="form" />
   </div>
 </template>

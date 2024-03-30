@@ -1,20 +1,18 @@
 <script setup>
 import dayjs from 'dayjs'
 
+const props = defineProps({
+  form: {
+    type: Object,
+    default: () => ({}),
+  },
+})
 const { sideWidth } = storeToRefs(useSettingsStore())
 const { issue_columns } = storeToRefs(useUserStore())
-
-const form = reactive({
-  key: '',
-  key_field: '',
-  field: '',
-  sort: '',
-})
 
 const loading = ref(false)
 
 const tableRef = ref(null)
-const issuesData = ref([])
 const filterData = ref([])
 
 const selectedCell = ref({
@@ -29,13 +27,12 @@ onClickOutside(tableRef, (event) => {
   }
 })
 
-async function getIssues() {
+async function getIssues(params = props.form) {
   loading.value = true
-  const { data: res } = await http.post('/issue/list', form)
-  if (res.code === 200) {
-    issuesData.value = res.data
+  filterData.value = []
+  const { data: res } = await http.post('/issue/list', params)
+  if (res.code === 200)
     filterData.value = res.data
-  }
 
   setTimeout(() => {
     loading.value = false
@@ -50,113 +47,19 @@ onMounted(() => {
   getIssues()
 })
 
-function filterAndSort(params) {
-  // 参数校验
-  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_field')
-    || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
-    throw new Error('参数错误')
+const fetchData = debounce(() => {
+  getIssues()
+}, 800)
 
-  // 根据 key_field 模糊筛选
-  const filteredIssues = issuesData.value.filter((issue) => {
-    if (!params.key_field)
-      return true
-    const keyValue = issue[params.key]
-    return keyValue.includes(params.key_field)
-  })
-
-  // 根据 field 排序
-  if (params.field && params.sort) {
-    filteredIssues.sort((a, b) => {
-      const valueA = a[params.field]
-      const valueB = b[params.field]
-      if (params.sort === 'asc')
-        return valueA > valueB ? 1 : -1
-      else if (params.sort === 'desc')
-        return valueA < valueB ? 1 : -1
-
-      return 0
-    })
-  }
-  filterData.value = filteredIssues
-  console.log(filteredIssues)
-
-  return filteredIssues
-}
-
-function getFieldType(field) {
-  // 判断字段类型
-  if (/[\u4E00-\u9FA5]/.test(field))
-    return 'chinese'
-  else if (/^[a-zA-Z]+$/.test(field))
-    return 'english'
-  else if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(field))
-    return 'date'
-  else if (/^\d+$/.test(field))
-    return 'number'
-
-  return 'string'
-}
-
-function filterAndSort2(params) {
-  // 参数校验
-  if (!params || !params.hasOwnProperty('key') || !params.hasOwnProperty('key_field')
-    || !params.hasOwnProperty('field') || !params.hasOwnProperty('sort'))
-    throw new Error('参数错误')
-
-  // 获取字段类型
-  const type = getFieldType(params.field)
-
-  // 根据 key_field 模糊筛选
-  const filteredData = issuesData.value.filter((issue) => {
-    if (!params.key_field)
-      return true
-    const keyValue = issue[params.key].toLowerCase()
-    return keyValue.includes(params.key_field.toLowerCase())
-  })
-
-  // 根据字段类型进行排序
-  if (params.field && params.sort) {
-    filteredData.sort((a, b) => {
-      let valueA = a[params.field]
-      let valueB = b[params.field]
-
-      // 处理日期格式
-      if (type === 'date') {
-        valueA = new Date(valueA)
-        valueB = new Date(valueB)
-      }
-
-      // 处理数字格式
-      if (type === 'number') {
-        valueA = Number.parseFloat(valueA)
-        valueB = Number.parseFloat(valueB)
-      }
-
-      // 忽略大小写
-      if (type === 'chinese' || type === 'english') {
-        valueA = valueA.toLowerCase()
-        valueB = valueB.toLowerCase()
-      }
-
-      if (params.sort === 'asc')
-        return valueA > valueB ? 1 : -1
-      else if (params.sort === 'desc')
-        return valueA < valueB ? 1 : -1
-
-      return 0
-    })
-  }
-
-  filterData.value = filteredData
-
-  return filteredData
-}
+watch(() => props.form.key, (val) => {
+  fetchData(val)
+})
 </script>
 
 <template>
   <div>
     <!-- <div class="py-3 px-4">
-      <IssuesSearch v-model="form.key" @input="filterAndSort(form)" />
+      <IssuesSearch v-model="form.key" @input="fetchData" />
     </div> -->
 
     <el-scrollbar :style="{ width: `calc(100vw - ${sideWidth}px)` }">
@@ -169,8 +72,8 @@ function filterAndSort2(params) {
               <div class="cell flex items-center justify-between px-2 text-[#485776] w-full h-full text-xs font-medium">
                 <span>{{ column.label }}</span>
                 <IssuesColumnOption
-                  :data="{ ...column, value: index }" :form="form"
-                  @update:form="filterAndSort(form)"
+                  v-if="index !== 'title'" :data="{ ...column, value: index }" :form="form"
+                  @update:form="getIssues()"
                 />
               </div>
             </div>

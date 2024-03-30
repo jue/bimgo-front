@@ -1,38 +1,31 @@
 <script setup>
-const props = defineProps({
-  item: {
-    type: Object,
-    default: () => ({}),
-  },
-  columns: {
-    type: Array,
-    default: () => [],
-  },
+import { defineProps, defineSlots, useSlots } from 'vue'
+
+defineProps({
+  row: Object,
+  columns: Array,
+  index: Number,
+  id: Boolean,
+  columnAttribute: String,
+  size: Number,
+  border: Boolean,
+  options: Object,
 })
 </script>
 
 <template>
-  <div :style="{ paddingLeft: `${item.level * 20}px` }" class="table-row">
-    <div
-      v-for="(column, columnIndex) in columns" :key="columnIndex" :style="{ width: `${column.width || 100}px` }"
-      class="table-cell"
-    >
-      {{ item[column.value] }}
-    </div>
-    <template v-if="item.children">
-      <np-table-row v-for="child in item.children" :key="child.tid" :item="child" :columns="columns" />
-    </template>
-  </div>
+  <tr :class="{ 'divide-x': border }" :style="{ height: `${size}px` }">
+    <td v-if="id" class="text-left relative px-3">
+      <slot name="id-td" :column="column" :row="row" :index="index">
+        <span>{{ index + 1 }}</span>
+      </slot>
+    </td>
+    <td v-for="(column, subIndex) in columns" :key="subIndex" nowrap class="text-left relative px-3">
+      <slot :name="`${column[options.value]}-data`" :column="column" :row="row" :index="index">
+        <span class="h-full flex items-center -mx-3 px-3">
+          {{ row[column[options.value]] }}
+        </span>
+      </slot>
+    </td>
+  </tr>
 </template>
-
-<style lang="scss" scoped>
-.table-row {
-  display: flex;
-}
-
-.table-cell {
-  border: 1px solid #ccc;
-  padding: 5px;
-  box-sizing: border-box;
-}
-</style>
