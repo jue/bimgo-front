@@ -58,16 +58,6 @@ function onMouseLeave(event) {
 
 <style lang="scss" scoped>
 .focus{
-  &::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #2563eb;
-    border-radius: 2px;
-    z-index: 0;
-  }
+  @apply rounded outline outline-blue-600 outline-2 -outline-offset-2;
 }
 </style>

@@ -87,7 +87,7 @@ watch(() => issue_columns, () => {
         </div>
       </template>
 
-      <template v-for="(column) in columnsConfig" #[`${column.value}-header`]>
+      <template v-for="(column) in columnsConfig.filter(item => item.value !== 'op')" #[`${column.value}-header`]>
         <div
           v-if="column.value !== 'title'" :key="column.value"
           class="cell flex items-center justify-between w-full h-full text-xs font-medium"
