@@ -74,7 +74,7 @@ watch(() => props.data[props.field], (val) => {
       </template>
       <template #input>
         <div
-          class="flex items-center cursor-pointer h-full px-[6px]"
+          class="flex items-center cursor-pointer h-full"
           :class="{ 'text-red-500': isPassTime && field === 'done_time' }" @click="handleOpen"
         >
           {{ formatDate(value) }}

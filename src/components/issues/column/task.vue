@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="pl-[6px] h-full flex items-center">
+  <div class="h-full flex items-center">
     <span v-if="tid" class="icon-[lucide--circle-dot] text-green-600" />
     <span v-else class="icon-[lucide--circle-dashed] text-gray-400" />
   </div>

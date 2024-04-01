@@ -21,8 +21,7 @@ async function addIssue() {
 </script>
 
 <template>
-  <div class="flex text-[#656d76] py-[2px] border-b pr-0.5">
-    <div class="w-16 flex justify-end" />
+  <div class="flex text-[#656d76] py-[2px] border-b px-0.5">
     <div class="flex-1">
       <el-input
         ref="input" v-model="title" :placeholder="placeholder" clearable class="h-10"

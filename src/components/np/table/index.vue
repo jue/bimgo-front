@@ -34,19 +34,43 @@ const props = defineProps({
       return {
         label: 'label',
         value: 'value',
+        idWidth: '40',
       }
     },
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+// const emit = defineEmits(['hover', 'mouseleave'])
 
 const colspan = computed(() => {
   return props.columns.length + (props.id ? 1 : 0)
+})
+
+const selectedCell = ref({
+  index: null, // Row index
+  field: null, // Column field name
+})
+
+function handleCellClick(event) {
+  selectedCell.value = event
+}
+
+const tableRef = ref(null)
+onClickOutside(tableRef, () => {
+  selectedCell.value = {
+    index: null,
+    field: null,
+  }
 })
 </script>
 
 <template>
   <div class="relative overflow-x-auto">
-    <table class="min-w-full border-collapse divide-y table-fixed">
+    <table ref="tableRef" class="min-w-full border-collapse divide-y table-fixed">
       <!-- 表头部分 -->
       <thead>
         <TableHeader :id="id" :columns="columns" :size="size" :border="border" :options="options">
@@ -63,7 +87,8 @@ const colspan = computed(() => {
           <td :colspan="colspan">
             <slot name="empty">
               <div class="flex items-center justify-center text-gray-400 min-h-20">
-                暂无数据
+                <span v-if="loading">…</span>
+                <span v-else>暂无数据</span>
               </div>
             </slot>
           </td>
@@ -76,9 +101,11 @@ const colspan = computed(() => {
           <template v-else>
             <Row
               v-for="(row, index) in rows" :id="id" :key="index" :row="row" :columns="columns" :index="index"
-              :options="options" :size="size" :border="border" class="hover:bg-gray-100"
+              :options="options" :size="size" :border="border" class="hover:bg-gray-100" :selected-cell="selectedCell"
+              @hover="($event) => $emit('hover', $event)" @mouseleave="($event) => $emit('mouseleave', $event)"
+              @cell:select="handleCellClick"
             >
-              <template #id="{ row, column, index }">
+              <template #id-td="{ row, column, index }">
                 <slot name="id-td" :column="column" :row="row" :index="index" />
               </template>
               <template v-for="column in columns" #[`${column[options.value]}-data`]="{ row, column, index }">
@@ -89,5 +116,8 @@ const colspan = computed(() => {
         </template>
       </tbody>
     </table>
+    <div v-if="loading" class="absolute inset-0 flex items-center justify-center bg-white/60">
+      <span class="icon-[lucide--loader] animate-spin" />
+    </div>
   </div>
 </template>

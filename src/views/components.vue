@@ -59,10 +59,10 @@ const columns = ref([
 ])
 
 const data = ref([])
-// const params = {
-//   groupby_field: 'status',
-// }
-const params = {}
+const params = {
+  groupby_field: 'status',
+}
+// const params = {}
 async function getIssues() {
   filterData.value = []
   const { data: res } = await http.post('/issue/list', params)
@@ -79,7 +79,7 @@ onMounted(async () => {
   <div class=" space-y-5 p-5">
     <div class="w-full">
       <h2>表格</h2>
-      <np-table id :columns="columns" :rows="data" :size="40" class="border" border tree>
+      <np-table id :columns="columns" :rows="data" :size="40" class="border" border>
         <template #id-th>
           <span>乡村爱情</span>
         </template>

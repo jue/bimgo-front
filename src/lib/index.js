@@ -62,3 +62,16 @@ export function filterData(key, field, data) {
     return item[field].includes(key)
   })
 }
+
+export function objectToArray(obj) {
+  // 将对象键值对转换为数组
+  const arr = Object.entries(obj)
+  // 将数组中的键值对转换为对象
+  const result = arr.map(([key, value]) => {
+    return {
+      key,
+      ...value,
+    }
+  })
+  return result
+}

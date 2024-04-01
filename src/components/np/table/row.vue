@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, defineSlots, useSlots } from 'vue'
 
-defineProps({
+const props = defineProps({
   row: Object,
   columns: Array,
   index: Number,
@@ -10,17 +10,43 @@ defineProps({
   size: Number,
   border: Boolean,
   options: Object,
+  selectedCell: Object,
 })
+
+const emit = defineEmits(['hover', 'mouseleave'])
+
+function onMouseEnter(event) {
+  emit('hover', {
+    event,
+    row: props.row,
+    index: props.index,
+  })
+}
+
+function onMouseLeave(event) {
+  emit('mouseleave', {
+    event,
+    row: props.row,
+    index: props.index,
+  })
+}
 </script>
 
 <template>
-  <tr :class="{ 'divide-x': border }" :style="{ height: `${size}px` }">
+  <tr
+    :class="{ 'divide-x': border }" :style="{ height: `${size}px` }" class="group" @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
     <td v-if="id" class="text-left relative px-3">
       <slot name="id-td" :column="column" :row="row" :index="index">
         <span>{{ index + 1 }}</span>
       </slot>
     </td>
-    <td v-for="(column, subIndex) in columns" :key="subIndex" nowrap class="text-left relative px-3">
+    <td
+      v-for="(column, subIndex) in columns" :key="subIndex" nowrap class="text-left relative px-3"
+      :class="{ focus: selectedCell?.index === index && selectedCell?.field === column[options.value] }"
+      @click="$emit('cell:select', { index, field: column[options.value] })"
+    >
       <slot :name="`${column[options.value]}-data`" :column="column" :row="row" :index="index">
         <span class="h-full flex items-center -mx-3 px-3">
           {{ row[column[options.value]] }}
@@ -29,3 +55,19 @@ defineProps({
     </td>
   </tr>
 </template>
+
+<style lang="scss" scoped>
+.focus{
+  &::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #2563eb;
+    border-radius: 2px;
+    z-index: 0;
+  }
+}
+</style>

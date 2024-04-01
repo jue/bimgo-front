@@ -33,13 +33,13 @@ const saveEdit = debounce(async () => {
 </script>
 
 <template>
-  <div class="flex items-center w-full h-full">
+  <div class="flex items-center w-full h-full space-x-1.5">
     <IssuesColumnTask :tid="data.tid" />
     <el-input
       v-if="isEdit" ref="input" v-model="value" placeholder="请输入" class="h-full w-full" @input="saveEdit"
       @blur="isEdit = false"
     />
-    <div v-else class="flex items-center justify-between w-full h-full px-[6px]" @dblclick="editInput">
+    <div v-else class="flex items-center justify-between w-full h-full" @dblclick="editInput">
       <span
         class="truncate hover:text-blue-600 hover:underline cursor-pointer underline-offset-4"
         @click="emit('show', data)"
@@ -51,7 +51,7 @@ const saveEdit = debounce(async () => {
 <style scoped lang="scss">
 :deep() {
   .el-input__wrapper {
-    @apply rounded-none shadow-none px-[6px];
+    @apply rounded-none shadow-none px-0;
   }
 }
 </style>

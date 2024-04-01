@@ -1,4 +1,5 @@
 <script setup>
+import Table from './components/table.vue'
 import GroupBy from './components/GroupBy.vue'
 
 const issuesRef = ref(null)
@@ -63,10 +64,10 @@ const form = reactive({
         </el-input>
       </div>
     </div>
-
+    <Table :form="form" />
     <pre>
       {{ form }}
     </pre>
-    <Issues ref="issuesRef" :form="form" />
+    <span class="text-blue-600">蓝色</span>
   </div>
 </template>

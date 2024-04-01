@@ -37,7 +37,7 @@ watch(() => props.data.uids, (val) => {
 </script>
 
 <template>
-  <el-dropdown trigger="click" :hide-on-click="false" class="w-full px-[6px]">
+  <el-dropdown trigger="click" :hide-on-click="false" class="w-full">
     <div class="flex items-center justify-between w-full ">
       <div class="flex items-center relative pl-2">
         <template v-for="uid in value?.slice(0, 5)" :key="uid">
