@@ -37,18 +37,18 @@ function onMouseLeave(event) {
     :class="{ 'divide-x': border }" :style="{ height: `${size}px` }" class="group" @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <td v-if="id" class="text-left relative px-3">
+    <td v-if="id" class="text-left relative px-2">
       <slot name="id-td" :column="column" :row="row" :index="index">
         <span>{{ index + 1 }}</span>
       </slot>
     </td>
     <td
-      v-for="(column, subIndex) in columns" :key="subIndex" nowrap class="text-left relative px-3"
+      v-for="(column, subIndex) in columns" :key="subIndex" nowrap class="text-left relative px-2"
       :class="{ focus: selectedCell?.index === index && selectedCell?.field === column[options.value] }"
       @click="$emit('cell:select', { index, field: column[options.value] })"
     >
       <slot :name="`${column[options.value]}-data`" :column="column" :row="row" :index="index">
-        <span class="h-full flex items-center -mx-3 px-3">
+        <span class="h-full flex items-center -mx-2 px-2">
           {{ row[column[options.value]] }}
         </span>
       </slot>

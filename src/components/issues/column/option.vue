@@ -32,7 +32,7 @@ function handleGroupBy() {
   else
     props.form.groupby_field = props.data.value
 
-  emit('update:form')
+  // emit('update:form')
 }
 
 function handleFilter() {

@@ -42,7 +42,7 @@ watch(() => props.data.status, (val) => {
         class="text-xs border h-6 flex items-center px-2 rounded-full"
         :style="{ borderColor: `${itemValue?.color}`, backgroundColor: `${itemValue?.color}10`, color: `${itemValue?.color}` }"
       >
-        {{ itemValue.label }}
+        {{ itemValue?.label }}
       </div>
       <span class="icon-[lucide--chevron-down] text-gray-400 hover:bg-gray-800" />
     </div>

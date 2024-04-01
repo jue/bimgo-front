@@ -54,6 +54,10 @@ watch(() => props.form.key, (val) => {
   fetchData(val)
 })
 
+watch(() => props.form.groupby_field, (val) => {
+  fetchData(val)
+})
+
 watch(() => issue_columns, () => {
   updateColumnsConfig()
 }, {
@@ -63,7 +67,10 @@ watch(() => issue_columns, () => {
 
 <template>
   <div>
-    <np-table id :columns="columnsConfig" :rows="filterData" border class="border-y" :loading="loading">
+    <np-table
+      id :columns="columnsConfig" :rows="filterData" border class="border-y" :loading="loading"
+      :tree="!!form.groupby_field"
+    >
       <template #id-th>
         <div class="text-right">
           #
@@ -79,6 +86,26 @@ watch(() => issue_columns, () => {
           </div>
         </div>
       </template>
+
+      <template v-for="(column) in columnsConfig" #[`${column.value}-header`]>
+        <div
+          v-if="column.value !== 'title'" :key="column.value"
+          class="cell flex items-center justify-between w-full h-full text-xs font-medium"
+        >
+          <span>{{ column.label }}</span>
+          <IssuesColumnOption :data="column" :form="form" @update:form="getIssues()" />
+        </div>
+      </template>
+
+      <!-- <template #uids-header="{ column }">
+        <div class="cell flex items-center justify-between text-[#485776] w-full h-full text-xs font-medium">
+          <span>{{ column.label }}</span>
+          <IssuesColumnOption
+            v-if="index !== 'title'" :data="{ ...column, value: index }" :form="form"
+            @update:form="getIssues()"
+          />
+        </div>
+      </template> -->
 
       <template #op-header="{ row, column, index }">
         <IssuesSetcolums />

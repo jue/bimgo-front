@@ -40,7 +40,7 @@ const form = reactive({
           <np-button icon="plus" text class="bg-none hover:text-blue-500" size="32">
             <span>添加问题</span>
           </np-button>
-          <GroupBy />
+          <GroupBy v-model="form.groupby_field" />
           <el-dropdown>
             <np-button icon="more-horizontal" text class="bg-none hover:text-blue-500" size="32" />
             <template #dropdown>
@@ -68,6 +68,5 @@ const form = reactive({
     <pre>
       {{ form }}
     </pre>
-    <span class="text-blue-600">蓝色</span>
   </div>
 </template>

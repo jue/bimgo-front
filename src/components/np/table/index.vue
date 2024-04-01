@@ -77,8 +77,8 @@ onClickOutside(tableRef, () => {
           <template #id-th>
             <slot name="id-th" />
           </template>
-          <template v-for="column in columns" #[`${column[options.value]}-header`]>
-            <slot :name="`${column[options.value]}-header`" />
+          <template v-for="column in columns" #[`${column[options.value]}-header`]="{ column }">
+            <slot :name="`${column[options.value]}-header`" :column="column" />
           </template>
         </TableHeader>
       </thead>
@@ -87,7 +87,7 @@ onClickOutside(tableRef, () => {
           <td :colspan="colspan">
             <slot name="empty">
               <div class="flex items-center justify-center text-gray-400 min-h-20">
-                <span v-if="loading">…</span>
+                <span v-if="loading" />
                 <span v-else>暂无数据</span>
               </div>
             </slot>
@@ -117,7 +117,7 @@ onClickOutside(tableRef, () => {
       </tbody>
     </table>
     <div v-if="loading" class="absolute inset-0 flex items-center justify-center bg-white/60">
-      <span class="icon-[lucide--loader] animate-spin" />
+      <span class="icon-[lucide--loader] animate-spin" :style="{ 'margin-top': `${size}px` }" />
     </div>
   </div>
 </template>
