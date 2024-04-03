@@ -1,14 +1,64 @@
 <script setup>
 const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
+const route = useRoute()
+const menus = ref([
+  {
+    label: '功能',
+    children: [
+      {
+        icon: 'layout-dashboard',
+        name: '控制面板',
+        path: '/dashborad',
+      },
+      {
+        icon: 'torus',
+        name: '模型预览',
+        path: '/model',
+      },
+      {
+        icon: 'list-todo',
+        name: '工程进度',
+        path: '/task',
+      },
+      {
+        icon: 'bug',
+        name: '问题处理',
+        path: '/issue',
+      },
+      {
+        icon: 'file-spreadsheet',
+        name: '工程报告',
+        path: '/report',
+      },
+      {
+        icon: 'file-box',
+        name: '文档管理',
+        path: '/file',
+      },
+    ],
+  },
+  {
+    label: '人员单位',
+    children: [
+      {
+        icon: 'users',
+        name: '人员管理',
+        path: '/contractors',
+      },
+    ],
+  },
+
+])
 </script>
 
 <template>
   <div
     class="shrink-0 flex flex-col h-screen bg-[#181f38]"
-    :style="{ width: `${sideWidth}px`, transition: 'width 0.3s' }"
+    :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
   >
     <div class="h-14 flex items-center justify-between px-2">
       <Logo class="w-12 fill-white" />
+      <UserButton v-if="!sideCollapsed" />
     </div>
 
     <el-scrollbar class="flex-1 h-full w-full">
@@ -28,7 +78,7 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
             <div>已分配给我的</div>
           </div>
         </div>
-        <div class="px-2 space-y-[1px] py-2">
+        <!-- <div class="px-2 space-y-[1px] py-2">
           <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
             收藏
           </div>
@@ -38,56 +88,23 @@ const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
             <span class="icon-[lucide--star]" />
             <div>收藏内容</div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="px-2 space-y-[1px] py-2">
+        <div v-for="(cate, index) in menus" :key="index" class="px-2 space-y-[8px] py-2">
           <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
-            功能
+            {{ cate.label }}
           </div>
-          <RouterLink to="/task">
-            <div
-              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-            >
-              <span class="icon-[lucide--list-todo]" />
-              <div>工程进度</div>
-            </div>
-          </RouterLink>
-          <RouterLink to="/issue">
-            <div
-              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-            >
-              <span class="icon-[lucide--circle-dot]" />
-              <div>问题汇总</div>
-            </div>
-          </RouterLink>
-          <div
-            class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-          >
-            <span class="icon-[lucide--file-spreadsheet]" />
-            <div>工程报告</div>
-          </div>
-          <div
-            class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-          >
-            <span class="icon-[lucide--file-box]" />
-            <div>文档管理</div>
-          </div>
-        </div>
-
-        <div class="px-2 space-y-[1px] py-2">
-          <div class="flex items-center text-neutral-300 px-2 h-6 mb-2 text-xs">
-            人员管理
-          </div>
-          <RouterLink to="/contractors">
-            <div
-              class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
-            >
-              <span class="icon-[lucide--users]" />
-              <div>
-                承包单位
+          <div class="space-y-1">
+            <RouterLink v-for="menu in cate.children" :key="menu.path" :to="menu.path" class="block">
+              <div
+                class="flex items-center space-x-2 text-neutral-50 cursor-pointer h-8 px-2 rounded-lg hover:text-white hover:bg-[#323f5e]"
+                :class="{ 'text-white bg-[#323f5e]': route.fullPath.startsWith(menu.path) }"
+              >
+                <Icon :name="menu.icon" :size="16" />
+                <div>{{ menu.name }}</div>
               </div>
-            </div>
-          </RouterLink>
+            </RouterLink>
+          </div>
         </div>
       </div>
     </el-scrollbar>

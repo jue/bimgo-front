@@ -59,10 +59,10 @@ const columns = ref([
 ])
 
 const data = ref([])
-const params = {
-  groupby_field: 'status',
-}
-// const params = {}
+// const params = {
+//   groupby_field: 'status',
+// }
+const params = {}
 async function getIssues() {
   filterData.value = []
   const { data: res } = await http.post('/issue/list', params)

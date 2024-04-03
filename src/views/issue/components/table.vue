@@ -10,6 +10,8 @@ const props = defineProps({
 })
 
 const { issue_columns } = storeToRefs(useUserStore())
+const { issuePriority } = storeToRefs(useSettingsStore())
+const issueStatus = issue_columns.value.status.options
 const columnsConfig = ref([])
 
 // const columnsConfig = [...objectToArray(issue_columns.value), {
@@ -87,7 +89,7 @@ watch(() => issue_columns, () => {
         </div>
       </template>
 
-      <template v-for="(column) in columnsConfig.filter(item => item.value !== 'op')" #[`${column.value}-header`]>
+      <template v-for="(column) in columnsConfig.filter(item => (item.value !== 'op' && item.value !== 'created_at'))" #[`${column.value}-header`]>
         <div
           v-if="column.value !== 'title'" :key="column.value"
           class="cell flex items-center justify-between w-full h-full text-xs font-medium"
@@ -143,7 +145,50 @@ watch(() => issue_columns, () => {
           {{ dayjs(row.created_at).format('YYYY-MM-DD HH:mm') }}
         </div>
       </template>
+
+      <template #group-th="{ group }">
+        <div class="inline-flex items-center space-x-2 h-full">
+          <!-- 执行人 -->
+          <div v-if="group.lable === 'uid'" class="flex items-center space-x-1">
+            <UserAvatar :uid="group.value" :size="24" />
+            <div class="text-stone-600">
+              <UserName :uid="group.value" />
+            </div>
+          </div>
+
+          <!-- 问题状态 -->
+          <div v-if="group.lable === 'status'" class="flex items-center space-x-1">
+            <div
+              class="w-3.5 h-3.5 rounded-full border border-2"
+              :style="{ borderColor: `${issueStatus.find(item => item.value === group.value)?.color}`, backgroundColor: `${issueStatus.find(item => item.value === group.value)?.color}10` }"
+            />
+            <div>{{ issueStatus.find(item => item.value === group.value)?.label }}</div>
+          </div>
+
+          <!-- 优选级 -->
+          <div v-if="group.lable === 'priority'" class="flex items-center space-x-1">
+            <div
+              class="w-3.5 h-3.5 rounded-full border border-2"
+              :style="{ borderColor: `${issuePriority.find(item => item.value === group.value)?.color}`, backgroundColor: `${issueStatus.find(item => item.value === group.value)?.color}10` }"
+            />
+            <div>{{ issuePriority.find(item => item.value === group.value)?.label }}</div>
+          </div>
+
+          <!-- 期望结束日期、实际完成日期、创建日期 -->
+          <div
+            v-if="group.lable === 'end_time' || group.lable === 'done_time' || group.lable === 'created_at'"
+            class="flex items-center"
+          >
+            {{ group.value ? dayjs(group.value).format('YYYY-MM-DD') : '-' }}
+          </div>
+
+          <span
+            class="text-xs text-gray-500 w-4 h-4 bg-gray-200 rounded-full flex justify-center items-center font-semibold"
+          >{{
+            group?.rows?.length }}</span>
+        </div>
+      </template>
     </np-table>
-    <IssuesAdd @refresh="getIssues" />
+    <IssuesAdd2 @refresh="getIssues" />
   </div>
 </template>

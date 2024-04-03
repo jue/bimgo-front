@@ -21,10 +21,14 @@ function logout() {
 </script>
 
 <template>
-  <el-dropdown trigger="click">
-    <UserAvatar :uid="user?.uid" size="32" />
+  <el-dropdown trigger="click" placement="bottom-start">
+    <div class="flex items-center space-x-1">
+      <UserAvatar :uid="user?.uid" size="24" />
+      <span class="text-white icon-[lucide--chevrons-up-down]" />
+    </div>
+
     <template #dropdown>
-      <el-dropdown-menu class="w-52">
+      <el-dropdown-menu class="w-48">
         <UserInvitation class="w-full">
           <template #default="{ toggleDialog }">
             <el-dropdown-item @click="toggleDialog">

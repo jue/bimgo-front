@@ -94,8 +94,24 @@ onClickOutside(tableRef, () => {
           </td>
         </tr>
         <template v-else>
-          <template v-if="tree">
-            <TreeItem />
+          <template v-if="tree && rows.length">
+            <template v-for="(group, groupIndex) in rows" :key="groupIndex">
+              <TreeItem
+                :id="id" :group="group" :columns="columns" :size="size" :border="border" :options="options"
+                :colspan="colspan"
+              >
+                <template #id-td="{ row, column, index }">
+                  <slot name="id-td" :column="column" :row="row" :index="index" />
+                </template>
+                <template v-for="column in columns" #[`${column[options.value]}-data`]="{ row, column, index }">
+                  <slot :name="`${column[options.value]}-data`" :column="column" :row="row" :index="index" />
+                </template>
+
+                <template #group-th="{ group }">
+                  <slot name="group-th" :group="group" />
+                </template>
+              </TreeItem>
+            </template>
           </template>
 
           <template v-else>

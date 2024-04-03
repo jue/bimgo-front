@@ -62,6 +62,7 @@ async function columnShow(val) {
 
 <template>
   <div class="flex items-center space-x-0.5">
+    <np-button v-if="form.groupby_field === data.value" size="24" shape="square" icon="gallery-vertical-end" text />
     <np-button
       v-if="form.sort_field === data.value && form.sort === 'asc'" size="24" shape="square"
       icon="arrow-up-narrow-wide" text @click="handleSort('desc')"
@@ -89,7 +90,7 @@ async function columnShow(val) {
             <div class="flex items-center w-full">
               <span class="icon-[lucide--gallery-vertical-end] mr-2 text-zinc-600" />
               <span class="flex-1">按此字段分组</span>
-              <span v-if="form.key_field === data.value" class="icon-[lucide--x]" />
+              <span v-if="form.groupby_field === data.value" class="icon-[lucide--x]" />
             </div>
           </el-dropdown-item>
           <el-dropdown-item divided @click="handleSort('asc')">
