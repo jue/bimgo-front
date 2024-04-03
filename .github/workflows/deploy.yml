@@ -31,18 +31,18 @@ jobs:
       - name: Clone Private Repository via SSH
         run: |
           git clone git@github.com:jue/bimgo-api.git
-          mkdir -p bimgo-api/app/public
-          rm -rf bimgo-api/app/public/*
+          mkdir -p bimgo-api/public
+          rm -rf bimgo-api/public/*
 
           echo "Copying files from dist to bimgo-api/public"
-          cp -r dist/* bimgo-api/app/public/
+          cp -r dist/* bimgo-api/public/
           cd bimgo-api
 
           git config user.email "i@xiangjianfeng.com"
           git config user.name "jue"
 
           echo "Adding changes to git..."
-          git add app/public/
+          git add public/
 
       - name: Get commit message
         id: get_commit_message
