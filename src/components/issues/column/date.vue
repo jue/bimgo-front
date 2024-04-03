@@ -1,7 +1,7 @@
 <script setup>
 import DatePicker from 'vue-datepicker-next'
 import 'vue-datepicker-next/index.css'
-import 'vue-datepicker-next/locale/zh-cn.js'
+import 'vue-datepicker-next/locale/zh-cn.es'
 import { formatDate } from '@/lib/index'
 
 const props = defineProps({
