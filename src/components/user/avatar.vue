@@ -27,7 +27,7 @@ const info = users.value.find(item => item.uid === props.uid)
         }"
       >
         <span v-if="info?.realname">{{ info?.realname.slice(0, 1) }}</span>
-        <span v-else class="icon-[lucide--users]" :style="{ 'font-size': `${size * 0.3}px` }" />
+        <span v-else class="icon-[lucide--user]" :style="{ 'font-size': `${size * 0.55}px` }" />
       </div>
     </template>
   </el-image>

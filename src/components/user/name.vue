@@ -10,5 +10,5 @@ const value = users.value.find(item => item.uid === props.uid)
 </script>
 
 <template>
-  <span>{{ value.realname }}</span>
+  <span>{{ value?.realname }}</span>
 </template>

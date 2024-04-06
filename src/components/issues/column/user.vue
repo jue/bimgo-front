@@ -39,13 +39,17 @@ watch(() => props.data.uids, (val) => {
 <template>
   <el-dropdown trigger="click" :hide-on-click="false" class="w-full">
     <div class="flex items-center justify-between w-full ">
-      <div class="flex items-center relative pl-2">
-        <template v-for="uid in value?.slice(0, 5)" :key="uid">
-          <UserAvatar
-            :uid="uid" :size="28"
-            class="border border-2 border-transparent hover:border-blue-500 -ml-2 z-0 hover:z-10"
-          />
-        </template>
+      <div class="flex items-center relative">
+        <span v-if="value?.length === 0" class="text-gray-400">请选择</span>
+        <span class="pl-2">
+          <template v-for="uid in value?.slice(0, 5)" :key="uid">
+
+            <UserAvatar
+              :uid="uid" :size="28"
+              class="border border-2 border-transparent hover:border-blue-500 -ml-2 z-0 hover:z-10"
+            />
+          </template>
+        </span>
         <div v-if="value?.length > 5" class="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
           +{{ value?.length - 5 }}
         </div>

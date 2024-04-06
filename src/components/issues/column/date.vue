@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  placeholder: {
+    type: String,
+    default: '请选择日期',
+  },
 })
 
 const value = ref(props.data[props.field])
@@ -54,9 +58,6 @@ async function handleChange(val) {
 }
 
 watch(() => props.data[props.field], (val) => {
-  if (props.field === 'end_time')
-    console.log(props.field, val, props.data.end_time, props.data.title)
-
   value.value = val
   // 使用计算属性更新 isPassTime
   // isPassTime.value = calculateIsPassTime(value.value)
@@ -77,7 +78,8 @@ watch(() => props.data[props.field], (val) => {
           class="flex items-center cursor-pointer h-full"
           :class="{ 'text-red-500': isPassTime && field === 'done_time' }" @click="handleOpen"
         >
-          {{ formatDate(value) }}
+          <span v-if="value">{{ formatDate(value) }}</span>
+          <span v-else class="text-gray-400">{{ placeholder }}</span>
         </div>
       </template>
     </DatePicker>

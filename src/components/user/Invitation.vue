@@ -31,6 +31,7 @@ onMounted(() => {
     </slot>
     <el-dialog v-model="visible" :title="`邀请人员加入${projectName}`" append-to-body width="300px">
       <div class="space-y-3 py-5">
+        {{ url }}
         <div class="w-40 mx-auto">
           <Qrcode :text="url" class="mx-auto block text-center" size="160" />
         </div>

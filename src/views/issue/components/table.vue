@@ -65,6 +65,8 @@ watch(() => issue_columns, () => {
 }, {
   deep: true,
 })
+
+const issueDetailRef = ref(null)
 </script>
 
 <template>
@@ -114,7 +116,7 @@ watch(() => issue_columns, () => {
       </template>
 
       <template #title-data="{ row }">
-        <IssuesColumnTitle :data="row" />
+        <IssuesColumnTitle :data="row" @show="issueDetailRef.open(row)" />
       </template>
 
       <template #status-data="{ row }">
@@ -190,5 +192,6 @@ watch(() => issue_columns, () => {
       </template>
     </np-table>
     <IssuesAdd2 @refresh="getIssues" />
+    <IssuesBox ref="issueDetailRef" />
   </div>
 </template>
