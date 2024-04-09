@@ -1,11 +1,4 @@
 <script setup>
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/shadcn/ui/tooltip'
-
 const props = defineProps({
   modelValue: {
     type: Array,

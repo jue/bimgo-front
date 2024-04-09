@@ -28,110 +28,83 @@ defineExpose({
 </script>
 
 <template>
-  <div class="flex flex-col h-full max-w-[750px]">
-    <div class="flex items-center justify-between h-14 px-4">
-      <div class="text-xl">
-        {{ issueData.title }}
+  <div class="flex space-x-4 p-4 flex-1">
+    <div class="flex-1">
+      <div class="flex items-start space-x-4">
+        <div class=" w-full">
+          <IssuesColumnInput
+            :data="issueData"
+            class="text-xl"
+          />
+        </div>
       </div>
+
       <div>
-        <np-button icon="pen" shape="square" class="hover:bg-gray-100" />
+        <div class="py-5">
+          <np-editor v-model="issueData.description" />
+          {{ issueData.description || '' }}
+          <span class="text-gray-400 cursor-pointer">些问题还没有描述，点击添加。</span>
+          <!-- <pre>{{ issueData }}</pre> -->
+        </div>
       </div>
+
+      <file-list :id="issueData.iid" type="issue" />
     </div>
-
-    <div class="py-2 px-7 space-y-2">
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--check-square-2]" />
-          <div>状态</div>
+    <div class="w-72 shrink-0 space-y-2">
+      <div class="space-y-1 border-b py-2">
+        <div class="text-gray-400 text-xs font-medium px-2">
+          执行人
         </div>
-        <div class="min-w-48">
-          <IssuesColumnStatus :data="issueData" />
-        </div>
+        <IssuesColumnUser :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--users]" />
-          <div>执行人</div>
+      <div class="space-y-1 border-b py-2">
+        <div class="text-gray-400 text-xs font-medium px-2">
+          状态
         </div>
-        <div class="min-w-48 flex items-center">
-          <IssuesColumnUser :data="issueData" />
-        </div>
+        <IssuesColumnStatus :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--users]" />
-          <div>
-            优先级
-          </div>
+      <div class="space-y-1 border-b py-2">
+        <div class="text-gray-400 text-xs font-medium px-2">
+          优先级
         </div>
-        <div class="min-w-48">
-          <IssuesColumnPriority :data="issueData" />
-        </div>
+        <IssuesColumnPriority :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--calendar]" />
-          <div>
-            期望结束日期
-          </div>
+      <div class="space-y-1 border-b py-2">
+        <div class="text-gray-400 text-xs font-medium px-2">
+          期望结束日期
         </div>
-        <div class="min-w-48 h-9">
-          <IssuesColumnDate :data="issueData" field="end_time" />
-        </div>
+        <IssuesColumnDate field="end_time" :data="issueData" class="hover:bg-gray-100 px-2 !h-10 rounded-lg" />
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--calendar-check]" />
-          <div>
-            实际完成日期
-          </div>
+      <div class="space-y-1 border-b py-2">
+        <div class="text-gray-400 text-xs font-medium px-2">
+          实际完成日期
         </div>
-        <div class="min-w-48 h-9">
-          <IssuesColumnDate :data="issueData" field="done_time" class="min-w-40" />
-        </div>
+        <IssuesColumnDate field="done_time" :data="issueData" class="hover:bg-gray-100 px-2 !h-10 rounded-lg" />
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--user]" />
-          <div>
-            创建人
-          </div>
-        </div>
-        <div class="flex items-center min-w-48">
-          <UserAvatar :uid="issueData.uid" :size="24" />
+      <div class="space-y-1 py-2">
+        <Button variant="ghost" class="h-7 px-2 w-full justify-start">
+          <span class="icon-[lucide--archive] mr-2" />
+          <span>归档</span>
+        </Button>
+
+        <Button variant="ghost" class="h-7 px-2 w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-500">
+          <span class="icon-[lucide--trash] mr-2" />
+          <span>删除</span>
+        </Button>
+      </div>
+
+      <div class="flex items-center text-gray-400 text-xs">
+        该问题由 <span class="flex items-center">
           <UserName :uid="issueData.uid" />
-        </div>
+        </span>于 {{ dayjs(issueData.created_time).format('YYYY-MM-DD HH:mm') }} 创建
       </div>
 
-      <div class="flex items-center min-h-9">
-        <div class="w-44 flex items-center space-x-2 text-gray-400">
-          <span class="icon-[lucide--clock-7]" />
-          <div>
-            创建时间
-          </div>
-        </div>
-        <div class="flex items-center min-w-48">
-          {{ dayjs(issueData.created_at).format('YYYY-MM-DD HH:mm') }}
-        </div>
-      </div>
-
-      <!-- 分割线 -->
+      <!-- end -->
     </div>
-    <pre>
-      {{ issueData }}
-    </pre>
   </div>
 </template>
-
-<style scoped lang="scss">
-:deep(.task-title) {
-  .el-input__wrapper {
-    @apply shadow-none hover:bg-gray-100;
-  }
-}
-</style>

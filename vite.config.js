@@ -48,12 +48,13 @@ export default defineConfig({
       })],
     }),
     Components({
-      dirs: ['src/components/', 'src/shadcn/ui/*/'],
+      dirs: ['src/components/'],
       directoryAsNamespace: true,
       resolvers: [
         ElementPlusResolver({
           importStyle: 'sass',
         }),
+        PrimeVueResolver(),
       ],
     }),
   ],

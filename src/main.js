@@ -3,6 +3,7 @@ import 'element-plus/es/components/message-box/style/index'
 import './assets/index.css'
 
 import { createApp } from 'vue'
+
 import pinia from './store'
 
 import App from './App.vue'

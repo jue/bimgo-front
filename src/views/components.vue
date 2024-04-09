@@ -130,5 +130,10 @@ onMounted(async () => {
         默认按钮
       </np-button>
     </div>
+
+    <div>
+      <InputText v-model="msg" style="margin-right:.5rem" />
+      <Button label="按钮" />
+    </div>
   </div>
 </template>

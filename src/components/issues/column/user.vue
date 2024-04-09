@@ -41,7 +41,7 @@ watch(() => props.data.uids, (val) => {
     <div class="flex items-center justify-between w-full ">
       <div class="flex items-center relative">
         <span v-if="value?.length === 0" class="text-gray-400">请选择</span>
-        <span class="pl-2">
+        <span class="pl-2 flex items-center">
           <template v-for="uid in value?.slice(0, 5)" :key="uid">
 
             <UserAvatar
