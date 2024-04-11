@@ -45,7 +45,7 @@ defineExpose({
           <LogList :id="issueData.iid" cate="issue" />
         </div>
       </el-scrollbar>
-      <div class="py-8">
+      <div class="pt-4 pb-8">
         <CommentSection :id="issueData.iid" cate="issue" />
       </div>
     </div>
