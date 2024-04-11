@@ -54,7 +54,6 @@ export default defineConfig({
         ElementPlusResolver({
           importStyle: 'sass',
         }),
-        PrimeVueResolver(),
       ],
     }),
   ],

@@ -8,19 +8,23 @@ const props = defineProps({
     type: Number,
     default: 28,
   },
+  shape: {
+    type: String,
+    default: 'circle',
+  },
 })
 const { users } = storeToRefs(useSettingsStore())
 const info = users.value.find(item => item.uid === props.uid)
 </script>
 
 <template>
-  <el-image
-    :src="info?.avatar || ''" fit="cover" :style="{ width: `${size}px`, height: `${size}px` }"
-    class="shrink-0 rounded-full overflow-hidden border"
+  <el-avatar
+    :src="info?.avatar || ''" fit="cover" :size="size" class="shrink-0 overflow-hidden"
+    :shape="shape"
   >
-    <template #error>
+    <template #default>
       <div
-        class="h-full w-full flex items-center justify-center text-white rounded-full select-none bg-black" :style="{
+        class="h-full w-full flex items-center justify-center text-white select-none bg-black/70" :style="{
           'background-color': info?.color,
           'font-size': `${size * 0.55}px`,
           'padding': `${size * 0.1}px`,
@@ -30,5 +34,5 @@ const info = users.value.find(item => item.uid === props.uid)
         <span v-else class="icon-[lucide--user]" :style="{ 'font-size': `${size * 0.55}px` }" />
       </div>
     </template>
-  </el-image>
+  </el-avatar>
 </template>

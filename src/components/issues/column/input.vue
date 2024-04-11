@@ -11,7 +11,7 @@ watch(() => props.data, (val) => {
   value.value = val.title
 }, { deep: true })
 
-const saveEdit = debounce(async () => {
+async function saveEdit() {
   const { data: res } = await http.post('/issue/update/title', {
     iid: props.data.iid,
     title: value.value,
@@ -20,13 +20,13 @@ const saveEdit = debounce(async () => {
     props.data.title = value
   else
     value.value = props.data.title
-}, 800)
+}
 </script>
 
 <template>
   <el-input
     ref="textareaRef" v-model="value" type="textarea" :autosize="{ minRows: 1 }"
-    class="border-b border-white border-b-2 pb-1.5 hover:border-blue-600" placeholder="请输入问题" @input="saveEdit"
+    class="border-b border-white border-b-2 pb-1.5 hover:border-blue-600" placeholder="请输入问题" @blur="saveEdit"
   />
 </template>
 

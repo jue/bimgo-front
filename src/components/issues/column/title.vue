@@ -20,7 +20,8 @@ function editInput() {
   })
 }
 
-const saveEdit = debounce(async () => {
+async function saveEdit() {
+  isEdit.value = false
   const { data: res } = await http.post('/issue/update/title', {
     iid: props.data.iid,
     title: value.value,
@@ -29,15 +30,15 @@ const saveEdit = debounce(async () => {
     props.data.title = value
   else
     value.value = props.data.title
-}, 800)
+}
 </script>
 
 <template>
   <div class="flex items-center w-full h-full space-x-1.5">
     <IssuesColumnTask :tid="data.tid" />
     <el-input
-      v-if="isEdit" ref="input" v-model="value" placeholder="请输入" class="h-full w-full" @input="saveEdit"
-      @blur="isEdit = false"
+      v-if="isEdit" ref="input" v-model="value" placeholder="请输入" class="h-full w-full"
+      @blur="saveEdit"
     />
     <div v-else class="flex items-center justify-between w-full h-full" @dblclick="editInput">
       <span

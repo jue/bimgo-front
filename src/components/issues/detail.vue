@@ -28,28 +28,28 @@ defineExpose({
 </script>
 
 <template>
-  <div class="flex space-x-4 p-4 flex-1">
-    <div class="flex-1">
-      <div class="flex items-start space-x-4">
-        <div class=" w-full">
-          <IssuesColumnInput
-            :data="issueData"
-            class="text-xl"
-          />
-        </div>
+  <div class="flex space-x-4 px-4 h-full">
+    <div class="flex-1 flex flex-col">
+      <div class="py-4">
+        <IssuesColumnInput :data="issueData" class="text-xl" />
       </div>
+      <el-scrollbar class="flex-1">
+        <div class="flex-1 flex flex-col space-y-5">
+          <div>
+            <!-- <np-editor v-model="issueData.description" /> -->
+            {{ issueData.description || '' }}
+            <span class="text-gray-400 cursor-pointer">些问题还没有描述，点击添加。</span>
+          </div>
 
-      <div>
-        <div class="py-5">
-          <np-editor v-model="issueData.description" />
-          {{ issueData.description || '' }}
-          <span class="text-gray-400 cursor-pointer">些问题还没有描述，点击添加。</span>
-          <!-- <pre>{{ issueData }}</pre> -->
+          <file-list :id="issueData.iid" cate="issue" />
+          <LogList :id="issueData.iid" cate="issue" />
         </div>
+      </el-scrollbar>
+      <div class="py-8">
+        <CommentSection :id="issueData.iid" cate="issue" />
       </div>
-
-      <file-list :id="issueData.iid" type="issue" />
     </div>
+
     <div class="w-72 shrink-0 space-y-2">
       <div class="space-y-1 border-b py-2">
         <div class="text-gray-400 text-xs font-medium px-2">
@@ -87,15 +87,18 @@ defineExpose({
       </div>
 
       <div class="space-y-1 py-2">
-        <Button variant="ghost" class="h-7 px-2 w-full justify-start">
+        <button variant="ghost" class="h-7 px-2 w-full flex items-center justify-start text-left hover:bg-gray-100">
           <span class="icon-[lucide--archive] mr-2" />
           <span>归档</span>
-        </Button>
+        </button>
 
-        <Button variant="ghost" class="h-7 px-2 w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-500">
+        <button
+          variant="ghost"
+          class="h-7 px-2 w-full flex items-center justify-start  text-left text-red-500 hover:bg-red-50 hover:text-red-500"
+        >
           <span class="icon-[lucide--trash] mr-2" />
           <span>删除</span>
-        </Button>
+        </button>
       </div>
 
       <div class="flex items-center text-gray-400 text-xs">

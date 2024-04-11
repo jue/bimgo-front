@@ -19,7 +19,7 @@ defineExpose({
     custom-class="np-drawer"
   >
     <div class="flex flex-col h-full">
-      <div class="flex items-center justify-between h-14 border-b px-4">
+      <div class="flex items-center justify-between h-14 border-b px-4 shrink-0">
         <div>
           问题
         </div>
@@ -31,7 +31,9 @@ defineExpose({
           </el-tooltip>
         </div>
       </div>
-      <IssuesDetail ref="issuesDetailRef" />
+      <div class="flex-1 overflow-y-scroll">
+        <IssuesDetail ref="issuesDetailRef" />
+      </div>
     </div>
   </el-drawer>
 </template>
