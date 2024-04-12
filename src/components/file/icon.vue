@@ -41,7 +41,7 @@ function streamMime(type) {
 </script>
 
 <template>
-  <div class="inline-flex">
+  <div class="inline-flex p-[10px] bg-gray-100 rounded-lg">
     <template v-if="streamMime(type).startsWith('image')">
       <Image />
     </template>

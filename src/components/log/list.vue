@@ -45,7 +45,7 @@ function getItem(field, value) {
   <div class="w-full overflow-y-auto space-y-4">
     <div v-for="(item, index) in dataList" :key="index" class="flex space-x-4">
       <UserAvatar :uid="item.uid" :size="32" shape="square" />
-      <div class="space-y-1">
+      <div class="space-y-1 flex-1">
         <div class="space-x-2">
           <span class="font-medium">
             <UserName :uid="item.uid" />
@@ -59,7 +59,7 @@ function getItem(field, value) {
             @click="console.log(log)"
           >
             <div v-if="log.action === 'add'" class="flex-1">
-              添加了新问题 <span class="text-zinc-800">{{ log.content?.newVal }}</span>
+              添加了新{{ cate === 'issue' ? '问题' : '任务' }} <span class="text-zinc-800">{{ log.content?.newVal }}</span>
             </div>
 
             <div v-if="log.action === 'update'" class="flex items-center">
@@ -92,6 +92,17 @@ function getItem(field, value) {
                 </span>
               </template>
             </div>
+
+            <div v-if="log.action === 'upload'" class="flex-1 space-y-1">
+              <div>添加了新内容:</div>
+              <div v-if="log.content?.newVal" class="px-4 py-3 bg-gray-100 rounded-lg">
+                {{ log.content?.newVal }}
+              </div>
+              <div v-if="log.content?.files?.length" class="px-4 py-3 bg-gray-100 rounded-lg">
+                <FileList :files="log.content?.files" />
+              </div>
+            </div>
+
             <span class="text-xs text-gray-400/75 ml-4">{{ dayjs(log.created_at).format('hh:mm') }}</span>
           </div>
           <!-- 日志列表结束 -->

@@ -10,21 +10,70 @@ const props = defineProps({
   },
 })
 
+const files = ref([])
+
 const { user } = storeToRefs(useUserStore())
 
 const textareaRef = ref(null)
 const value = ref('')
 const isFocus = ref(false)
+
+function addFile(file) {
+  files.value.push(file)
+}
+
+function updateFile(file) {
+  const index = files.value.findIndex(item => item.file_name === file.file_name)
+  if (index !== -1) {
+    if (file.file_type === 'error') {
+      setTimeout(() => {
+        files.value.splice(index, 1)
+      }, 1000)
+    }
+    else {
+      files.value[index] = file
+    }
+  }
+}
+
+function deleteFile(file) {
+  const index = files.value.findIndex(item => item.file_name === file.file_name)
+  if (index !== -1)
+    files.value.splice(index, 1)
+}
+
+async function handleSubmit() {
+  const { data: res } = await http.post('/logs/create', {
+    id: props.id,
+    cate: props.cate,
+    content: value.value,
+    files: files.value,
+  })
+
+  if (res.code === 200) {
+    ElMessage.success('评论成功')
+    value.value = ''
+    files.value = []
+  }
+}
 </script>
 
 <template>
   <div class="w-full">
     <div class="pl-11">
       <div class="flex flex-wrap">
-        <span v-for="i in 9" :key="i" class="bg-gray-100 rounded-lg px-2 py-1 mr-2 mb-2 inline-flex items-center">
-          <span>Span {{ 12 * 234 }}</span>
-          <el-tooltip content="删除">
-            <span class="icon-[lucide--x] ml-2 text-red-400 cursor-pointer" />
+        <span
+          v-for="(file, index) in files" :key="index"
+          class="bg-gray-100 rounded-lg px-2 py-1 mr-2 mb-2 inline-flex items-center"
+        >
+          <span>{{ file.file_name }}</span>
+          <el-tooltip :content="file.file_type === 'loading' ? '上传中' : '删除'">
+            <span
+              v-if="file.file_type === 'loading'"
+              class="icon-[lucide--loader-circle] ml-2 text-blue-400 cursor-pointer animate-spin"
+            />
+            <span v-else class="icon-[lucide--x] ml-2 text-red-400 cursor-pointer" @click="deleteFile(file)" />
+
           </el-tooltip>
         </span>
       </div>
@@ -41,8 +90,10 @@ const isFocus = ref(false)
             placeholder="尝试上传文件并添加评论…" @focus="isFocus = true" @blur="isFocus = false"
           />
           <div class="flex items-center justify-between">
-            <np-button icon="paperclip" class="hover:bg-gray-200 opacity-60" shape="square" />
-            <el-button type="primary" :disabled="!value">
+            <FileUploader :id="id" cate="issue" :status="0" @add="addFile" @update="updateFile">
+              <np-button icon="paperclip" class="hover:bg-gray-200 hover:text-blue-500 opacity-60" shape="square" />
+            </FileUploader>
+            <el-button type="primary" :disabled="!value && files.length === 0" @click="handleSubmit">
               提交
             </el-button>
           </div>

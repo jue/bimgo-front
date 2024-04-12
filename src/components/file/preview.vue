@@ -33,13 +33,19 @@ function close() {
 </script>
 
 <template>
-  <div
+  <!-- <div
     class="w-14 h-10 border rounded-lg flex items-center justify-center bg-gray-100 bg-cover bg-center bg-no-repeat cursor-pointer preview"
     :style="{ 'background-image': `url(${project.file_url}${file.path}?_upt=${file.upt})` }" @click="preview"
   >
     <span v-if="file.file_type === 'loading'" class="icon-[lucide--loader-2] animate-spin text-primary" />
     <FileIcon v-else-if="!isImage(file)" class="h-7" :type="file.file_type" />
-  </div>
+  </div> -->
+  <span class="cursor-pointer" @click="preview">
+    <slot>
+      <FileIcon :type="file.file_type" class="h-11 shrink-0 cursor-pointer" />
+    </slot>
+  </span>
+
   <el-dialog v-model="show" fullscreen :show-close="false" class="!p-0 !rounded-none" append-to-body>
     <template #header>
       <div class="flex items-center justify-between h-14 px-3">
@@ -84,14 +90,15 @@ function close() {
           </div>
           <div class="flex items-center mt-10 space-x-40">
             <div class="flex items-center space-x-2">
-              <div
+              <!-- <div
                 class="w-14 h-10 rounded-lg flex items-center justify-center bg-gray-100 bg-cover bg-center bg-no-repeat cursor-pointer preview"
                 :style="{ 'background-image': `url(${project.file_url}${file.path}?_upt=${file.upt})` }"
                 @click="preview"
               >
                 <span v-if="file.file_type === 'loading'" class="icon-[lucide--loader-2] animate-spin text-primary" />
                 <FileIcon v-else-if="!isImage(file)" class="h-7" :type="file.file_type" />
-              </div>
+              </div> -->
+              <FileIcon :type="file.file_type" class="h-11 shrink-0 cursor-pointer" />
               <div class="flex-1 shrink-0">
                 <div>{{ file.file_name }}</div>
                 <div class="text-xs text-gray-500">
