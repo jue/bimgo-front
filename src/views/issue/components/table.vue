@@ -26,8 +26,10 @@ const filterData = ref([])
 async function getIssues(params = props.form) {
   loading.value = true
   const { data: res } = await http.post('/issue/list', params)
-  if (res.code === 200)
+  if (res.code === 200) {
+    filterData.value = []
     filterData.value = res.data
+  }
 
   setTimeout(() => {
     loading.value = false
@@ -73,15 +75,17 @@ const issueDetailRef = ref(null)
   <div>
     <np-table
       id :columns="columnsConfig" :rows="filterData" border class="border-y" :loading="loading"
-      :tree="!!form.groupby_field"
+      :tree="!!form.groupby_field" :options="{
+        idWidth: 68,
+      }"
     >
       <template #id-th>
-        <div class="text-right">
+        <div class="flex items-center justify-end h-full">
           #
         </div>
       </template>
       <template #id-td="{ row, column, index }">
-        <div class=" shrink-0 flex items-center relative space-x-2 -mx-3 px-2">
+        <div class=" shrink-0 flex items-center relative space-x-2">
           <div class="flex flex-1 w-6">
             <IssuesColumnMore :data="row" @refresh="getIssues" />
           </div>
@@ -91,13 +95,10 @@ const issueDetailRef = ref(null)
         </div>
       </template>
 
-      <template v-for="(column) in columnsConfig.filter(item => (item.value !== 'op' && item.value !== 'created_at'))" #[`${column.value}-header`]>
-        <div
-          v-if="column.value !== 'title'" :key="column.value"
-          class="cell flex items-center justify-between w-full h-full text-xs font-medium"
-        >
+      <template v-for="(column) in columnsConfig.filter(item => (item.value !== 'op'))" #[`${column.value}-header`]>
+        <div :key="column.value" class="cell flex items-center justify-between w-full h-full text-xs font-medium">
           <span>{{ column.label }}</span>
-          <IssuesColumnOption :data="column" :form="form" @update:form="getIssues()" />
+          <IssuesColumnOption v-if="column.value !== 'title'" :data="column" :form="form" @update:form="getIssues()" />
         </div>
       </template>
 
@@ -112,7 +113,9 @@ const issueDetailRef = ref(null)
       </template> -->
 
       <template #op-header="{ row, column, index }">
-        <IssuesSetcolums />
+        <div class="h-full flex items-center">
+          <IssuesSetcolums />
+        </div>
       </template>
 
       <template #title-data="{ row }">
@@ -137,13 +140,13 @@ const issueDetailRef = ref(null)
       </template>
 
       <template #uid-data="{ row }">
-        <div class="flex items-center">
+        <div class="flex items-center h-full">
           <UserAvatar :uid="row.uid" :size="24" />
           <UserName :uid="row.uid" />
         </div>
       </template>
       <template #created_at-data="{ row }">
-        <div class="flex items-center">
+        <div class="flex items-center h-full">
           {{ dayjs(row.created_at).format('YYYY-MM-DD HH:mm') }}
         </div>
       </template>

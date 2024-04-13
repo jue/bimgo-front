@@ -86,13 +86,13 @@ async function handleSubmit() {
       <div class="flex-1 space-y-3">
         <div
           class="w-full bg-gray-100 py-2 px-3 rounded-lg outline-[3px] outline-blue-100 border border-transparent"
-          :class="{ 'outline border-blue-400 bg-white': isFocus }"
+          :class="{ 'outline border-blue-800 bg-white': isFocus }"
         >
           <el-input
             ref="textareaRef" v-model="value" type="textarea" :autosize="{ minRows: 2 }"
             placeholder="尝试上传文件并添加评论…" @focus="isFocus = true" @blur="isFocus = false"
           />
-          <div class="flex items-center justify-between">
+          <div class="flex items-end justify-between">
             <FileUploader :id="id" cate="issue" :status="0" @add="addFile" @update="updateFile">
               <np-button icon="paperclip" class="hover:bg-gray-200 hover:text-blue-500 opacity-60" shape="square" />
             </FileUploader>

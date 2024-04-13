@@ -35,6 +35,14 @@ const form = reactive({
               <span>看板</span>
             </div>
           </el-tooltip>
+          <el-tooltip content="未开放" placement="top">
+            <div
+              class="flex items-center space-x-1 px-4 rounded-lg h-full cursor-pointer text-zinc-600 hover:text-blue-600"
+            >
+              <span class="icon-[lucide--square-kanban]" />
+              <span>日历</span>
+            </div>
+          </el-tooltip>
         </div>
         <div class="flex items-center">
           <np-button icon="plus" text class="bg-none hover:text-blue-500" size="32">

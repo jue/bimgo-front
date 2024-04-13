@@ -42,8 +42,8 @@ watch(() => props.data.uids, (val) => {
 </script>
 
 <template>
-  <el-dropdown trigger="click" :hide-on-click="false" class="w-full">
-    <div class="flex items-center justify-between w-full ">
+  <el-dropdown trigger="click" :hide-on-click="false" class="w-full h-full">
+    <div class="flex items-center justify-between w-full">
       <div class="flex items-center relative">
         <span v-if="value?.length === 0" class="text-gray-400">请选择</span>
         <span class="pl-2 flex items-center">

@@ -38,7 +38,7 @@ watch(() => props.data.status, (val) => {
 </script>
 
 <template>
-  <el-dropdown trigger="click" class="w-full">
+  <el-dropdown trigger="click" class="w-full h-full">
     <div class="flex items-center justify-between w-full ">
       <div
         class="text-xs border h-6 flex items-center px-2 rounded-full"
