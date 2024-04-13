@@ -11,6 +11,10 @@ const props = defineProps({
   border: Boolean,
   options: Object,
   selectedCell: Object,
+  show: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const emit = defineEmits(['hover', 'mouseleave'])
@@ -34,8 +38,8 @@ function onMouseLeave(event) {
 
 <template>
   <tr
-    :class="{ 'divide-x': border }" :style="{ height: `${size}px` }" class="group" @mouseenter="onMouseEnter"
-    @mouseleave="onMouseLeave"
+    v-show="show" :class="{ 'divide-x': border }" :style="{ height: `${size}px` }" class="group"
+    @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
   >
     <td v-if="id" class="relative">
       <div class="absolute inset-0 px-2">

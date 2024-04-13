@@ -13,7 +13,7 @@ async function addIssue() {
 
   const { data: res } = await http.post('/issue/add', { title: title.value })
   if (res.code === 200) {
-    emit('refresh', res.data)
+    emit('refresh')
     title.value = ''
     input.value.blur()
   }

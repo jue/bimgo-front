@@ -27,7 +27,6 @@ function handleEnter() {
 }
 
 async function saveEdit() {
-  console.log('-----------')
   isEdit.value = false
   if (value.value === '') {
     value.value = props.data.title

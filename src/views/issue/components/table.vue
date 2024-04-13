@@ -24,6 +24,7 @@ const loading = ref(false)
 const filterData = ref([])
 
 async function getIssues(params = props.form) {
+  console.log(params)
   loading.value = true
   const { data: res } = await http.post('/issue/list', params)
   if (res.code === 200) {

@@ -111,7 +111,7 @@ const allOptions = computed(() => {
             <template v-for="(group, groupIndex) in rows" :key="groupIndex">
               <TreeItem
                 :id="id" :group="group" :columns="columns" :size="size" :border="border" :options="allOptions"
-                :colspan="colspan"
+                :colspan="colspan" :selected-cell="selectedCell"
               >
                 <template #id-td="{ row, column, index }">
                   <slot name="id-td" :column="column" :row="row" :index="index" />
