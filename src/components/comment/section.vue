@@ -54,6 +54,9 @@ async function handleSubmit() {
     ElMessage.success('评论成功')
     value.value = ''
     files.value = []
+
+    const { getLogs } = useLogsStore()
+    getLogs(props.id, 'iisue')
   }
 }
 </script>

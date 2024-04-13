@@ -18,6 +18,9 @@ function isImage(file) {
 const show = ref(false)
 const fileUrl = ref('')
 async function preview() {
+  if (!props.file.status)
+    return
+
   show.value = true
   const { data: res } = await http.post('/file/url', {
     fid: props.file.fid,

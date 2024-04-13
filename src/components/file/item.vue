@@ -7,6 +7,28 @@ const props = defineProps({
     default: () => ({}),
   },
 })
+
+const emit = defineEmits(['deleted'])
+
+function deleteFiles() {
+  ElMessageBox.confirm(
+    `确定删除 ${props.file.file_name} 吗？`,
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      // type: 'warning',
+    },
+  )
+    .then(async () => {
+      const { data: res } = await deleteFile([props.file.fid])
+      if (res.code === 200) {
+        ElMessage.success('删除成功')
+        emit('deleted')
+      }
+    })
+    .catch(() => {
+    })
+}
 </script>
 
 <template>
@@ -21,23 +43,28 @@ const props = defineProps({
       </div>
     </div>
     <el-tooltip content="下载">
-      <el-button text class="w-6 h-6 p-0" @click="downloadFile(file.fid)">
+      <el-button
+        text class="w-6 h-6 p-0" :disabled="!file.status || file.file_type === 'loading'"
+        @click="downloadFile(file.fid)"
+      >
         <span class="icon-[lucide--download] text-sm" />
       </el-button>
     </el-tooltip>
-    <el-dropdown trigger="click" class="ml-0.5">
-      <el-button text class="w-6 h-6 p-0">
+    <el-dropdown trigger="click" class="ml-0.5" :disabled="!file.status || file.file_type === 'loading'">
+      <el-button text class="w-6 h-6 p-0" :disabled="!file.status || file.file_type === 'loading'">
         <span class="icon-[lucide--more-vertical] text-sm" />
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <!-- <el-dropdown-item @click="downloadFile(file.fid)">
+          <!-- <el-dropdown-item>
             <span class="icon-[lucide--eye] mr-2" />
             <span>预览</span>
           </el-dropdown-item> -->
-          <el-dropdown-item class="!text-red-500">
-            <span class="icon-[lucide--trash] mr-2" />
-            <span>删除</span>
+          <el-dropdown-item @click="deleteFiles">
+            <div class="text-red-500 flex items-center">
+              <span class="icon-[lucide--trash] mr-2" />
+              <span>删除</span>
+            </div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>

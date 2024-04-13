@@ -40,6 +40,7 @@ declare module 'vue' {
     ElLink: typeof import('element-plus/es')['ElLink']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']

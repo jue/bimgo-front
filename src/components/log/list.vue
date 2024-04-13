@@ -12,38 +12,19 @@ const props = defineProps({
   },
 })
 
+const { logs } = storeToRefs(useLogsStore())
+const { getLogs } = useLogsStore()
+
 const { issue_columns } = storeToRefs(useUserStore())
 
-const dataList = ref([])
-const isLoading = ref(false)
-
-async function getDataList() {
-  isLoading.value = true
-  const { data: res } = await http.post('/logs/list', {
-    id: props.id,
-    cate: props.cate,
-  })
-  dataList.value = res.code === 200 ? res.data : [] // 处理潜在错误
-
-  isLoading.value = false
-}
-
-// onMounted(() => {
-//   getDataList()
-// })
-
-watch(() => props.id, () => {
-  getDataList()
+watch(() => props.id, async () => {
+  getLogs(props.id, props.cate)
 })
-
-function getItem(field, value) {
-  return issue_columns[field]?.options.find(item => item.value === value)
-}
 </script>
 
 <template>
   <div class="w-full overflow-y-auto space-y-4">
-    <div v-for="(item, index) in dataList" :key="index" class="flex space-x-4">
+    <div v-for="(item, index) in logs" :key="index" class="flex space-x-4">
       <UserAvatar :uid="item.uid" :size="32" shape="square" />
       <div class="space-y-1 flex-1">
         <div class="space-x-2">
@@ -54,10 +35,7 @@ function getItem(field, value) {
         </div>
         <div class="space-y-2 text-gray-500">
           <!-- 日志列表开始 -->
-          <div
-            v-for="(log, log_index) in item.children" :key="log_index" class="flex items-center"
-            @click="console.log(log)"
-          >
+          <div v-for="(log, log_index) in item.children" :key="log_index" class="flex items-center">
             <div v-if="log.action === 'add'" class="flex-1">
               添加了新{{ cate === 'issue' ? '问题' : '任务' }} <span class="text-zinc-800">{{ log.content?.newVal }}</span>
             </div>
@@ -99,7 +77,17 @@ function getItem(field, value) {
                 {{ log.content?.newVal }}
               </div>
               <div v-if="log.content?.files?.length" class="px-4 py-3 bg-gray-100 rounded-lg">
-                <FileList :files="log.content?.files" />
+                <FileList :files="log.content?.files" @deleted="getLogs(id, cate)" />
+              </div>
+            </div>
+
+            <div v-if="log.action === 'remove'" class="flex-1 space-y-1">
+              <div>删除了文件:</div>
+              <div v-if="log.content?.newVal" class="px-4 py-3 bg-gray-100 rounded-lg">
+                {{ log.content?.newVal }}
+              </div>
+              <div v-if="log.content?.files?.length" class="px-4 py-3 bg-gray-100 rounded-lg">
+                <FileList :files="log.content?.files" @deleted="getLogs(id, cate)" />
               </div>
             </div>
 

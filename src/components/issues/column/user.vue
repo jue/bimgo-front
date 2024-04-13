@@ -23,8 +23,13 @@ async function changeValue(uid) {
     iid: props.data.iid,
     uid,
   })
-  if (res.code !== 200)
+  if (res.code !== 200) {
     value.value = value.value.filter(item => item !== uid)
+  }
+  else {
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.iid, 'iisue')
+  }
 }
 
 // const handleInput = debounce(async () => {

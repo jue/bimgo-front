@@ -23,6 +23,8 @@ async function changeValue(val) {
   if (res.code === 200) {
     itemValue.value = issueStatus.find(item => item.value === val)
     props.data.status = val
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.iid, 'iisue')
   }
   else {
     value.value = props.data.title

@@ -54,6 +54,8 @@ async function handleChange(val) {
     value.value = val
     // 使用计算属性更新 isPassTime
     isPassTime.value = calculateIsPassTime(value.value)
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.iid, 'iisue')
   }
 }
 
