@@ -56,7 +56,7 @@ const menus = ref([
     class="shrink-0 flex flex-col h-screen bg-[#181f38]"
     :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
   >
-    <div class="h-14 flex items-center justify-between px-2">
+    <div class="h-16 flex items-center justify-between px-2">
       <Logo class="w-12 fill-white" />
       <UserButton v-if="!sideCollapsed" />
     </div>

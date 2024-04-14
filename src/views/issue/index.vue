@@ -15,11 +15,6 @@ const form = reactive({
 
 <template>
   <div class="flex flex-col">
-    <div class="flex items-center justify-between px-4 mb-5">
-      <div class="flex items-center h-11 text-xl shrink-0">
-        问题列表
-      </div>
-    </div>
     <div class="px-5 space-x-3 flex items-center justify-between mb-3">
       <div class="flex items-center space-x-4">
         <div class="inline-flex items-center h-8 bg-gray-200/70 p-0.5 rounded-lg shrink-0">
@@ -78,3 +73,11 @@ const form = reactive({
     </pre>
   </div>
 </template>
+
+<route>
+  {
+    meta: {
+      title: '问题列表',
+    },
+  }
+</route>

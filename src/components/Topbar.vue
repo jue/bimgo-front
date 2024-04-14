@@ -1,10 +1,13 @@
 <script setup>
 const { changeSideCollapsed } = useSettingsStore()
 const { sideCollapsed } = storeToRefs(useSettingsStore())
+
+const route = useRoute()
+console.log(route)
 </script>
 
 <template>
-  <div class="flex items-center justify-between h-14 px-5">
+  <div class="flex items-center justify-between h-16 px-5">
     <div class="flex items-center space-x-4">
       <!-- <Logo v-if="sideCollapsed" class="w-12" /> -->
       <el-tooltip :content="sideCollapsed ? '展开侧边栏' : '收起侧边栏'" placement="right" hide-after="0" :show-arrow="false">
@@ -15,6 +18,9 @@ const { sideCollapsed } = storeToRefs(useSettingsStore())
           />
         </el-button>
       </el-tooltip>
+      <div v-if="route.meta?.title" class="text-xl font-medium">
+        {{ route.meta?.title }}
+      </div>
     </div>
     <div>
       <np-button class="bg-zinc-900 text-white" size="32">
