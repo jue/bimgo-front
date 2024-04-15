@@ -1,4 +1,5 @@
 <script setup>
+const emit = defineEmits(['close'])
 const drawerVisible = ref(false)
 const issuesDetailRef = ref(null)
 function open(data) {
@@ -11,6 +12,11 @@ function open(data) {
 defineExpose({
   open,
 })
+
+function close() {
+  drawerVisible.value = false
+  emit('close')
+}
 </script>
 
 <template>
@@ -32,7 +38,7 @@ defineExpose({
         </div>
       </div>
       <div class="flex-1 overflow-y-scroll">
-        <IssuesDetail ref="issuesDetailRef" />
+        <IssuesDetail ref="issuesDetailRef" @close="close" />
       </div>
     </div>
   </el-drawer>

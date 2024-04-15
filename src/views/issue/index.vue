@@ -2,6 +2,8 @@
 import Table from './components/table.vue'
 import GroupBy from './components/GroupBy.vue'
 
+const router = useRouter()
+
 const issuesRef = ref(null)
 
 const form = reactive({
@@ -65,6 +67,11 @@ const form = reactive({
             <span class="icon-[lucide--list-filter] text-gray-500" />
           </template>
         </el-input>
+        <el-tooltip content="存档问题">
+          <el-button class="h-8 w-8 p-0" @click="router.push('/issue/archive')">
+            <span class="icon-[lucide--archive]" />
+          </el-button>
+        </el-tooltip>
       </div>
     </div>
     <Table :form="form" />

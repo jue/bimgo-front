@@ -12,6 +12,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
     "@vueuse/core": "^10.9.0",
+    "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",

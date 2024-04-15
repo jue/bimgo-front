@@ -1,6 +1,8 @@
 <script setup>
 import dayjs from 'dayjs'
 
+const emit = defineEmits(['refresh', 'close'])
+
 const route = useRoute()
 
 const iid = ref(route.query.iid || '')
@@ -25,6 +27,24 @@ onMounted(() => {
 defineExpose({
   getTaskDetail,
 })
+
+function handleClick(type) {
+  const text = type === 'archive' ? '归档' : '删除'
+  ElMessageBox.confirm(`确定要${text}吗?`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(async () => {
+    const { data: res } = await http.post('/issue/update/status', {
+      status: type,
+      iid: iid.value,
+    })
+    if (res.code === 200)
+      emit('close')
+  }).catch(() => {
+
+  })
+}
 </script>
 
 <template>
@@ -36,9 +56,11 @@ defineExpose({
       <el-scrollbar class="flex-1">
         <div class="flex-1 flex flex-col space-y-5">
           <div>
-            <!-- <np-editor v-model="issueData.description" /> -->
+            <IssuesColumnDescription :data="issueData" />
+
+            <!-- <np-editor v-model="issueData.description" />
             {{ issueData.description || '' }}
-            <span class="text-gray-400 cursor-pointer">些问题还没有描述，点击添加。</span>
+            <span class="text-gray-400 cursor-pointer">些问题还没有描述，点击添加。</span> -->
           </div>
 
           <file-list :id="issueData.iid" cate="issue" />
@@ -87,14 +109,17 @@ defineExpose({
       </div>
 
       <div class="space-y-1 py-2">
-        <button variant="ghost" class="h-7 px-2 w-full flex items-center justify-start text-left hover:bg-gray-100">
+        <button
+          class="h-7 px-2 w-full flex items-center justify-start text-left hover:bg-gray-100"
+          @click="handleClick('archive')"
+        >
           <span class="icon-[lucide--archive] mr-2" />
           <span>归档</span>
         </button>
 
         <button
-          variant="ghost"
           class="h-7 px-2 w-full flex items-center justify-start  text-left text-red-500 hover:bg-red-50 hover:text-red-500"
+          @click="handleClick('delete')"
         >
           <span class="icon-[lucide--trash] mr-2" />
           <span>删除</span>

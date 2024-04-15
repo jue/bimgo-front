@@ -3,7 +3,6 @@ const { changeSideCollapsed } = useSettingsStore()
 const { sideCollapsed } = storeToRefs(useSettingsStore())
 
 const route = useRoute()
-console.log(route)
 </script>
 
 <template>

@@ -24,7 +24,6 @@ const loading = ref(false)
 const filterData = ref([])
 
 async function getIssues(params = props.form) {
-  console.log(params)
   loading.value = true
   const { data: res } = await http.post('/issue/list', params)
   if (res.code === 200) {
@@ -86,7 +85,7 @@ const issueDetailRef = ref(null)
         </div>
       </template>
       <template #id-td="{ row, column, index }">
-        <div class=" shrink-0 flex items-center relative space-x-2">
+        <div class=" shrink-0 flex items-center relative space-x-2 h-full">
           <div class="flex flex-1 w-6">
             <IssuesColumnMore :data="row" @refresh="getIssues" />
           </div>
@@ -196,6 +195,6 @@ const issueDetailRef = ref(null)
       </template>
     </np-table>
     <IssuesAdd2 @refresh="getIssues" />
-    <IssuesBox ref="issueDetailRef" />
+    <IssuesBox ref="issueDetailRef" @close="getIssues" />
   </div>
 </template>

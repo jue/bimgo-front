@@ -63,6 +63,8 @@ declare module 'vue' {
     IssuesAdd2: typeof import('./src/components/issues/add2.vue')['default']
     IssuesBox: typeof import('./src/components/issues/box.vue')['default']
     IssuesColumnDate: typeof import('./src/components/issues/column/date.vue')['default']
+    IssuesColumnDesc: typeof import('./src/components/issues/column/desc.vue')['default']
+    IssuesColumnDescription: typeof import('./src/components/issues/column/description.vue')['default']
     IssuesColumnInput: typeof import('./src/components/issues/column/input.vue')['default']
     IssuesColumnMore: typeof import('./src/components/issues/column/more.vue')['default']
     IssuesColumnOption: typeof import('./src/components/issues/column/option.vue')['default']
