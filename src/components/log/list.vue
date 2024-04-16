@@ -55,23 +55,31 @@ watch(() => props.id, async () => {
                   更新了{{ cate === 'issue' ? '问题' : '任务' }}描述 <span class="italic text-gray-300 text-xs">(仅管理员可见)</span>
                 </span>
                 <template v-else>
-                  将<span>{{ issue_columns[log.content?.field]?.label }}</span>变更为<span class="text-zinc-800 px-1">
-                    <template v-if="issue_columns[log.content?.field]?.options">
-                      <div
-                        class="text-xs border h-6 flex items-center px-2 rounded-full" :style="{
-                          borderColor: `${issue_columns[log.content?.field].options.find(item => item.value
-                            === log.content?.newVal)?.color}`,
-                          backgroundColor: `${issue_columns[log.content?.field].options.find(item => item.value
-                            === log.content?.newVal)?.color}10`,
-                          color: `${issue_columns[log.content?.field].options.find(item => item.value
-                            === log.content?.newVal)?.color}` }"
-                      >
-                        {{ issue_columns[log.content?.field].options.find(item => item.value
-                          === log.content?.newVal)?.label }}
-                      </div>
-                    </template>
-                    <template v-else>{{ log.content?.newVal }}</template>
-                  </span>
+                  <template v-if="log.content?.newVal === 'archive'">
+                    <span class="font-medium text-zinc-900">归档了该{{ cate === 'issue' ? '问题' : '任务' }}</span>
+                  </template>
+                  <template v-else-if="log.content?.newVal === 'delete'">
+                    <span class="text-red-500">删除了该{{ cate === 'issue' ? '问题' : '任务' }}</span>
+                  </template>
+                  <template v-else>
+                    将<span>{{ issue_columns[log.content?.field]?.label }}</span>变更为<span class="text-zinc-800 px-1">
+                      <template v-if="issue_columns[log.content?.field]?.options">
+                        <div
+                          class="text-xs border h-6 flex items-center px-2 rounded-full" :style="{
+                            borderColor: `${issue_columns[log.content?.field].options.find(item => item.value
+                              === log.content?.newVal)?.color}`,
+                            backgroundColor: `${issue_columns[log.content?.field].options.find(item => item.value
+                              === log.content?.newVal)?.color}10`,
+                            color: `${issue_columns[log.content?.field].options.find(item => item.value
+                              === log.content?.newVal)?.color}` }"
+                        >
+                          {{ issue_columns[log.content?.field].options.find(item => item.value
+                            === log.content?.newVal)?.label }}
+                        </div>
+                      </template>
+                      <template v-else>{{ log.content?.newVal }}</template>
+                    </span>
+                  </template>
                 </template>
               </template>
             </div>

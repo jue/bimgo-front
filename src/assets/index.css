@@ -155,6 +155,10 @@
   @apply p-6 !important;
 }
 
+.el-breadcrumb__separator {
+  @apply font-normal  mx-1.5 !important;
+}
+
 /* 以下为修改element-plus样式 结束 */
 :focus, :focus-visible {
   outline: none !important;

@@ -27,6 +27,7 @@ import Unknown from '@/assets/svg_icons/unknown.svg'
 import Video from '@/assets/svg_icons/video.svg'
 import Word from '@/assets/svg_icons/word.svg'
 import Zip from '@/assets/svg_icons/zip.svg'
+import Folder from '@/assets/svg_icons/folder.svg'
 
 defineProps({
   type: {
@@ -80,6 +81,9 @@ function streamMime(type) {
       v-else-if="streamMime(type).startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')"
     >
       <Excel />
+    </template>
+    <template v-else-if="streamMime(type).startsWith('folder')">
+      <Folder />
     </template>
     <template v-else>
       <Unknown />
