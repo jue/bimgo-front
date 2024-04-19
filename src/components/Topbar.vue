@@ -6,7 +6,7 @@ const route = useRoute()
 </script>
 
 <template>
-  <div class="flex items-center justify-between h-16 px-5">
+  <div class="flex items-center justify-between h-16 px-5 shrink-0 shadow">
     <div class="flex items-center space-x-4">
       <!-- <Logo v-if="sideCollapsed" class="w-12" /> -->
       <el-tooltip :content="sideCollapsed ? '展开侧边栏' : '收起侧边栏'" placement="right" hide-after="0" :show-arrow="false">

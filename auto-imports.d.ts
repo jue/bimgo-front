@@ -38,6 +38,7 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const extractID: typeof import('./src/lib/file.js')['extractID']
   const filterData: typeof import('./src/lib/index.js')['filterData']
   const filterDataFn: typeof import('./src/lib/index.js')['filterDataFn']
   const formatDate: typeof import('./src/lib/index.js')['formatDate']

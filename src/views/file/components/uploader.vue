@@ -1,7 +1,6 @@
 <script setup>
 const emit = defineEmits(['uploaded'])
 const route = useRoute()
-const dir_id = ref(route.query.dir_id || '')
 const uploadInput = ref(null)
 const loading = ref(false)
 function seletFile() {
@@ -12,7 +11,7 @@ async function uploader(event) {
   loading.value = true
   const formData = new FormData()
   formData.append('file', event.target.files[0])
-  formData.append('dir_id', dir_id.value)
+  formData.append('dir_id', route.query.dir_id || '')
 
   const { data: res } = await http.post('/uffile/upload', formData)
   if (res.code === 200)
@@ -24,7 +23,7 @@ async function uploader(event) {
 </script>
 
 <template>
-  <el-button type="primary" bg :loading="loading" :disabled="loading" @click="seletFile">
+  <el-button type="primary" bg :loading="loading" :disabled="loading" class="rounded-full" @click="seletFile">
     <div class="space-x-2 flex items-center">
       <span v-if="!loading" class="icon-[lucide--file-plus-2]" />
       <span>上传文件</span>
