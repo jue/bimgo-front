@@ -1,9 +1,18 @@
 <script setup>
 import dayjs from 'dayjs'
 import More from './more.vue'
-import { formatSize } from '@/lib/utils.js'
+import Preview from './preview.vue'
+import { downloadFile, formatSize } from '@/lib/file.js'
 
+const props = defineProps({
+  keyword: {
+    type: String,
+    default: '',
+  },
+})
 const emit = defineEmits(['update:selection'])
+
+const previewRef = ref(null)
 
 const route = useRoute()
 const router = useRouter()
@@ -19,7 +28,7 @@ async function getDataList() {
   loading.value = true
   const { data: res } = await http.post('/uffile/file_list', {
     dir_id: dir_id.value,
-    key: route.query.key || '',
+    key: props.keyword,
   })
   if (res.code === 200)
     dataList.value = res.data
@@ -122,7 +131,10 @@ function handleClickFile(row) {
         dir_id: row.dir_id,
       },
     })
+    return false
   }
+  // 预览文件
+  previewRef.value.open(row.file_path)
 }
 
 defineExpose({
@@ -184,10 +196,24 @@ async function handleDelete(arr) {
 function handleSelectionChange(selection) {
   emit('update:selection', selection)
 }
+// const currentFile = ref(null)
+// function handleCurrentChange(row) {
+//   currentFile.value = row
+//   previewRef.value.open(row.file_path)
+// }
+
+const searchFileByKey = debounce(() => {
+  getDataList()
+}, 800)
+
+watch(() => props.keyword, () => {
+  searchFileByKey()
+})
 </script>
 
 <template>
-  <el-table ref="multipleTableRef" v-loading="loading" :data="dataList" fixed empty-text="当前列表为空" @selection-change="handleSelectionChange">
+  {{ key }}
+  <el-table ref="multipleTableRef" v-loading="loading" :data="dataList" fixed empty-text="当前列表为空" highlight-current-row @selection-change="handleSelectionChange">
     <el-table-column type="selection" />
     <el-table-column prop="file_name" label="文件名" min-width="300" show-overflow-tooltip>
       <template #default="scope">
@@ -198,7 +224,7 @@ function handleSelectionChange(selection) {
           />
           <div class="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-500 cursor-pointer" :title="scope.row?.dir_name || scope.row?.file_name">
             <div v-if="scope.row?.edit === 'create_folder' || scope.row?.edit === 'edit_file_name' || scope.row?.edit === 'edit_folder_name'" class="flex items-center space-x-2" @click.stop>
-              <el-input ref="inputRef" v-model="input" size="small" class="w-1/2" placeholder="请输入" @keyup.enter="submitName(scope.row)" />
+              <el-input ref="inputRef" v-model="input" size="small" class="w-1/2 border bg-white" placeholder="请输入" @keyup.enter="submitName(scope.row)" />
               <el-button class="w-6 h-6" type="primary" size="small" @click.stop="submitName(scope.row)">
                 <span class="icon-[lucide--check]" />
               </el-button>
@@ -211,7 +237,7 @@ function handleSelectionChange(selection) {
             </template>
           </div>
           <div v-if="!scope.row?.edit" class="operation shrink-0 hidden">
-            <el-button text class="w-6 h-6 p-0" title="下载">
+            <el-button text class="w-6 h-6 p-0" title="下载" @click.stop="downloadFile(scope.row)">
               <span class="icon-[lucide--download] text-blue-600" />
             </el-button>
             <el-button text class="w-6 h-6 p-0" title="删除" @click.stop="handleDelete([scope.row])">
@@ -220,49 +246,8 @@ function handleSelectionChange(selection) {
             <el-button text class="w-6 h-6 p-0" title="重命名" @click.stop="handleRename(scope.row)">
               <span class="icon-[lucide--text-cursor-input] text-blue-600" />
             </el-button>
-            <el-button text class="w-6 h-6 p-0" title="移动">
-              <span class="icon-[lucide--move] text-blue-600" />
-            </el-button>
           </div>
         </div>
-
-        <!-- <div class="flex items-center cursor-pointer text-gray-500 relative w-full hidden" @click="handleClickFile(scope.row)">
-          <div class="flex items-center space-x-3 flex-1 w-full relative z-10">
-            <FileIcon
-              :type="scope.row?.file_type || 'folder'"
-              class="h-8 shrink-0 cursor-pointer !p-1 bg-transparent"
-            />
-
-            <div v-if="scope.row?.edit === 'create_folder' || scope.row?.edit === 'edit_file_name' || scope.row?.edit === 'edit_folder_name'" class="flex items-center space-x-2" @click.stop>
-              <el-input ref="inputRef" v-model="input" size="small" @keyup.enter="submitName(scope.row)" />
-              <el-button class="w-6 h-6" type="primary" size="small" @click.stop="submitName(scope.row)">
-                <span class="icon-[lucide--check]" />
-              </el-button>
-              <el-button class="w-6 h-6" type="primary" size="small" @click.stop="cancelAddFolder(scope.row, scope.$index)">
-                <span class="icon-[lucide--x]" />
-              </el-button>
-            </div>
-
-            <div v-else class="flex-1 shrink-0 whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-500" :title="scope.row?.dir_name || scope.row?.file_name">
-              {{ scope.row?.dir_name || scope.row?.file_name }}
-            </div>
-          </div>
-
-          <div class="operation items-center bg-[#f5f7fa] z-20 flex px-3 space-x-2" @click.stop>
-            <el-button text class="w-6 h-6 p-0">
-              <span class="icon-[lucide--download] text-blue-600" />
-            </el-button>
-            <el-button text class="w-6 h-6 p-0" @click.stop="handleDelete([scope.row])">
-              <span class="icon-[lucide--trash-2] text-blue-600" />
-            </el-button>
-            <el-button text class="w-6 h-6 p-0" title="重命名" @click.stop="handleRename(scope.row)">
-              <span class="icon-[lucide--text-cursor-input] text-blue-600" />
-            </el-button>
-            <el-button text class="w-6 h-6 p-0">
-              <span class="icon-[lucide--move] text-blue-600" />
-            </el-button>
-          </div>
-        </div> -->
       </template>
     </el-table-column>
     <el-table-column prop="update_at" label="修改时间" sortable width="250">
@@ -276,6 +261,7 @@ function handleSelectionChange(selection) {
       </template>
     </el-table-column>
   </el-table>
+  <Preview ref="previewRef" />
 </template>
 
 <style lang="scss" scoped>

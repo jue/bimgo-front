@@ -64,16 +64,22 @@ function openFolderDialog() {
         </el-button>
       </div>
       <div>
-        <el-input v-model="key" placeholder="搜索我的文件" clearable class="w-80 !rounded-full">
+        <el-input v-model="key" placeholder="搜索我的文件" clearable class="w-80 !rounded-full bg-[#f5f7fa]">
           <template #prefix>
             <span class="icon-[lucide--search] text-gray-500" />
           </template>
         </el-input>
       </div>
     </div>
-    <Breadcrumb :dir-id="route.query.dir_id" @update:dir-id="router.push({ name: 'file', query: { dir_id: $event } })" />
+    <Breadcrumb v-if="!key" :dir-id="route.query.dir_id" @update:dir-id="router.push({ name: 'file', query: { dir_id: $event } })" />
+    <div v-else class="flex items-center h-10 shrink-0">
+      <span>搜索：</span>
+      <el-tag type="primary" closable disable-transitions round @close="key = ''">
+        {{ key }}
+      </el-tag>
+    </div>
     <!-- 文件列表 -->
-    <FileList ref="fileListRef" @update:selection="updateSelection" />
+    <FileList ref="fileListRef" :keyword="key" @update:selection="updateSelection" />
     <FolderDialog ref="folderDialogRef" :selections="selections" @moved="fileListRef.getDataList()" />
   </div>
 </template>
@@ -81,7 +87,7 @@ function openFolderDialog() {
 <style scoped lang="scss">
 :deep(){
   .el-input__wrapper {
-    @apply rounded-full bg-[#f5f7fa] text-gray-500 shadow-none;
+    @apply bg-transparent text-gray-500 shadow-none;
   }
 }
 </style>

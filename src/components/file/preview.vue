@@ -51,7 +51,7 @@ function close() {
 
   <el-dialog v-model="show" fullscreen :show-close="false" class="!p-0 !rounded-none" append-to-body>
     <template #header>
-      <div class="flex items-center justify-between h-14 px-3">
+      <div class="flex items-center justify-between h-14 px-3 bg-white border-b">
         <div class="space-y-1">
           <div class="font-bold">
             {{ file.file_name }}
@@ -75,7 +75,7 @@ function close() {
         </div>
       </div>
     </template>
-    <div class="h-full flex overflow-auto">
+    <div class="h-full flex overflow-auto bg-gray-100">
       <div class="flex-1 flex items-center justify-center p-10">
         <!-- 预览图片 -->
         <el-image v-if="file.file_type.startsWith('image/')" class="h-full" :src="fileUrl" />
