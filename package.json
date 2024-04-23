@@ -29,7 +29,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
-    "vue": "^3.3.11",
+    "vue": "^3.4.21",
     "vue-datepicker-next": "^1.0.3",
     "vue-draggable-plus": "^0.3.5",
     "vue-pdf-embed": "^2.0.2",

@@ -88,6 +88,9 @@
 }
 
 /* 以下为修改element-plus样式 开始 */
+.el-button {
+  @apply !px-3;
+}
 .el-dropdown-menu {
   @apply !p-1 min-w-32;
 }
@@ -157,6 +160,12 @@
 
 .el-breadcrumb__separator {
   @apply font-normal  mx-1.5 !important;
+}
+.el-popper {
+  @apply -mt-3;
+}
+.el-popper__arrow {
+  @apply hidden;
 }
 
 /* 以下为修改element-plus样式 结束 */

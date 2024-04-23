@@ -4,7 +4,7 @@ import GroupBy from './components/GroupBy.vue'
 
 const router = useRouter()
 
-const issuesRef = ref(null)
+const tableRef = ref(null)
 
 const form = reactive({
   key: '',
@@ -13,11 +13,15 @@ const form = reactive({
   sort: '',
   groupby_field: '',
 })
+
+function getIssues() {
+  tableRef.value.getIssues(form)
+}
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <div class="px-5 space-x-3 flex items-center justify-between mb-3">
+  <div class="flex flex-col h-full">
+    <div class="px-5 space-x-3 flex items-center justify-between h-12 shrink-0">
       <div class="flex items-center space-x-4">
         <div class="inline-flex items-center h-8 bg-gray-200/70 p-0.5 rounded-lg shrink-0">
           <div class="flex items-center space-x-1 px-4 bg-white rounded-lg h-full cursor-pointer">
@@ -42,23 +46,7 @@ const form = reactive({
           </el-tooltip>
         </div>
         <div class="flex items-center">
-          <np-button icon="plus" text class="bg-none hover:text-blue-500" size="32">
-            <span>添加问题</span>
-          </np-button>
           <GroupBy v-model="form.groupby_field" />
-          <el-dropdown>
-            <np-button icon="more-horizontal" text class="bg-none hover:text-blue-500" size="32" />
-            <template #dropdown>
-              <el-dropdown-menu class="w-48">
-                <el-dropdown-item>
-                  <div class="flex items-center w-full">
-                    <span class="icon-[lucide--plus-circle] mr-2" />
-                    <span>添加问题</span>
-                  </div>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
         </div>
       </div>
       <div class="flex items-center space-x-4">
@@ -72,12 +60,13 @@ const form = reactive({
             <span class="icon-[lucide--archive]" />
           </el-button>
         </el-tooltip>
+        <IssuesAdd @close="getIssues" />
       </div>
     </div>
-    <Table :form="form" />
-    <pre>
+    <Table ref="tableRef" :form="form" />
+    <!-- <pre>
       {{ form }}
-    </pre>
+    </pre> -->
   </div>
 </template>
 

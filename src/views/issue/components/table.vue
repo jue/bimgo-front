@@ -68,11 +68,15 @@ watch(() => issue_columns, () => {
   deep: true,
 })
 
+defineExpose({
+  getIssues,
+})
+
 const issueDetailRef = ref(null)
 </script>
 
 <template>
-  <div>
+  <div class="flex-1 overflow-y-auto">
     <np-table
       id :columns="columnsConfig" :rows="filterData" border class="border-y" :loading="loading"
       :tree="!!form.groupby_field" :options="{
@@ -90,7 +94,7 @@ const issueDetailRef = ref(null)
             <IssuesColumnMore :data="row" @refresh="getIssues" />
           </div>
           <div class="w-4 h-8 flex items-center justify-center text-gray-500">
-            {{ index + 1 }}
+            #{{ row.id }}
           </div>
         </div>
       </template>

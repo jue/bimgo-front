@@ -1,14 +1,15 @@
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   $colors: (
     'primary': (
-      'base': #2563eb,
+      // 'base': #2563eb,
+      'base': #262626,
     ),
   ),
   $text-color: (
     'regular': '#070921',
   ),
   $border-radius: (
-    'base': 6px,
+    'base': 3px,
   ),
   $button: (
     'font-weight': 400,

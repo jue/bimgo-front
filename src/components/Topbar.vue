@@ -22,12 +22,12 @@ const route = useRoute()
       </div>
     </div>
     <div>
-      <np-button class="bg-zinc-900 text-white" size="32">
+      <el-button type="primary">
         <div class="flex items-center space-x-1">
           <span class="icon-[lucide--plus]" />
-          <span>创建</span>
+          <span>创建事项</span>
         </div>
-      </np-button>
+      </el-button>
     </div>
   </div>
 </template>

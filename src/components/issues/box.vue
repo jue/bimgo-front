@@ -24,7 +24,7 @@ function close() {
     v-model="drawerVisible" title="用户信息" :with-header="false" :modal="true" :append-to-body="true" size="950"
     custom-class="np-drawer"
   >
-    <div class="flex flex-col h-full">
+    <!-- <div class="flex flex-col h-full">
       <div class="flex items-center justify-between h-14 border-b px-4 shrink-0">
         <div>
           问题
@@ -40,6 +40,7 @@ function close() {
       <div class="flex-1 overflow-y-scroll">
         <IssuesDetail ref="issuesDetailRef" @close="close" />
       </div>
-    </div>
+    </div> -->
+    <IssuesDetail ref="issuesDetailRef" @close="close" />
   </el-drawer>
 </template>

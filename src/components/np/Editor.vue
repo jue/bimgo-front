@@ -119,7 +119,7 @@ const editorConfig = {
           'https://img.nipao.com/upload',
           params,
         )
-        insertFn(`https://img.nipao.com/${res.data[0]?.src}`)
+        insertFn(`https://img.nipao.com${res.data[0]?.src}`)
       },
     },
   },

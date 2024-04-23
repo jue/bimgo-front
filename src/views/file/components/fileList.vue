@@ -212,7 +212,6 @@ watch(() => props.keyword, () => {
 </script>
 
 <template>
-  {{ key }}
   <el-table ref="multipleTableRef" v-loading="loading" :data="dataList" fixed empty-text="当前列表为空" highlight-current-row @selection-change="handleSelectionChange">
     <el-table-column type="selection" />
     <el-table-column prop="file_name" label="文件名" min-width="300" show-overflow-tooltip>

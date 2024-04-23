@@ -145,6 +145,13 @@ function disabledDate(date) {
   .mx-calendar-content .cell.active {
     @apply rounded-md;
   }
+
+}
+
+:deep(){
+  .mx-datepicker-popup {
+    z-index: 4000 important;
+  }
 }
 
 .close:hover {

@@ -48,8 +48,11 @@ function handleClick(type) {
 </script>
 
 <template>
-  <div class="flex space-x-4 px-4 h-full">
-    <div class="flex-1 flex flex-col">
+  <div class="flex h-full">
+    <div class="flex-1 flex flex-col py-4 px-6">
+      <div class="font-medium">
+        问题 #{{ issueData.id }}
+      </div>
       <div class="py-4">
         <IssuesColumnInput :data="issueData" class="text-xl" />
       </div>
@@ -72,26 +75,26 @@ function handleClick(type) {
       </div>
     </div>
 
-    <div class="w-72 shrink-0 space-y-2">
+    <div class="w-1/3 min-w-64 shrink-0 space-y-2 bg-gray-50 px-6 py-4">
       <div class="space-y-1 border-b py-2">
         <div class="text-gray-400 text-xs font-medium px-2">
           执行人
         </div>
-        <IssuesColumnUser :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
+        <IssuesColumnUser :data="issueData" class="hover:bg-gray-100 px-2 !h-10 rounded-lg" />
       </div>
 
       <div class="space-y-1 border-b py-2">
         <div class="text-gray-400 text-xs font-medium px-2">
           状态
         </div>
-        <IssuesColumnStatus :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
+        <IssuesColumnStatus :data="issueData" class="hover:bg-gray-100 px-2 !h-10 rounded-lg" />
       </div>
 
       <div class="space-y-1 border-b py-2">
         <div class="text-gray-400 text-xs font-medium px-2">
           优先级
         </div>
-        <IssuesColumnPriority :data="issueData" class="hover:bg-gray-100 px-2 h-10 rounded-lg" />
+        <IssuesColumnPriority :data="issueData" class="hover:bg-gray-100 px-2 !h-10 rounded-lg" />
       </div>
 
       <div class="space-y-1 border-b py-2">

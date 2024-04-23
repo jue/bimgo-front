@@ -16,6 +16,8 @@ const props = defineProps({
   },
 })
 
+const issuesAddRef = ref(null)
+
 const iconSize = computed(() => Math.min(props.size * 0.667, 16))
 
 const buttonClasses = computed(() => ({
@@ -31,11 +33,13 @@ const buttonStyle = computed(() => ({
 </script>
 
 <template>
-  <button
-    class="inline-flex items-center justify-center rounded-lg active:bg-opacity-75 select-none overflow-hidden space-x-1"
-    :class="[buttonClasses]" :style="buttonStyle"
-  >
-    <Icon v-if="icon" :name="icon" :size="iconSize" />
-    <slot />
-  </button>
+  <div>
+    <button
+      class="inline-flex items-center justify-center rounded-lg active:bg-opacity-75 select-none overflow-hidden space-x-1"
+      :class="[buttonClasses]" :style="buttonStyle"
+    >
+      <Icon v-if="icon" :name="icon" :size="iconSize" />
+      <slot />
+    </button>
+  </div>
 </template>

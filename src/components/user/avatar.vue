@@ -14,7 +14,11 @@ const props = defineProps({
   },
 })
 const { users } = storeToRefs(useSettingsStore())
-const info = users.value.find(item => item.uid === props.uid)
+const info = ref(users.value.find(item => item.uid === props.uid))
+
+watch(() => props.uid, () => {
+  info.value = users.value.find(item => item.uid === props.uid)
+}, { immediate: true })
 </script>
 
 <template>
