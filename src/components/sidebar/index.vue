@@ -1,5 +1,6 @@
 <script setup>
 const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
+const { changeSideCollapsed } = useSettingsStore()
 const route = useRoute()
 const menus = ref([
   {
@@ -58,7 +59,9 @@ const menus = ref([
   >
     <div class="h-16 flex items-center justify-between px-2">
       <Logo class="w-12 fill-white" />
-      <UserButton v-if="!sideCollapsed" />
+      <el-tooltip v-if="!sideCollapsed" content="收起侧边栏" hide-after="0" :show-arrow="false">
+        <span class="icon-[lucide--panel-left-close] text-gray-300 text-xl cursor-pointer" @click="changeSideCollapsed()" />
+      </el-tooltip>
     </div>
 
     <el-scrollbar class="flex-1 h-full w-full">

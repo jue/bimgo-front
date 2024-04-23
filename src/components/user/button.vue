@@ -23,8 +23,8 @@ function logout() {
 <template>
   <el-dropdown trigger="click" placement="bottom-start">
     <div class="flex items-center space-x-1">
-      <UserAvatar :uid="user?.uid" size="24" />
-      <span class="text-white icon-[lucide--chevrons-up-down]" />
+      <UserAvatar :uid="user?.uid" :size="32" />
+      <span class="icon-[lucide--chevrons-up-down]" />
     </div>
 
     <template #dropdown>

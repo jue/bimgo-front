@@ -162,7 +162,7 @@
   @apply font-normal  mx-1.5 !important;
 }
 .el-popper {
-  @apply -mt-3;
+  @apply -mt-[8px];
 }
 .el-popper__arrow {
   @apply hidden;

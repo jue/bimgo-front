@@ -16,3 +16,11 @@ const form = reactive({
     <task-table :form="form" />
   </div>
 </template>
+
+<route>
+  {
+    meta: {
+      title: '工程进度',
+    },
+  }
+</route>

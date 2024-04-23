@@ -9,7 +9,7 @@ const route = useRoute()
   <div class="flex items-center justify-between h-16 px-5 shrink-0 shadow">
     <div class="flex items-center space-x-4">
       <!-- <Logo v-if="sideCollapsed" class="w-12" /> -->
-      <el-tooltip :content="sideCollapsed ? '展开侧边栏' : '收起侧边栏'" placement="right" hide-after="0" :show-arrow="false">
+      <el-tooltip v-if="sideCollapsed" :content="sideCollapsed ? '展开侧边栏' : '收起侧边栏'" :show-arrow="false">
         <el-button text class="w-8 h-8" @click="changeSideCollapsed()">
           <span
             :class="{ '!icon-[lucide--menu]': sideCollapsed }"
@@ -22,12 +22,13 @@ const route = useRoute()
       </div>
     </div>
     <div>
-      <el-button type="primary">
+      <!-- <el-button type="primary">
         <div class="flex items-center space-x-1">
           <span class="icon-[lucide--plus]" />
           <span>创建事项</span>
         </div>
-      </el-button>
+      </el-button> -->
+      <UserButton />
     </div>
   </div>
 </template>
