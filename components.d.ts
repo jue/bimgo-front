@@ -98,6 +98,7 @@ declare module 'vue' {
     NpTableTableHeader: typeof import('./src/components/np/table/TableHeader.vue')['default']
     NpTableTreeItem: typeof import('./src/components/np/table/TreeItem.vue')['default']
     NpTextarea: typeof import('./src/components/np/textarea/index.vue')['default']
+    Password: typeof import('primevue/password')['default']
     Qrcode: typeof import('./src/components/Qrcode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

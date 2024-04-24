@@ -4,78 +4,36 @@
  
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 213 13% 14%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 4.92% 11.96%;
- 
-    --card: 0 0% 100%;
-    --card-foreground: 220 4.92% 11.96%;
- 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
- 
-    --primary: 164.31 100% 25.49%;
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --ring: 220 4.92% 11.96%;
- 
-    --radius: 0.5rem;
+    --primary-50: 236 253 245;
+    --primary-100: 209 250 229;
+    --primary-200: 167 243 208;
+    --primary-300: 110 231 183;
+    --primary-400: 52 211 153;
+    --primary-500: 16 185 129;
+    --primary-600: 5 150 105;
+    --primary-700: 4 120 87;
+    --primary-800: 6 95 70;
+    --primary-900: 4 78 56;
+    --primary-950: 2 44 34;
+    --surface-0: 255 255 255;
+    --surface-50: 248 250 252;
+    --surface-100: 241 245 249;
+    --surface-200: 226 232 240;
+    --surface-300: 203 213 225;
+    --surface-400: 148 163 184;
+    --surface-500: 100 116 139;
+    --surface-600: 71 85 105;
+    --surface-700: 45 55 72;
+    --surface-800: 30 41 59;
+    --surface-900: 15 23 42;
+    --surface-950: 3 6 23;
+  }
 
-    --el-font-weight-primary: 400;
-  }
- 
-  .dark {
-    --background: 220 4.92% 11.96%;
-    --foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --popover: 220 4.92% 11.96%;
-    --popover-foreground: 210 40% 98%;
- 
-    --card: 220 4.92% 11.96%;
-    --card-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --ring: 212.7 26.8% 83.9%;
-  }
 }
  
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground text-sm;
+    @apply text-sm;
   }
   
   button {
@@ -106,7 +64,7 @@
 }
 
 .el-dialog__header {
-  @apply text-lg font-semibold text-foreground !pb-0;
+  @apply text-lg font-semibold !pb-0;
 }
 .el-dialog__body {
   @apply !py-0;

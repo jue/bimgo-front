@@ -7,7 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import svgLoader from 'vite-svg-loader'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { ElementPlusResolver, PrimeVueResolver } from 'unplugin-vue-components/resolvers'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 
@@ -52,6 +52,7 @@ export default defineConfig({
         ElementPlusResolver({
           importStyle: 'sass',
         }),
+        PrimeVueResolver(),
       ],
     }),
   ],
