@@ -132,9 +132,8 @@ onBeforeUnmount(() => {
   editor.destroy()
 })
 
-watchEffect(() => {
-  if (props.modelValue)
-    valueHtml.value = props.modelValue
+watch(() => props.modelValue, () => {
+  valueHtml.value = props.modelValue
 })
 
 function handleCreated(editor) {
@@ -184,7 +183,7 @@ function handleBlur() {
 </script>
 
 <template>
-  <div class="np-editor border rounded w-full" :class="{ 'border-blue-600': isFocus }" @click="setFocus">
+  <div class="np-editor border rounded w-full" :class="{ 'ring ring-1 ring-green-500': isFocus }" @click="setFocus">
     <Toolbar :editor="editorRef" :default-config="toolbarConfig" :mode="mode" class="rounded-t px-0.5 bg-[#f7f7f7]" />
     <Editor
       v-model="valueHtml" class="min-h-40 max-h-[500px] overflow-y-auto cursor-text" :default-config="editorConfig"

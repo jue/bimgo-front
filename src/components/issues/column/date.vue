@@ -2,6 +2,7 @@
 import DatePicker from 'vue-datepicker-next'
 import 'vue-datepicker-next/index.css'
 import 'vue-datepicker-next/locale/zh-cn.es'
+import { onClickOutside } from '@vueuse/core'
 import { formatDate } from '@/lib/index'
 
 const props = defineProps({

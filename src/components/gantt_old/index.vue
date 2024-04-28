@@ -2,34 +2,34 @@
 import { countTasks, getFormattedWeeksInRange, getStartAndEndTimes } from './gannt.js'
 import Line from './line.vue'
 
+const props = defineProps({
+  tasks: {
+    type: Array,
+    default: () => [],
+  },
+})
+
 const config = reactive({
   dateWidth: 56,
   cellWidth: 40,
 })
 
-const tasks = ref([])
-
 const startAndEndDate = ref({})
 const WeekArr = ref([])
 
-async function getTaskList() {
-  const { data: res } = await http.post('/task/list')
-  if (res.code === 200) {
-    tasks.value = res.data
-    startAndEndDate.value = getStartAndEndTimes(tasks.value)
+watch(
+  () => props.tasks,
+  () => {
+    startAndEndDate.value = getStartAndEndTimes(props.tasks)
     // 计算周数据
     WeekArr.value = getFormattedWeeksInRange(startAndEndDate.value.earliestStartTime, startAndEndDate.value.latestEndTime, 1)
-    countTasks(WeekArr.value, tasks.value)
-  }
-}
-
-onMounted(() => {
-  getTaskList()
-})
+    countTasks(WeekArr.value, props.tasks)
+  },
+)
 </script>
 
 <template>
-  <div class="flex-1  overflow-x-scroll">
+  <div class="flex-1 overflow-x-scroll w-full">
     <div class="gantt-chart select-none w-fit h-full">
       <div class="gantt-header">
         <div class="flex items-center text-[#737577] text-xs">

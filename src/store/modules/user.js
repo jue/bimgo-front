@@ -64,6 +64,8 @@ export const useUserStore = defineStore('token', {
       },
     },
     issue_columns: {},
+    task_columns: [],
+    issue_columns_v2: [],
   }),
   actions: {
     async userLogin(params) {
@@ -92,6 +94,8 @@ export const useUserStore = defineStore('token', {
       if (res?.code === 200) {
         this.user = res.data
         this.issue_columns = res.data.issue_columns
+        this.task_columns = res.data.task_columns
+        this.issue_columns_v2 = res.data.issue_columns_v2
 
         // 获取 settings store 实例
         const settingsStore = useSettingsStore()

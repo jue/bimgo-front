@@ -48,6 +48,8 @@ declare global {
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getFileInfo: typeof import('./src/lib/file.js')['getFileInfo']
   const getLogs: typeof import('./src/lib/useLogs.js')['getLogs']
+  const getTaskData: typeof import('./src/lib/task.js')['getTaskData']
+  const getTaskList: typeof import('./src/lib/task.js')['getTaskList']
   const getToken: typeof import('./src/lib/token.js')['getToken']
   const h: typeof import('vue')['h']
   const http: typeof import('./src/api/http.js')['default']
