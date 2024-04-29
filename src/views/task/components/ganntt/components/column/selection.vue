@@ -57,11 +57,11 @@ function onRightClickCheckbox(state: boolean) {
 </script>
 
 <template>
-  <Icon
+  <!-- <Icon
     v-if="$styleBox.draggable.draggable !== false"
     name="drag"
-    class="drag-icon"
-  />
+    class="drag-icon mr-2"
+  /> -->
 
   <div class="level-block" :style="{ width: `${data!.level * indent}px` }" />
 
@@ -97,7 +97,3 @@ function onRightClickCheckbox(state: boolean) {
     @right-click="onRightClickCheckbox"
   />
 </template>
-
-<style lang="scss">
-@import './style.scss';
-</style>

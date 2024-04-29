@@ -201,6 +201,7 @@ defineExpose(exports)
   position: relative;
   width: 100%;
   height: 100%;
+  border: 1px solid #e5e5e5;
   text-align: left !important;
 
   transition: background-color 0.1s, color 0.1s, border-color 0.1s;

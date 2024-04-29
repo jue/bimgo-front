@@ -82,10 +82,10 @@ const titleProps = props.column.isLeaf
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
-  text-align: center;
   position: relative;
   box-sizing: border-box;
   border-bottom: 1px solid #e5e5e5;
+  border-left: 1px solid #fff;
   padding: 0 12px;
   font-size: 14px;
   pointer-events: none;

@@ -30,16 +30,23 @@ function handleMove({ level }) {
     slider-into-view
     border-color="#0f0"
   >
-    <XGanttColumn prop="title" label="标题" width="150">
+    <!-- <XGanttColumn prop="id" label="#" width="300" /> -->
+    <XGanttColumn prop="title" label="标题" width="500">
       <template #default="{ row }">
         <div>
           {{ row.title }}
         </div>
       </template>
     </XGanttColumn>
-    <XGanttColumn prop="description" width="300" />
-    <XGanttColumn prop="start_time" width="100" />
-    <XGanttColumn prop="end_time" width="100" />
+    <!-- <XGanttColumn prop="description" label="任务描述" width="300" /> -->
+    <XGanttColumn prop="status" width="100" />
+    <XGanttColumn prop="start_time" label="开始日期" width="120" date-format="YYYY-MM-DD" />
+    <XGanttColumn prop="end_time" label="结束日期" width="120" date-format="YYYY-MM-DD" />
+    <XGanttColumn label="" width="120">
+      <template #default="{ row }">
+        <span class="icon-[lucide--calendar]" />
+      </template>
+    </XGanttColumn>
 
     <XGanttSlider
       prop="start_time"
@@ -53,18 +60,14 @@ function handleMove({ level }) {
       progress-decimal
       move-by-unit
     >
-      <template #default="row">
-        <div>{{ row.title }}</div>
+      <template #default="{ row }">
+        <div class="h-full flex items-center px-3">
+          {{ row.title }}
+        </div>
       </template>
-      <!-- <template #content="{ row, level }">
+      <template #content="{ row }">
         <div v-if="level === 1" class="slider-level-one" />
-      </template> -->
-      <!-- <template #left>
-        <div style="background-color: #123456; width: 5px; height: 10px" />
       </template>
-      <template #right>
-        <div style="background-color: #123456; width: 5px; height: 10px" />
-      </template> -->
     </XGanttSlider>
   </XGantt>
 </template>

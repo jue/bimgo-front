@@ -45,7 +45,7 @@ onUpdated(updateHeaderHeight)
         <th
           v-for="(c, i) in r"
           :key="i"
-          class="xg-gantt-header-cell font-normal" :class="[
+          class="xg-gantt-header-cell font-normal border-x border-r-transparent border-b px-3" :class="[
             {
               highlight:
                 $styleBox.highlightDate
@@ -81,11 +81,8 @@ onUpdated(updateHeaderHeight)
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
-    text-align: center;
     position: relative;
     box-sizing: border-box;
-    border-bottom: 1px solid #dfe5eb;
-    border-right: 1px solid #dfe5eb;
     font-size: 12px;
   }
 

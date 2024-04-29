@@ -8,6 +8,7 @@ import useSlotsBox from '../../composables/useSlotsBox'
 import useStyle from '../../composables/useStyle'
 import useData from '../../composables/useData'
 import useParam from '../../composables/useParam'
+import Icon from '../common/Icon.vue'
 import RowVue from './Row.vue'
 
 type UseMouseInElement = ReturnType<typeof useMouseInElement>
@@ -88,7 +89,14 @@ useSortable(tableBodyRef, [], {
 <template>
   <div ref="tableBodyRef" class="xg-table-body" :style="{ height: bodyHeight }">
     <template v-for="d in inView" :key="d.id">
-      <RowVue class="xg-table-row" :data="d">
+      <RowVue class="xg-table-row flex" :data="d">
+        <div class="w-[38px] shrink-0 flex items-center justify-center">
+          <Icon
+            v-if="$styleBox.draggable.draggable !== false"
+            name="drag"
+            class="drag-icon"
+          />
+        </div>
         <template v-for="(c, i) in $slotsBox.cols" :key="`${d.uuid}_${i}`">
           <component :is="c" :data="d" />
         </template>

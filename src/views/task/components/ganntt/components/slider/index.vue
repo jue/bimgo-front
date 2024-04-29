@@ -301,7 +301,7 @@ const progressValue = computed(() => {
     @click.stop
     @pointerup="onPointerUp"
   >
-    <div class="xg-slider-block">
+    <div class="xg-slider-block h-full">
       <!-- 滑块主体 -->
       <slot
         v-if="isValidSlots(slots.content, props.data)"
@@ -310,7 +310,7 @@ const progressValue = computed(() => {
       />
       <div
         v-else
-        class="xg-slider-content bg-[#d4edff] rounded-full"
+        class="xg-slider-content bg-[#d4edff] rounded-full h-full"
       >
         <slot
           v-if="isValidSlots(slots.default, props.data)"

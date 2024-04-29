@@ -43,7 +43,7 @@ export const Variables = {
     headerHeight: 80,
     rowHeight: 30,
     ganttColumnWidth: 30,
-    tableColumnWidth: 80,
+    tableColumnWidth: 100,
     startKey: 'startDate',
     endKey: 'endDate',
     idKey: 'id',

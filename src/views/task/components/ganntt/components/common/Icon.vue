@@ -20,6 +20,7 @@ const icon = computed(() => `icon-${props.name}`)
   </svg> -->
 
   <i class="iconfont xg-icon" :class="icon" />
+  <!-- <span class="icon-[lucide--chevron-down] xg-icon" /> -->
 </template>
 
 <style lang="scss">

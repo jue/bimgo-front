@@ -18,21 +18,28 @@ onUpdated(updateHeaderHeight)
 <template>
   <table
     ref="tableHeaderRef"
-    class="xg-table-header h-8 mt-8 text-[#737577]"
+    class="xg-table-header h-16 text-[#737577]"
     :style="{
       backgroundColor: $styleBox.headerStyle?.bgColor || $styleBox.primaryColor,
     }"
     cellpadding="0"
     cellspacing="0"
-    border="0"
+    :border="0"
   >
     <colgroup>
+      <col :width="38">
       <template v-for="(c, i) in $slotsBox.tableHeaders.leafs" :key="i">
         <col :width="c.width">
       </template>
     </colgroup>
     <thead>
+      <!-- <tr>
+        <th :colspan="$slotsBox.tableHeaders.headers[0].length + 1" class="h-8" />
+      </tr> -->
       <tr v-for="(r, trIndex) in $slotsBox.tableHeaders.headers" :key="trIndex">
+        <th class="text-center xg-table-header-cell">
+          #
+        </th>
         <TableHeaderTh v-for="(c, i) in r" :key="i" :column="c" />
       </tr>
     </thead>

@@ -59,15 +59,13 @@ function calcLeft(date: XDate) {
     </template>
 
     <!-- 周末 -->
-    <template v-for="(date, i) in ganttHeader.datesByUnit">
+    <template v-for="(date, i) in ganttHeader.datesByUnit" :key="i">
       <div
-        v-if="$styleBox.showWeekend && date.isWeekend()"
-        :key="i"
-        class="xg-gantt-body-date-line weekend"
+        class="xg-gantt-body-date-line border-l"
+        :class="{ weekend: date.isWeekend() }"
         :style="{
           width: `${ganttColumnWidth}px`,
           left: `${ganttColumnWidth * i}px`,
-          backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 2px, #efefef 2px, #efefef 4px`,
         }"
       />
     </template>
@@ -124,5 +122,8 @@ function calcLeft(date: XDate) {
     opacity: 0.6;
     pointer-events: none;
   }
+}
+.weekend {
+  background-image: repeating-linear-gradient(135deg, transparent, transparent 2px, #efefef 2px, #efefef 4px);
 }
 </style>

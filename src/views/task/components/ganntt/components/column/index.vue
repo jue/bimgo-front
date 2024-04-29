@@ -85,7 +85,7 @@ watch(() => [$styleBox.showCheckbox, $styleBox.showExpand], setPrefixWidth)
         </div>
 
         <div
-          class="cell" :class="[
+          class="cell px-1" :class="[
             {
               'cell-center': props.center,
               'cell-ellipsis': props.ellipsis,
@@ -94,7 +94,7 @@ watch(() => [$styleBox.showCheckbox, $styleBox.showExpand], setPrefixWidth)
           ]"
           :style="[
             props.columnStyle,
-            { width: `calc(100% - ${prefixWidth}px` },
+            { width: `calc(100% - ${prefixWidth}px - 2px` },
           ]"
         >
           <slot
