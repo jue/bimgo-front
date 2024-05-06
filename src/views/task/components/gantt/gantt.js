@@ -24,12 +24,19 @@ export function getEarliestStartAndLatestEnd(data) {
   }
 
   return {
-    earliestStart: earliestStart.toISOString().slice(0, 10),
-    latestEnd: latestEnd.toISOString().slice(0, 10),
+    earliestStart: earliestStart?.toISOString().slice(0, 10),
+    latestEnd: latestEnd?.toISOString().slice(0, 10),
   }
 }
 
 export function getTimeLines(earliestStart, latestEnd) {
+  if (!earliestStart || !latestEnd) {
+    // 如果earliestStart为空时，earliestStart为当前月第一天
+    const currentDate = new Date()
+    earliestStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
+    latestEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
+  }
+
   const timeLines = []
   const currentDate = new Date(earliestStart)
   const endDate = new Date(latestEnd)

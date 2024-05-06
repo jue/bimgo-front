@@ -13,6 +13,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  selectedCell: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 const gid = inject('gid')
 
@@ -37,6 +41,10 @@ function handleToggle(gid) {
 function handleSetGid(id) {
   gid.value = id
 }
+
+const filterColumns = computed(() => {
+  return props.columns.filter(item => item.show)
+})
 </script>
 
 <template>
@@ -47,9 +55,11 @@ function handleSetGid(id) {
       </div>
     </td>
     <td
-      v-for="(column, index) in columns"
+      v-for="(column, index) in filterColumns"
       :key="index"
       class="relative"
+      :class="{ focus: selectedCell?.gid === task.gid && selectedCell?.field === column.value }"
+      @click="$emit('cell:select', { gid: task.gid, field: column.value })"
     >
       <div
         class="inset-0 px-2 flex flex-nowrap items-center text-[#00021bf8]"
@@ -60,7 +70,11 @@ function handleSetGid(id) {
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </span>
-        {{ task[column.value] }}
+
+        <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" />
+        <span v-else>
+          {{ task[column.value] }}
+        </span>
       </div>
     </td>
   </tr>
@@ -71,6 +85,8 @@ function handleSetGid(id) {
       :task="childTask"
       :columns="columns"
       :level="level + 1"
+      :selected-cell="selectedCell"
+      @cell:select="$emit('cell:select', $event)"
     />
   </template>
 </template>
@@ -83,6 +99,9 @@ tr {
   @apply p-0 box-border;
 }
 td{
-  @apply border h-8;
+  @apply border h-10;
+}
+.focus{
+  @apply rounded outline outline-green-400 outline-2 -outline-offset-2;
 }
 </style>

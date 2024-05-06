@@ -29,7 +29,7 @@ function getEndDatePosition(endDate) {
 
 <template>
   <div
-    class="h-8 flex items-center w-full relative"
+    class="h-10 flex items-center w-full relative"
     :class="{ 'bg-[#ebf6ff]/50': task.gid === gid }"
     :style="{ width: `${totalLength * config.dateWidth}px` }"
     @mouseenter="gid = task.gid"

@@ -44,19 +44,24 @@ const timeLines = getTimeLines(earliestStart, latestEnd)
 
       <!-- 横线开始 -->
       <div class="relative z-10">
-        <GanttLine
-          v-for="(task, index) in data"
-          :key="index"
-          :task="task"
-          :config="config"
-          :time-lines="timeLines"
+        <!-- 如果data为空，显示空提示 -->
+        <div
+          v-if="data.length === 0"
+          class="w-full flex items-center justify-center h-40"
         />
+        <template v-else>
+          <GanttLine
+            v-for="(task, index) in data"
+            :key="index"
+            :task="task"
+            :config="config"
+            :time-lines="timeLines"
+          />
+        </template>
       </div>
       <!-- 横线结束 -->
     </div>
   </div>
-  <pre>{{ timeLines }}</pre>
-  <pre>{{ data }}</pre>
 </template>
 
 <style lang="scss" scoped>

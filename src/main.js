@@ -3,6 +3,7 @@ import 'element-plus/es/components/message-box/style/index'
 
 import PrimeVue from 'primevue/config'
 import Tooltip from 'primevue/tooltip'
+import FocusTrap from 'primevue/focustrap'
 
 import './assets/index.css'
 
@@ -212,5 +213,6 @@ app.use(PrimeVue, {
 })
 
 app.directive('tooltip', Tooltip)
+app.directive('focustrap', FocusTrap)
 
 app.mount('#app')
