@@ -14,7 +14,14 @@ import Layouts from 'vite-plugin-vue-layouts'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          // 这行是为了避免与 Ionic 框架的标签名冲突,如果你没有使用 Ionic,可以忽略
+          isCustomElement: tag => tag.includes('ion-'),
+        },
+      },
+    }),
     vueJsx(),
     svgLoader(),
     Pages({

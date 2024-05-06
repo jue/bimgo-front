@@ -3,7 +3,7 @@ import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import TaskTree from './components/taskTree.vue'
 
-import Gantt from './components/ganntt/index.vue'
+import Gantt from './components/gantt/index.vue'
 
 const gantt = ref(null)
 
@@ -35,7 +35,7 @@ const data = ref([
     children: [
       {
         id: 2,
-        gid: 'yB1bCVwmZp4PCoFVUQXCm',
+        gid: 'yB1bCVwmZp4PCoFVUQXC1',
         title: '子任务A1',
         description: '这是项目A的子任务A1',
         parent_gid: 'wz6GVxdqDOXmVyqcTaqpq',
@@ -53,9 +53,9 @@ const data = ref([
         uid: 'user2',
         children: [
           {
-            id: 2,
+            id: 3,
             gid: 'yB1bCVwmZp4PCoFVUQXCm',
-            title: '子任务A1',
+            title: '子任务A11',
             description: '这是项目A的子任务A1',
             parent_gid: 'wz6GVxdqDOXmVyqcTaqpq',
             previous_id: null,
@@ -73,9 +73,9 @@ const data = ref([
             children: [],
           },
           {
-            id: 3,
-            gid: 'zxcvbnmqwertyuioplkj',
-            title: '子任务A2',
+            id: 4,
+            gid: 'zxcvbnmqwertyuioplk2',
+            title: '子任务A22',
             description: '这是项目A的子任务A2',
             parent_gid: 'wz6GVxdqDOXmVyqcTaqpq',
             previous_id: 'yB1bCVwmZp4PCoFVUQXCm',
@@ -93,9 +93,10 @@ const data = ref([
             children: [],
           },
         ],
+
       },
       {
-        id: 3,
+        id: 5,
         gid: 'zxcvbnmqwertyuioplkj',
         title: '子任务A2',
         description: '这是项目A的子任务A2',
@@ -117,7 +118,7 @@ const data = ref([
     ],
   },
   {
-    id: 4,
+    id: 6,
     gid: 'eN7xzMECuqnYbbp48czUN',
     title: '项目B',
     description: '这是项目B的描述',
@@ -136,7 +137,7 @@ const data = ref([
     uid: 'user3',
     children: [
       {
-        id: 5,
+        id: 7,
         gid: 'swK9zMdNRoSbZXtXhVypS',
         title: '子任务B1',
         description: '这是项目B的子任务B1',
@@ -156,7 +157,7 @@ const data = ref([
         children: [],
       },
       {
-        id: 6,
+        id: 8,
         gid: 'hjklqwertyzxcvbnm',
         title: '子任务B2',
         description: '这是项目B的子任务B2',
@@ -178,7 +179,7 @@ const data = ref([
     ],
   },
   {
-    id: 7,
+    id: 9,
     gid: 'asdfghjklzxcvbnm',
     title: '项目C',
     description: '这是项目C的描述',
@@ -195,28 +196,6 @@ const data = ref([
     uids: ['user5', 'user6'],
     sort: 3,
     uid: 'user5',
-    children: [
-      {
-        id: 8,
-        gid: 'qwertyuiopasdfghjkl',
-        title: '子任务C1',
-        description: '这是项目C的子任务C1',
-        parent_gid: 'asdfghjklzxcvbnm',
-        previous_id: null,
-        priority: 1,
-        progress: 0.3,
-        start_time: '2024-04-01',
-        end_time: '2024-05-31',
-        done_time: null,
-        budget: 8000,
-        status: 'doing',
-        contractor_id: 'team3',
-        uids: ['user5'],
-        sort: 1,
-        uid: 'user6',
-        children: [],
-      },
-    ],
   },
 ])
 

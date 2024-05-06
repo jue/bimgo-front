@@ -2,6 +2,7 @@ import 'element-plus/es/components/message/style/index'
 import 'element-plus/es/components/message-box/style/index'
 
 import PrimeVue from 'primevue/config'
+import Tooltip from 'primevue/tooltip'
 
 import './assets/index.css'
 
@@ -209,5 +210,7 @@ app.use(PrimeVue, {
     },
   },
 })
+
+app.directive('tooltip', Tooltip)
 
 app.mount('#app')
