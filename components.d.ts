@@ -23,6 +23,7 @@ declare module 'vue' {
     CommentSection: typeof import('./src/components/comment/section.vue')['default']
     ContractorsAdd: typeof import('./src/components/contractors/add.vue')['default']
     CountDown: typeof import('./src/components/countDown.vue')['default']
+    CreateData: typeof import('./src/components/createData.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']

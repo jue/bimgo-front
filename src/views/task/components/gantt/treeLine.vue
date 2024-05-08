@@ -1,9 +1,10 @@
 <script setup>
+import DragBtn from './dragBtn.vue'
+
 const props = defineProps({
   task: {
     type: Object,
     default: () => ({}),
-    required: true,
   },
   columns: {
     type: Array,
@@ -18,15 +19,19 @@ const props = defineProps({
     default: () => ({}),
   },
 })
-const gid = inject('gid')
-
-const unexpandedKeys = inject('unexpandedKeys')
 
 const tabWith = computed(() => {
   const children = props.task.children || 0
-  return props.level * 20 + (children <= 0 ? 20 : 0)
+  return props.level * 22 + (children <= 0 ? 22 : 0)
 })
 
+const gid = inject('gid')
+
+const filterColumns = computed(() => {
+  return props.columns.filter(item => item.show)
+})
+
+const unexpandedKeys = inject('unexpandedKeys')
 const hideChildren = computed(() => unexpandedKeys.value.includes(props.task.gid))
 function handleToggle(gid) {
   hideChildren.value = !hideChildren.value
@@ -37,32 +42,29 @@ function handleToggle(gid) {
   else
     unexpandedKeys.value.push(gid)
 }
-
-function handleSetGid(id) {
-  gid.value = id
-}
-
-const filterColumns = computed(() => {
-  return props.columns.filter(item => item.show)
-})
 </script>
 
 <template>
-  <tr :class="{ 'bg-[#ebf6ff]/50': task.gid === gid }" @mouseenter="handleSetGid(task.gid)" @mouseleave="handleSetGid('')">
-    <td class="p-0 h-8">
-      <div class="flex items-center justify-center">
-        <span class="text-[#485776] text-xs">{{ task.id }}</span>
-      </div>
-    </td>
-    <td
+  <div
+    :class="{ 'bg-[#ebf6ff]/50': task.gid === gid }"
+    class="flex items-center divide-x select-none"
+    @mouseenter="gid = task.gid"
+    @mouseleave="gid = ''"
+  >
+    <div class="w-10 h-10 flex items-center justify-center shrink-0 border-b">
+      <DragBtn v-if="task.gid === gid" />
+      <span v-else class="text-[#485776] text-xs">{{ task.id }}</span>
+    </div>
+    <div
       v-for="(column, index) in filterColumns"
       :key="index"
-      class="relative"
+      class="text-xs h-10 flex items-center border-b shrink-0 overflow-hidden"
+      :style="{ width: `${column.width}px` }"
       :class="{ focus: selectedCell?.gid === task.gid && selectedCell?.field === column.value }"
       @click="$emit('cell:select', { gid: task.gid, field: column.value })"
     >
       <div
-        class="inset-0 px-2 flex flex-nowrap items-center text-[#00021bf8]"
+        class="inset-0 px-2 flex flex-nowrap items-center w-full"
         :style="{ 'margin-left': `${index === 0 ? tabWith : 0}px` }"
       >
         <span v-if="task.children && task.children.length > 0 && index === 0" class="transform transition-transform duration-200 mr-1" :style="{ transform: hideChildren ? 'rotate(-90deg)' : 'rotate(0deg)' }">
@@ -76,31 +78,11 @@ const filterColumns = computed(() => {
           {{ task[column.value] }}
         </span>
       </div>
-    </td>
-  </tr>
-  <template v-if="task.children && task.children.length > 0 && !hideChildren">
-    <Row
-      v-for="(childTask, childIndex) in task.children"
-      :key="childIndex"
-      :task="childTask"
-      :columns="columns"
-      :level="level + 1"
-      :selected-cell="selectedCell"
-      @cell:select="$emit('cell:select', $event)"
-    />
-  </template>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-table,
-th,
-td,
-tr {
-  @apply p-0 box-border;
-}
-td{
-  @apply border h-10;
-}
 .focus{
   @apply rounded outline outline-green-400 outline-2 -outline-offset-2;
 }

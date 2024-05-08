@@ -2,13 +2,6 @@
 import GanttLine from './ganttLine.vue'
 import { getEarliestStartAndLatestEnd, getTimeLines } from './gantt.js'
 
-const props = defineProps({
-  data: {
-    type: Array,
-    default: () => [],
-  },
-})
-
 const config = reactive({
   dateWidth: 56,
   cellWidth: 40,
@@ -16,14 +9,14 @@ const config = reactive({
 const gid = inject('gid')
 const data = inject('data', [])
 
-const { earliestStart, latestEnd } = getEarliestStartAndLatestEnd(data)
+const { earliestStart, latestEnd } = getEarliestStartAndLatestEnd(data.value)
 const timeLines = getTimeLines(earliestStart, latestEnd)
 </script>
 
 <template>
   <div class="overflow-auto flex-1">
     <!-- 表头 -->
-    <div class="flex items-center text-[#00021bf8] border-t">
+    <div class="flex items-center text-[#00021bf8]">
       <div v-for="(timeLine, index) in timeLines" :key="index" class="text-xs shrink-0 flex flex-wrap" :style="{ width: `${config.dateWidth * 7}px` }">
         <div class="w-full h-8 border-l border-b flex items-center px-2">
           {{ timeLine.title }}

@@ -1,5 +1,5 @@
 <script setup>
-import Table from './table.vue'
+import Tree from './tree.vue'
 import GanttChart from './ganttChart.vue'
 import Divider from './divider.vue'
 
@@ -9,8 +9,6 @@ const props = defineProps({
     default: () => [],
   },
 })
-
-provide('data', props.data)
 
 // 甘物图元素
 const ganttRef = ref(null)
@@ -34,16 +32,23 @@ onMounted(() => {
 // 未展开的节点
 const unexpandedKeys = ref([])
 provide('unexpandedKeys', unexpandedKeys)
+
+// 更新数据
+function uddateData(task) {
+  props.data.push(task)
+}
 </script>
 
 <template>
   <div ref="ganttRef" class="flex h-full border-y overflow-y-auto">
     <div :style="{ width: `${tableWidth}px` }">
-      <Table />
+      <Tree :tasks="data" />
+      <CreateData cate="task" @refresh="uddateData" />
     </div>
     <Divider />
     <div :style="{ width: `calc(100% - ${tableWidth}px)` }">
-      <GanttChart />
+      <!-- <pre>{{ data }}</pre> -->
+      <GanttChart :tasks="data" />
     </div>
   </div>
 </template>

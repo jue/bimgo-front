@@ -14,6 +14,11 @@ const form = reactive({
 })
 
 const data = ref([])
+provide('data', data)
+provide('updateData', (newData) => {
+  console.log(newData)
+  data.value = newData
+})
 
 async function getTaskList() {
   const { data: res } = await getTaskData(form)
