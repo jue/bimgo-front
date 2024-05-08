@@ -78,7 +78,7 @@ function handleToggle(gid) {
         </div>
 
         <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" />
-        <FieldUids v-else-if="column.value === 'uids'" v-model="task[column.value]" class="!shadow-none !ring-0 bg-transparent" />
+        <FieldUids v-else-if="column.value === 'uids'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" />
         <span v-else>
           {{ task[column.value] }}
         </span>

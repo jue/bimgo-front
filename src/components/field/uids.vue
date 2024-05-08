@@ -4,7 +4,17 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
+  cate: {
+    type: String,
+    default: 'task',
+  },
 })
+
+const emit = defineEmits(['update:modelValue'])
 
 const { users } = storeToRefs(useSettingsStore())
 
@@ -13,7 +23,38 @@ watch(() => props.modelValue, (val) => {
   value.value = val
 })
 
+const apiUpdateUrl = computed(() => {
+  if (props.cate === 'task')
+    return '/task/update/uids'
+
+  if (props.cate === 'issue')
+    return '/issue/update/uids'
+})
+
 const isShow = ref(false)
+
+async function handleChange() {
+  return false
+}
+
+async function handleHide() {
+  isShow.value = false
+  if (props.data.gid)
+    saveData()
+  else
+    emit('update:modelValue', value.value)
+}
+
+async function saveData() {
+  const { data: res } = await http.post(apiUpdateUrl.value, {
+    uids: value.value,
+    gid: props.data.gid,
+  })
+  if (res.code === 200)
+    emit('update:modelValue', value.value)
+  else
+    value.value = props.modelValue
+}
 </script>
 
 <template>
@@ -30,13 +71,14 @@ const isShow = ref(false)
     highlight-on-select
     class="w-full"
     @show="isShow = true"
-    @hide="isShow = false"
+    @hide="handleHide"
+    @change="handleChange"
   >
     <template #value="slotProps">
       <div v-if="slotProps.value && slotProps.value.length" class="px-4">
-        <AvatarGroup v-if="slotProps.value.length > 2" size="small">
-          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" />
-          <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
+        <AvatarGroup v-if="slotProps.value.length > 2">
+          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="normal" />
+          <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="normal" />
         </AvatarGroup>
         <div v-else class="-mx-4 space-x-1">
           <User v-for="uid in slotProps.value" :key="uid" :uid="uid" />
