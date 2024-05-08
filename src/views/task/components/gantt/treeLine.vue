@@ -22,7 +22,7 @@ const props = defineProps({
 
 const tabWith = computed(() => {
   const children = props.task.children || 0
-  return props.level * 22 + (children <= 0 ? 22 : 0)
+  return props.level * 28 + (children <= 0 ? 28 : 0) + 8
 })
 
 const gid = inject('gid')
@@ -58,22 +58,27 @@ function handleToggle(gid) {
     <div
       v-for="(column, index) in filterColumns"
       :key="index"
-      class="text-xs h-10 flex items-center border-b shrink-0 overflow-hidden"
+      class="h-10 border-b shrink-0"
       :style="{ width: `${column.width}px` }"
-      :class="{ focus: selectedCell?.gid === task.gid && selectedCell?.field === column.value }"
       @click="$emit('cell:select', { gid: task.gid, field: column.value })"
     >
       <div
-        class="inset-0 px-2 flex flex-nowrap items-center w-full"
-        :style="{ 'margin-left': `${index === 0 ? tabWith : 0}px` }"
+        class="inset-0 flex flex-nowrap items-center w-full h-full relative rounded-[1px]"
+        :class="{ 'focus': selectedCell?.gid === task.gid && selectedCell?.field === column.value, 'pr-2': index === 0 }"
+        :style="{ 'padding-left': `${index === 0 ? tabWith : 0}px` }"
       >
-        <span v-if="task.children && task.children.length > 0 && index === 0" class="transform transition-transform duration-200 mr-1" :style="{ transform: hideChildren ? 'rotate(-90deg)' : 'rotate(0deg)' }">
-          <svg class="w-5 h-5 text-gray-400 hover:text-blue-500 cursor-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" @click="handleToggle(task.gid)">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </span>
+        <div
+          v-if="task.children && task.children.length > 0 && index === 0"
+          class="transform transition-transform duration-200 w-7 h-7 cursor-pointer rounded flex items-center justify-center"
+          :style="{ transform: hideChildren ? 'rotate(-90deg)' : 'rotate(0deg)' }"
+        >
+          <div class="flex items-center justify-center w-5 h-5 rounded hover:bg-gray-100">
+            <span class="icon-[lucide--chevron-down]" @click="handleToggle(task.gid)" />
+          </div>
+        </div>
 
         <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" />
+        <FieldUids v-else-if="column.value === 'uids'" v-model="task[column.value]" class="!shadow-none !ring-0 bg-transparent" />
         <span v-else>
           {{ task[column.value] }}
         </span>
@@ -83,7 +88,11 @@ function handleToggle(gid) {
 </template>
 
 <style lang="scss" scoped>
-.focus{
-  @apply rounded outline outline-green-400 outline-2 -outline-offset-2;
-}
+  .focus {
+    @apply  outline outline-1 outline-green-600 hover:outline-green-600 bg-white ;
+    &:after {
+      content: '';
+      @apply bg-white absolute border border-green-600 w-2 h-2 rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 z-50;
+    }
+  }
 </style>

@@ -23,12 +23,12 @@ const isShow = ref(false)
     <template #value="slotProps">
       <div v-if="slotProps.value && slotProps.value.length" class="px-4">
         <AvatarGroup size="small">
-          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2 !w-7 !h-7" :uid="uid" />
+          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" />
           <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" />
         </AvatarGroup>
       </div>
       <span v-else class="flex items-center">
-        <Avatar icon="icon-[lucide--user]" class="mr-2 !w-7 !h-7" shape="circle" />{{ slotProps.placeholder }}
+        <Avatar icon="icon-[lucide--user]" class="mr-2" shape="circle" />{{ slotProps.placeholder }}
       </span>
     </template>
 

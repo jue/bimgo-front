@@ -70,7 +70,6 @@ onClickOutside(treeRef, () => {
           v-for="(column, index) in filterColumns" :key="index"
           :style="{ 'min-width': `${column.width}px` }"
           class="text-xs h-8 flex items-center px-2 border-b"
-          :class="{ 'pr-10': index === 0 }"
         />
       </div>
       <div class="flex items-center divide-x">
@@ -78,9 +77,10 @@ onClickOutside(treeRef, () => {
           <ColumnOption />
         </div>
         <div
-          v-for="column in filterColumns" :key="column.value"
+          v-for="(column, index) in filterColumns" :key="index"
           :style="{ 'min-width': `${column.width}px` }"
           class="text-xs h-8 flex items-center px-2 border-b"
+          :class="{ 'pl-9': index === 0 }"
         >
           {{ column.label }}
         </div>

@@ -10,15 +10,15 @@ const props = defineProps({
     type: String,
     default: 'circle',
   },
+  size: {
+    type: String,
+    default: 'small',
+  },
 })
 const { users } = storeToRefs(useSettingsStore())
 const info = computed(() => users.value.find(item => item.uid === props.uid))
 </script>
 
 <template>
-  <Avatar :image="info?.avatar || ''" :shape="shape">
-    <template #default>
-      <span v-if="!info?.avatar && info?.realname" class="text-neutral-900">{{ info?.realname.slice(0, 1) }}</span>
-    </template>
-  </Avatar>
+  <Avatar :image="info?.avatar ? info.avatar : ''" :shape="shape" :label="!info?.avatar ? info?.realname.slice(0, 1) : ''" :size="size" />
 </template>
