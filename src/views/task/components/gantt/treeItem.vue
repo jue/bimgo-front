@@ -50,7 +50,7 @@ function onEnd(event) {
     @start="onStart"
     @end="onEnd"
   >
-    <li v-for="(task, index) in tasks" :key="index">
+    <li v-for="(task, index) in tasks" :key="index" class="w-fit">
       <TreeLine :task="task" :level="level" :columns="columns" :selected-cell="selectedCell" @cell:select="$emit('cell:select', $event)" />
       <!-- 这里递归children -->
       <template v-if="task.children && task.children.length > 0 && !unexpandedKeys.includes(task.gid)">

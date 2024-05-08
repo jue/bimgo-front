@@ -54,6 +54,7 @@ const timeLines = getTimeLines(earliestStart, latestEnd)
       </div>
       <!-- 横线结束 -->
     </div>
+    <div class="w-full h-10 border-b" />
   </div>
 </template>
 
