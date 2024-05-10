@@ -51,7 +51,7 @@ const itemValue = computed(() => {
         />
         <div class="leading-none space-y-1 flex-1">
           <div>{{ scope.option.label }}</div>
-          <div class="text-xs text-gray-400">
+          <div v-if="scope.option.desc" class="text-xs text-gray-400">
             {{ scope.option.desc }}
           </div>
         </div>

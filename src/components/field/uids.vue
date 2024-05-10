@@ -70,6 +70,13 @@ async function saveData() {
     filter-placeholder="搜索用户"
     highlight-on-select
     class="w-full"
+    :pt="{
+      trigger: {
+        class: [
+          'opacity-0',
+        ],
+      },
+    }"
     @show="isShow = true"
     @hide="handleHide"
     @change="handleChange"
@@ -77,8 +84,8 @@ async function saveData() {
     <template #value="slotProps">
       <div v-if="slotProps.value && slotProps.value.length" class="px-4">
         <AvatarGroup v-if="slotProps.value.length > 2">
-          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="normal" />
-          <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="normal" />
+          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="small" />
+          <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
         </AvatarGroup>
         <div v-else class="-mx-4 space-x-1">
           <User v-for="uid in slotProps.value" :key="uid" :uid="uid" />

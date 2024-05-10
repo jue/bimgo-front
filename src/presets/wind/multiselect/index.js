@@ -91,7 +91,6 @@ export default {
 
       // Color and Background
       'bg-transparent',
-      'text-surface-400',
 
       // Size
       // 'w-12',

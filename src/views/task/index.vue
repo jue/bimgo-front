@@ -25,6 +25,7 @@ async function getTaskList() {
   if (res.code === 200)
     data.value = res.data
 }
+provide('getTaskList', getTaskList)
 
 onMounted(() => {
   getTaskList()
