@@ -46,6 +46,10 @@ const panelGid = ref('')
 provide('openPanel', (gid) => {
   panelGid.value = gid
   visible.value = true
+
+  nextTick(() => {
+    panelRef.value.getData(gid)
+  })
 })
 </script>
 
@@ -61,6 +65,15 @@ provide('openPanel', (gid) => {
         :show-close-icon="false"
         :modal="false"
         class="w-[900px]"
+        :dismissable="false"
+        :pt="{
+          root: ({ context }) => ({
+            class: ['max-w-[900px]'],
+          }),
+          mask: ({ props }) => ({
+            class: ['!right-0 !w-[900px] !left-auto'],
+          }),
+        }"
         @show="panelRef.getData(panelGid)"
       >
         <template #container>

@@ -22,6 +22,10 @@ app.use(router)
 app.use(PrimeVue, {
   unstyled: true,
   pt: Wind,
+  ptOptions: {
+    mergeSections: true,
+    mergeProps: true,
+  },
   locale: {
     accept: '是',
     addRule: '添加规则',

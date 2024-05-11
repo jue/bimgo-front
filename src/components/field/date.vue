@@ -98,10 +98,8 @@ const isLate = computed(() => {
 
 <template>
   <div
-    class="px-3 w-full h-full flex items-center"
-    :class="{
-      'text-red-400': isLate,
-    }"
+    class="px-3 w-full h-full flex items-center cursor-pointer select-none"
+    :class="[$attrs.class, { 'text-red-400': isLate }]"
     @click="toggle"
   >
     {{ modelValue || '' }}
@@ -119,7 +117,7 @@ const isLate = computed(() => {
       inline
       :pt="{
         root: {
-          class: 'shadow-none',
+          class: '!shadow-none',
         },
       }"
       :min-date="field !== 'done_time' && field !== 'start_time' && data.start_time ? new Date(data.start_time) : null"

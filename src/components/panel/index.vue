@@ -41,7 +41,7 @@ defineExpose({ getData })
     </div>
     <div class="w-80 border-l bg-gray-50/80 p-4">
       <PanelSide :task="dataList.task" />
-      <div class="flex items-center text-gray-400 text-xs mt-10">
+      <div class="flex items-center text-gray-400 text-xs mt-10 border-t py-4">
         该问题由 <span class="flex items-center">
           <User :uid="dataList?.task?.uid" />
         </span>于 {{ dayjs(dataList?.task?.created_time).format('YYYY-MM-DD HH:mm') }} 创建

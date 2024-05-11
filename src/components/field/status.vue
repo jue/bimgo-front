@@ -45,7 +45,8 @@ const isShow = ref(false)
 const loading = ref(false)
 function handleChange() {
   isShow.value = false
-  console.log(value.value)
+
+  console.log(props.data.gid)
 
   if (props.data.gid)
     saveData()

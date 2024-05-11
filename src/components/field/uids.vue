@@ -87,7 +87,7 @@ async function saveData() {
           <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="small" />
           <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
         </AvatarGroup>
-        <div v-else class="-mx-4 space-x-1">
+        <div v-else class="-mx-4 space-x-1 flex items-center">
           <User v-for="uid in slotProps.value" :key="uid" :uid="uid" />
         </div>
       </div>

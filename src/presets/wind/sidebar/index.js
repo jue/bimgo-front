@@ -6,12 +6,12 @@ export default {
 
       // Position
       'relative',
-      { '!transition-none !transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': props.position === 'full' },
+      { '!transition-none !transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': props.position == 'full' },
 
       // Size
       {
-        'h-full w-96': props.position === 'left' || props.position === 'right',
-        'h-auto w-full': props.position === 'top' || props.position === 'bottom',
+        'h-full w-full max-w-[28rem]': props.position == 'left' || props.position == 'right',
+        'h-auto w-full': props.position == 'top' || props.position == 'bottom',
       },
 
       // Shape
@@ -112,7 +112,7 @@ export default {
       // Transitions
       'transition',
       'duration-300',
-      { 'p-5': !props.position === 'full' },
+      { 'p-5': !props.position == 'full' },
 
       // Background and Effects
       { 'has-[.mask-active]:bg-transparent dark:has-[.mask-active]:bg-transparent bg-surface-500/70 dark:bg-surface-700/70': props.modal, 'has-[.mask-active]:backdrop-blur-none backdrop-blur-sm': props.modal },
