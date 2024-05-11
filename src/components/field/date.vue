@@ -34,9 +34,9 @@ function toggle(event) {
 
 const apiUpdateUrl = computed(() => {
   if (props.cate === 'task')
-    return `/task/update/time`
+    return `/task/update/date`
   if (props.cate === 'issue')
-    return `/issue/update/time`
+    return `/issue/update/date`
 })
 
 const apiClearUrl = computed(() => {
@@ -86,10 +86,24 @@ async function clear() {
 
   op.value.hide()
 }
+
+// 实际完成日期是否误期
+const isLate = computed(() => {
+  if (props.field === 'done_time')
+    return dayjs(props.data.done_time).isAfter(dayjs(props.data.end_time))
+  else
+    return false
+})
 </script>
 
 <template>
-  <div class="px-3 w-full h-full flex items-center" @click="toggle">
+  <div
+    class="px-3 w-full h-full flex items-center"
+    :class="{
+      'text-red-400': isLate,
+    }"
+    @click="toggle"
+  >
     {{ modelValue || '' }}
   </div>
   <OverlayPanel
@@ -108,6 +122,8 @@ async function clear() {
           class: 'shadow-none',
         },
       }"
+      :min-date="field !== 'done_time' && field !== 'start_time' && data.start_time ? new Date(data.start_time) : null"
+      :max-date="field !== 'done_time' && field !== 'end_time' && data.end_time ? new Date(data.end_time) : null"
     >
       <template #footer>
         <div class="flex items-center justify-between">

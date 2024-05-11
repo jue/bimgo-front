@@ -41,5 +41,6 @@
     "jsonc",
     "yaml",
     "toml"
-  ]
+  ],
+  "CodeGPT.apiKey": "Google AI Studio"
 }

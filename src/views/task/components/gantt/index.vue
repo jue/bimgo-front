@@ -1,4 +1,5 @@
 <script setup>
+import Sidebar from 'primevue/sidebar'
 import Tree from './tree.vue'
 import GanttChart from './ganttChart.vue'
 import Divider from './divider.vue'
@@ -37,6 +38,15 @@ provide('unexpandedKeys', unexpandedKeys)
 function uddateData(task) {
   props.data.push(task)
 }
+
+// 打开任务详情
+const visible = ref(false)
+const panelRef = ref(null)
+const panelGid = ref('')
+provide('openPanel', (gid) => {
+  panelGid.value = gid
+  visible.value = true
+})
 </script>
 
 <template>
@@ -44,6 +54,19 @@ function uddateData(task) {
     <div :style="{ width: `${tableWidth}px` }">
       <Tree :tasks="data" />
       <CreateData cate="task" @refresh="uddateData" />
+
+      <Sidebar
+        v-model:visible="visible"
+        position="right"
+        :show-close-icon="false"
+        :modal="false"
+        class="w-[900px]"
+        @show="panelRef.getData(panelGid)"
+      >
+        <template #container>
+          <Panel ref="panelRef" cate="task" />
+        </template>
+      </Sidebar>
     </div>
     <Divider />
     <div :style="{ width: `calc(100% - ${tableWidth}px)` }">

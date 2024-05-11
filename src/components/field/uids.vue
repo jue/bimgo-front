@@ -69,7 +69,7 @@ async function saveData() {
     variant="filled"
     filter-placeholder="搜索用户"
     highlight-on-select
-    class="w-full"
+    class="w-full items-center"
     :pt="{
       trigger: {
         class: [

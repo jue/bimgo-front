@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: 'task',
   },
+  openDetail: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -117,12 +121,21 @@ onMounted(() => {
   if (!props.data.gid)
     editInput()
 })
+
+// 打开任务详情
+const openPanel = inject('openPanel')
+
+function handleOpenPanel(gid) {
+  openPanel(gid)
+}
 </script>
 
 <template>
   <div class="h-full w-full flex items-center min-h-[32px]">
     <div v-if="!isEdit" class="flex items-center w-full">
-      <span class="flex-1">{{ data.title }}</span>
+      <div class="flex-1">
+        <span class="hover:text-blue-400 cursor-pointer" @click="handleOpenPanel(data.gid)">{{ data.title }}</span>
+      </div>
       <div class="items-center space-x-2 hidden btns">
         <span v-tooltip.bottom="'添加子任务'" class="cursor-pointer bg-gray-300 hover:bg-gray-500 w-4 h-4 rounded flex items-center justify-center" @click.stop="addNew(data)">
           <span class="icon-[lucide--plus] text-xs text-white" />

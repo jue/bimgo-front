@@ -16,7 +16,6 @@ const form = reactive({
 const data = ref([])
 provide('data', data)
 provide('updateData', (newData) => {
-  console.log(newData)
   data.value = newData
 })
 

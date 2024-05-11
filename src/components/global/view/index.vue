@@ -6,7 +6,7 @@ const props = defineProps({
     type: String,
     default: 'create', // view 查看 create 创建
   },
-  type: {
+  cate: {
     type: String,
     default: 'issue', // issue 任务 task 任务
   },
@@ -24,7 +24,7 @@ const data = ref({
 const nextCreate = ref(false)
 
 async function createData() {
-  const url = props.type === 'issue' ? '/issue/create' : '/task/create'
+  const url = props.cate === 'issue' ? '/issue/create' : '/task/create'
 
   const { data: res } = await http.post(url, data.value)
   if (res.code === 200) {
