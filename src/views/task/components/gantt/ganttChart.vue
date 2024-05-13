@@ -28,9 +28,9 @@ const timeLines = getTimeLines(earliestStart, latestEnd)
       </div>
     </div>
 
-    <div class="relative border-b">
+    <div class="relative">
       <!-- 竖线 -->
-      <div class="flex absolute top-0 left-0 w-full h-full z-0">
+      <div class="flex absolute top-0 left-0 w-full h-full z-0  border-b">
         <template v-for="(timeLine, index) in timeLines" :key="index">
           <div v-for="(date, dateIndex) in timeLine.timeRange" :key="dateIndex" :style="{ width: `${config.dateWidth}px` }" class="shrink-0 border-l border-[#efefef]" :class="{ 'is-weekend': date.subTitle === '周日' || date.subTitle === '周六' }" />
         </template>

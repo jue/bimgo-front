@@ -64,7 +64,7 @@ onClickOutside(treeRef, () => {
       <!-- 如果data为空，显示空提示 -->
       <div
         v-if="tasks.length === 0"
-        class="flex items-center justify-center text-gray-400 text-xs min-h-40 border-b"
+        class="flex items-center justify-center text-gray-400 text-xs h-40 border-b"
       >
         暂无数据
       </div>
