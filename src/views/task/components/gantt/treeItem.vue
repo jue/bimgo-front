@@ -26,6 +26,9 @@ const gid = inject('gid')
 const unexpandedKeys = inject('unexpandedKeys')
 
 const tasks = ref(props.tasks)
+watch(() => props.tasks, () => {
+  tasks.value = props.tasks
+}, { deep: true })
 const updateData = inject('updateData')
 
 function onStart(event) {

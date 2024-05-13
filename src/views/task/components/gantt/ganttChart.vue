@@ -7,7 +7,8 @@ const config = reactive({
   cellWidth: 40,
 })
 const gid = inject('gid')
-const data = inject('data', [])
+
+const { tasks: data } = storeToRefs(useTaskStore())
 
 const { earliestStart, latestEnd } = getEarliestStartAndLatestEnd(data.value)
 const timeLines = getTimeLines(earliestStart, latestEnd)

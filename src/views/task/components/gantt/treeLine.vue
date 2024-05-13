@@ -47,11 +47,11 @@ function handleToggle(gid) {
 <template>
   <div
     :class="{ 'bg-[#ebf6ff]/50': task.gid === gid }"
-    class="flex items-center divide-x select-none"
+    class="flex items-center select-none"
     @mouseenter="gid = task.gid"
     @mouseleave="gid = ''"
   >
-    <div class="w-10 h-10 flex items-center justify-center shrink-0 border-b">
+    <div class="w-10 h-10 flex items-center justify-center shrink-0 border-b border-r">
       <DragBtn v-if="task.gid === gid" />
       <span v-else class="text-[#485776] text-xs">{{ task.id }}</span>
     </div>

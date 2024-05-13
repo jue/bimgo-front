@@ -9,12 +9,14 @@ export default {
       // Sizes & Spacing
       'text-sm',
       {
-        'px-2.5 py-1.5 min-w-[2rem]': props.size === null,
-        'px-2 py-1': props.size === 'small',
+        'px-2 py-1.5': props.size === null,
+        'px-1 py-0.5': props.size === 'small',
         'px-3 py-2': props.size === 'large',
       },
       {
-        'h-8 w-8 p-0': props.label == null && props.icon !== null,
+        '!h-6 !w-6 !p-0': props.label == null && props.icon !== null && props.size === 'small',
+        '!h-9 !w-9 !p-0': props.label == null && props.icon !== null && props.size === 'large',
+        'h-8 w-8 !p-0': props.label == null && props.icon !== null,
       },
 
       // Shapes
@@ -26,11 +28,11 @@ export default {
       { 'text-primary-600 bg-transparent ring-transparent': props.link },
 
       // Plain Button
-      { 'text-white bg-gray-500 ring-1 ring-gray-500': props.plain && !props.outlined && !props.text },
+      { 'text-surface-800 bg-gray-100': props.plain && !props.outlined && !props.text },
       // Plain Text Button
-      { 'text-surface-500': props.plain && props.text },
+      { 'text-surface-800': props.plain && props.text },
       // Plain Outlined Button
-      { 'text-surface-500 ring-1 ring-gray-500': props.plain && props.outlined },
+      { 'text-surface-800 ring-1 ring-gray-100': props.plain && props.outlined },
 
       // Text Button
       { 'bg-transparent ring-transparent': props.text && !props.plain },
@@ -118,16 +120,16 @@ export default {
       { 'text-red-500 ring-1 ring-red-500 hover:bg-red-300/20': props.outlined && props.severity === 'danger' && !props.plain },
 
       // --- Severity Button States ---
-      'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
+      'focus:outline-none focus:outline-offset-0 focus:ring-2',
       { 'focus:ring-offset-2': !props.link && !props.plain && !props.outlined && !props.text },
 
       // Link
       { 'focus:ring-primary-500 dark:focus:ring-primary-400': props.link },
 
       // Plain
-      { 'hover:bg-gray-600 hover:ring-gray-600': props.plain && !props.outlined && !props.text },
+      { 'hover:bg-surface-300/20 focus:ring-offset-2 focus:ring-primary-500': props.plain && !props.outlined && !props.text },
       // Text & Outlined Button
-      { 'hover:bg-surface-300/20': props.plain && (props.text || props.outlined) },
+      { 'hover:bg-surface-300/20 focus:ring-primary-500': props.plain && (props.text || props.outlined) },
 
       // Primary
       { 'hover:bg-primary-600 dark:hover:bg-primary-300 hover:ring-primary-600 dark:hover:ring-primary-300': !props.link && props.severity === null && !props.text && !props.outlined && !props.plain },

@@ -55,9 +55,6 @@ function handleEnter() {
     input.value?.blur()
   })
 }
-
-const filterTasks = inject('filterTasks')
-
 async function saveEdit() {
   isEdit.value = false
 
@@ -65,7 +62,7 @@ async function saveEdit() {
   if (!props.data.gid) {
     // 如果value.value 是空字符串，就删除当前props.data数据
     if (value.value === '') {
-      filterTasks()
+      useTaskStore().getTasks()
     }
     else {
       const { data: res } = await http.post(apiAddUrl.value, {
@@ -75,6 +72,7 @@ async function saveEdit() {
       if (res.code === 200) {
         emit('update:modelValue', value.value)
         props.data = res.data
+        useTaskStore().getTasks()
       }
     }
 
@@ -100,8 +98,14 @@ async function saveEdit() {
 }
 
 const updateSelectedCell = inject('updateSelectedCell')
+
+const unexpandedKeys = inject('unexpandedKeys')
 // 创建子任务
 async function addNew(data) {
+  const index = unexpandedKeys.value.indexOf(data.gid)
+  if (index > -1)
+    unexpandedKeys.value.splice(index, 1)
+
   // 检查props.data里有没有children属性, 如果没有就添加一个children，默认是空数组，然后pusht {title: ''}空对象作为第一个元素
   if (!props.data.children) {
     props.data.children = []

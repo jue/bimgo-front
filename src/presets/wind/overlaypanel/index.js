@@ -8,7 +8,7 @@ export default {
 
       // Position
       'absolute left-0 top-0',
-      'z-40 transform origin-center mt-2',
+      'z-40 transform origin-center mt-1',
 
       // Color
       'bg-surface-0 dark:bg-surface-800',
@@ -30,7 +30,7 @@ export default {
     ],
   },
   content: {
-    class: 'p-5 items-center flex',
+    class: 'p-0 items-center flex',
   },
   transition: {
     enterFromClass: 'opacity-0 scale-y-[0.8]',

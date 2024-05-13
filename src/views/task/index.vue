@@ -1,11 +1,8 @@
 <script setup>
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
-import TaskTree from './components/taskTree.vue'
 
 import Gantt from './components/gantt/index.vue'
-
-const gantt = ref(null)
 
 const form = reactive({
   type: 'tree',
@@ -13,18 +10,10 @@ const form = reactive({
   sort: 'default',
 })
 
-const data = ref([])
-provide('data', data)
-provide('updateData', (newData) => {
-  data.value = newData
-})
-
 async function getTaskList() {
-  const { data: res } = await getTaskData(form)
-  if (res.code === 200)
-    data.value = res.data
+  const taskStore = useTaskStore()
+  await taskStore.getTasks()
 }
-provide('getTaskList', getTaskList)
 
 onMounted(() => {
   getTaskList()
@@ -34,7 +23,14 @@ onMounted(() => {
 <template>
   <div class="flex flex-col h-full">
     <div class="flex items-center justify-between h-12 shrink-0 px-5">
-      <div class="flex items-center h-11 shrink-0" />
+      <div class="flex items-center h-11 shrink-0">
+        <div class="space-x-5">
+          <Button icon="icon-[lucide--plus]" />
+          <Button icon="icon-[lucide--plus]" size="small" />
+          <Button icon="icon-[lucide--plus]" size="small" label="默认按钮" plain />
+          <Button icon="icon-[lucide--plus]" size="large" severity="danger" />
+        </div>
+      </div>
       <!-- <TaskFilter :form="form" /> -->
       <div class="flex items-center space-x-2">
         <IconField icon-position="left">
@@ -49,20 +45,8 @@ onMounted(() => {
       </div>
     </div>
     <div class="h-full overflow-y-auto">
-      <Gantt :data="data" />
-      <!-- <pre>{{ data }}</pre> -->
-
-      <!-- <Splitter>
-        <SplitterPanel>
-          <TaskTree :data="data" />
-        </SplitterPanel>
-        <SplitterPanel class="overflow-x-auto">
-          <Gannt :tasks="data" />
-        </SplitterPanel>
-      </Splitter> -->
+      <Gantt />
     </div>
-
-    <!-- <task-table :form="form" /> -->
   </div>
 </template>
 

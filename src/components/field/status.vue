@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: 'task',
   },
+  inline: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -46,8 +50,6 @@ const loading = ref(false)
 function handleChange() {
   isShow.value = false
 
-  console.log(props.data.gid)
-
   if (props.data.gid)
     saveData()
   else
@@ -76,12 +78,13 @@ async function saveData() {
     option-value="value"
     option-label="label"
     placeholder="未指定"
-    class="w-full"
+    class="w-full group"
     input-class="flex items-center"
     :pt="{
       trigger: {
         class: [
-          'opacity-0',
+          'hidden',
+          { ' !inline-flex': isShow && !inline, 'group-hover:inline-flex': !inline },
         ],
       },
     }"
@@ -93,8 +96,9 @@ async function saveData() {
     <template #value="scope">
       <!-- <div>{{ scope.value }}</div> -->
       <div
-        class="text-xs border h-6 flex items-center px-2 rounded-full"
-        :style="{ borderColor: `${itemValue?.color}`, backgroundColor: `${itemValue?.color}10`, color: `${itemValue?.color}` }"
+        class="text-xs h-6 flex items-center px-2 rounded"
+        :class="{ ' -mx-3': inline }"
+        :style="{ borderColor: `${itemValue?.color}`, backgroundColor: `${itemValue?.color}20`, color: `${itemValue?.color}` }"
       >
         {{ itemValue?.label }}
       </div>

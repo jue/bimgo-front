@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: 'task',
   },
+  inline: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -69,11 +73,12 @@ async function saveData() {
     variant="filled"
     filter-placeholder="搜索用户"
     highlight-on-select
-    class="w-full items-center"
+    class="w-full items-center group"
     :pt="{
       trigger: {
         class: [
-          'opacity-0',
+          'hidden',
+          { ' !inline-flex': isShow && !inline, 'group-hover:inline-flex': !inline },
         ],
       },
     }"
@@ -82,14 +87,17 @@ async function saveData() {
     @change="handleChange"
   >
     <template #value="slotProps">
-      <div v-if="slotProps.value && slotProps.value.length" class="px-4">
-        <AvatarGroup v-if="slotProps.value.length > 2">
+      <div
+        v-if="slotProps.value && slotProps.value.length"
+        class="px-4"
+        :class="{
+          '!-mx-3 !pr-0': inline,
+        }"
+      >
+        <AvatarGroup>
           <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="small" />
           <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
         </AvatarGroup>
-        <div v-else class="-mx-4 space-x-1 flex items-center">
-          <User v-for="uid in slotProps.value" :key="uid" :uid="uid" />
-        </div>
       </div>
       <span v-else class="flex items-center">
         <Avatar icon="icon-[lucide--user]" class="mr-2" shape="circle" size="small" />{{ slotProps.placeholder }}

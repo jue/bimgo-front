@@ -2,13 +2,7 @@
 import ColumnOption from '../columnOption.vue'
 import TreeItem from './treeItem.vue'
 
-const props = defineProps({
-  tasks: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-})
+const { tasks } = storeToRefs(useTaskStore())
 
 const selectedCell = ref({
   gid: null, // 行gid
@@ -17,7 +11,10 @@ const selectedCell = ref({
 
 provide('updateSelectedCell', (newVal) => {
   selectedCell.value = newVal
-  delete selectedCell.value.gid
+  if (!newVal.gid) {
+    // 如果gid是null 就删除掉
+    delete selectedCell.value.gid
+  }
 })
 
 function handleCellClick(event) {
@@ -28,27 +25,6 @@ function handleCellClick(event) {
 const { task_columns } = storeToRefs(useUserStore())
 const filterColumns = computed(() => {
   return task_columns.value.filter(item => item.show)
-})
-
-// const data = ref(props.tasks)
-// watch(() => props.tasks, (val) => {
-//   data.value = val
-// }, { deep: true })
-
-// 过滤掉所有gid为null的对象
-function filterTasks(tasks) {
-  return tasks.filter((task) => {
-    if (!task.gid)
-      return false
-
-    if (task.children && task.children.length > 0)
-      task.children = filterTasks(task.children)
-
-    return true
-  })
-}
-provide('filterTasks', () => {
-  filterTasks(data.value)
 })
 
 const treeRef = ref(null)
@@ -85,23 +61,21 @@ onClickOutside(treeRef, () => {
           {{ column.label }}
         </div>
       </div>
-      <div class="min-h-40">
-        <!-- 如果data为空，显示空提示 -->
-        <div
-          v-if="tasks.length === 0"
-          class="flex items-center justify-center text-gray-400 text-xs h-40"
-        >
-          暂无数据
-        </div>
-        <template v-else>
-          <TreeItem
-            :tasks="tasks"
-            :columns="filterColumns"
-            :selected-cell="selectedCell"
-            @cell:select="handleCellClick"
-          />
-        </template>
+      <!-- 如果data为空，显示空提示 -->
+      <div
+        v-if="tasks.length === 0"
+        class="flex items-center justify-center text-gray-400 text-xs min-h-40 border-b"
+      >
+        暂无数据
       </div>
+      <template v-else>
+        <TreeItem
+          :tasks="tasks"
+          :columns="filterColumns"
+          :selected-cell="selectedCell"
+          @cell:select="handleCellClick"
+        />
+      </template>
     </div>
   </div>
 </template>

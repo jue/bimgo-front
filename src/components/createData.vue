@@ -5,7 +5,6 @@ const props = defineProps({
     default: 'task',
   },
 })
-const emit = defineEmits(['refresh'])
 const apiUrl = computed(() => {
   if (props.cate === 'task')
     return '/task/add'
@@ -22,8 +21,8 @@ async function addData() {
     title: value.value,
   })
   if (res.code === 200) {
-    emit('refresh', res.data)
     value.value = ''
+    useTaskStore().getTasks()
   }
 }
 </script>

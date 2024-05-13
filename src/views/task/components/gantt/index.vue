@@ -4,12 +4,7 @@ import Tree from './tree.vue'
 import GanttChart from './ganttChart.vue'
 import Divider from './divider.vue'
 
-const props = defineProps({
-  data: {
-    type: Array,
-    default: () => [],
-  },
-})
+const { tasks } = storeToRefs(useTaskStore())
 
 // 甘物图元素
 const ganttRef = ref(null)
@@ -34,11 +29,6 @@ onMounted(() => {
 const unexpandedKeys = ref([])
 provide('unexpandedKeys', unexpandedKeys)
 
-// 更新数据
-function uddateData(task) {
-  props.data.push(task)
-}
-
 // 打开任务详情
 const visible = ref(false)
 const panelRef = ref(null)
@@ -56,8 +46,8 @@ provide('openPanel', (gid) => {
 <template>
   <div ref="ganttRef" class="flex h-full border-y overflow-y-auto">
     <div :style="{ width: `${tableWidth}px` }">
-      <Tree :tasks="data" />
-      <CreateData cate="task" @refresh="uddateData" />
+      <Tree />
+      <CreateData cate="task" />
 
       <Sidebar
         v-model:visible="visible"
@@ -74,11 +64,10 @@ provide('openPanel', (gid) => {
             class: ['!right-0 !w-[900px] !left-auto'],
           }),
         }"
-        @show="panelRef.getData(panelGid)"
       >
         <template #container>
           <Panel ref="panelRef" cate="task" />
-          <Button text raised rounded class="!absolute top-3 left-0 shadow bg-gray-600 text-white hover:bg-blue-500 !p-0 w-5 h-5 !min-w-0 -translate-x-1/2" @click="visible = false">
+          <Button text raised rounded class="!absolute top-3 left-0 shadow !bg-gray-600 text-white hover:bg-blue-500 !p-0 w-5 h-5 !min-w-0 -translate-x-1/2" @click="visible = false">
             <div class="icon-[lucide--x] text-md" />
           </Button>
         </template>
@@ -86,8 +75,7 @@ provide('openPanel', (gid) => {
     </div>
     <Divider />
     <div :style="{ width: `calc(100% - ${tableWidth}px)` }">
-      <!-- <pre>{{ data }}</pre> -->
-      <GanttChart :tasks="data" />
+      <GanttChart :tasks="tasks" />
     </div>
   </div>
 </template>

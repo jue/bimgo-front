@@ -101,7 +101,7 @@ const isShow = ref(false)
 
 <template>
   <div
-    class="px-3 w-full h-full flex items-center cursor-pointer select-none ring-1 ring-surface-300 ring-inset rounded-md bg-white shadow-sm"
+    class="px-3 w-full h-full flex items-center cursor-pointer select-none ring-1 ring-surface-300 ring-inset rounded-md shadow-sm"
     :class="[$attrs.class, { 'text-red-400': isLate, 'ring-2 !ring-primary-500': isShow }]"
     @click="toggle"
   >

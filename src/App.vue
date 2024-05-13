@@ -1,9 +1,8 @@
 <script setup>
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import Toast from 'primevue/toast'
 </script>
 
 <template>
-  <ElConfigProvider :locale="zhCn">
-    <RouterView />
-  </ElConfigProvider>
+  <Toast position="bottom-right" />
+  <RouterView />
 </template>
