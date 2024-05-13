@@ -86,8 +86,11 @@ async function uploader(event) {
 </script>
 
 <template>
-  <div class="space-x-3">
-    <Button label="上传附件" icon="icon-[lucide--arrow-up-from-line]" plain text size="small" :loading="loading" @click="toggle" />
+  <div class="space-x-2 flex items-center">
+    <span @click="toggle">
+      <slot><Button icon="icon-[lucide--arrow-up-from-line]" size="small" plain text :loading="loading" label="上传附件" /></slot>
+    </span>
+
     <OverlayPanel ref="op" @show="value = ''" @hide="hangleChange">
       <Listbox v-model="value" :options="options" option-label="label" option-value="value" @change="toggle">
         <template #option="{ option }">

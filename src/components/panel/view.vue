@@ -25,11 +25,19 @@ const subTasks = computed(() => props.dataList.children)
       <!-- 标题/描述区域 -->
       <div v-if="dataList && dataList.task" class="pt-2">
         <FieldTitleView :task="dataList?.task" />
+
+        <div class="flex items-center py-2 mb-3 border-b space-x-3">
+          <UploadButton :id="dataList?.task?.gid" cate="task" @uploaded="dataList.files.push({ ...$event })">
+            <Button label="上传附件" icon="icon-[lucide--plus]" outlined severity="secondary" size="small" />
+          </UploadButton>
+          <Button label="分解任务" icon="icon-[lucide--list-tree]" outlined severity="secondary" size="small" />
+        </div>
+
         <FieldDescription v-model="dataList.task.description" :data="dataList?.task" />
       </div>
 
       <!-- 附件区域 -->
-      <div>
+      <div v-if="dataList?.files?.length">
         <div class="flex items-center py-3">
           <span class="text-base font-bold">附件</span>
           <Divider layout="vertical" class="!h-4 !p-0 !mx-3" />
@@ -41,7 +49,7 @@ const subTasks = computed(() => props.dataList.children)
       </div>
 
       <!-- 子任务 -->
-      <div>
+      <div v-if="dataList?.children?.length">
         <div class="flex items-center py-3">
           <span class="text-base font-bold">子任务</span>
           <Divider layout="vertical" class="!h-4 !p-0 !mx-3" />

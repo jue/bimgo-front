@@ -139,17 +139,26 @@ onMounted(() => {
     editorRef.value?.setHtml(value.value)
 })
 
+const isFocus = ref(false)
+
+function setFocus() {
+  isFocus.value = true
+  editorRef.value.focus()
+}
+
 function handleBlur() {
+  isFocus.value = false
   saveData()
 }
 </script>
 
 <template>
-  <div class="np-editor">
+  <div class="np-editor" @click="setFocus">
     <Toolbar
       :editor="editorRef"
       :default-config="toolbarConfig"
       mode="simple"
+      :class="{ hidden: !isFocus }"
     />
     <Editor
       v-model="value"
@@ -157,6 +166,7 @@ function handleBlur() {
       :mode="mode"
       @on-created="handleCreated"
       @on-blur="handleBlur"
+      @on-focus="isFocus = true"
     />
   </div>
 </template>
