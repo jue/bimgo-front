@@ -94,12 +94,15 @@ const isLate = computed(() => {
   else
     return false
 })
+
+// 面板是否显示
+const isShow = ref(false)
 </script>
 
 <template>
   <div
-    class="px-3 w-full h-full flex items-center cursor-pointer select-none"
-    :class="[$attrs.class, { 'text-red-400': isLate }]"
+    class="px-3 w-full h-full flex items-center cursor-pointer select-none ring-1 ring-surface-300 ring-inset rounded-md bg-white shadow-sm"
+    :class="[$attrs.class, { 'text-red-400': isLate, 'ring-2 !ring-primary-500': isShow }]"
     @click="toggle"
   >
     {{ modelValue || '' }}
@@ -111,6 +114,8 @@ const isLate = computed(() => {
         class: 'p-0',
       },
     }"
+    @show="isShow = true"
+    @hide="isShow = false"
   >
     <Calendar
       v-model="value"

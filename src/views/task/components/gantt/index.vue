@@ -64,7 +64,7 @@ provide('openPanel', (gid) => {
         position="right"
         :show-close-icon="false"
         :modal="false"
-        class="w-[900px]"
+        class="w-[900px] relative"
         :dismissable="false"
         :pt="{
           root: ({ context }) => ({
@@ -78,6 +78,9 @@ provide('openPanel', (gid) => {
       >
         <template #container>
           <Panel ref="panelRef" cate="task" />
+          <Button text raised rounded class="!absolute top-3 left-0 shadow bg-gray-600 text-white hover:bg-blue-500 !p-0 w-5 h-5 !min-w-0 -translate-x-1/2" @click="visible = false">
+            <div class="icon-[lucide--x] text-md" />
+          </Button>
         </template>
       </Sidebar>
     </div>
