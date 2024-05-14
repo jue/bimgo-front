@@ -21,14 +21,20 @@ function toggle(event) {
 
 const options = ref([
   {
-    label: '本机上传',
-    value: 'local',
-    icon: 'icon-[lucide--upload-cloud]',
+    label: '新窗口打开',
+    value: 'open',
   },
   {
-    label: '网盘选择',
-    value: 'drive',
-    icon: 'icon-[lucide--folder-plus]',
+    label: '复制链接',
+    value: 'copy',
+  },
+  {
+    label: '更改父任务',
+    value: 'update',
+  },
+  {
+    label: '删除',
+    value: 'delete',
   },
 ])
 
@@ -85,14 +91,14 @@ async function uploader(event) {
   <div class="space-x-3">
     <Button icon="icon-[lucide--ellipsis]" size="small" text plain :loading="loading" @click="toggle" />
     <OverlayPanel ref="op" @show="value = ''" @hide="hangleChange">
-      <Listbox v-model="value" :options="options" option-label="label" option-value="value" @change="toggle">
+      <div>dddd</div>
+      <!-- <Listbox v-model="value" :options="options" option-label="label" option-value="value" @change="toggle">
         <template #option="{ option }">
           <div class="flex items-center">
-            <span class="mr-2 text-base" :class="option.icon" />
-            <span>{{ option.label }}</span>
+            <span :class="{ 'text-red-500': option.value === 'delete' }">{{ option.label }}</span>
           </div>
         </template>
-      </Listbox>
+      </Listbox> -->
     </OverlayPanel>
 
     <input ref="uploadInput" accept="*/*" type="file" class="hidden" @change="uploader">

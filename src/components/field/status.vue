@@ -97,7 +97,7 @@ async function saveData() {
       <!-- <div>{{ scope.value }}</div> -->
       <div
         class="text-xs h-6 flex items-center px-2 rounded"
-        :class="{ ' -mx-3': inline }"
+        :class="{ ' -mx-2': inline }"
         :style="{ borderColor: `${itemValue?.color}`, backgroundColor: `${itemValue?.color}20`, color: `${itemValue?.color}` }"
       >
         {{ itemValue?.label }}

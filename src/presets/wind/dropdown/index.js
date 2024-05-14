@@ -45,7 +45,7 @@ export default {
 
       // Sizing and Spacing
       'w-[1%]',
-      'py-1.5 px-3',
+      'py-1.5 px-2',
       { 'pr-7': props.showClear },
 
       // Shape
@@ -85,7 +85,7 @@ export default {
       // Shape
       'rounded-tr-md',
       'rounded-br-md',
-      'px-3',
+      'px-2',
     ],
   },
   panel: {
@@ -211,7 +211,7 @@ export default {
       'sm:text-sm',
 
       // Sizing
-      'py-1.5 px-3',
+      'py-1.5 px-2',
       'pr-7',
       '-mr-7',
       'w-full',

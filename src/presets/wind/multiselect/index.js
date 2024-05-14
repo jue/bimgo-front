@@ -33,7 +33,7 @@ export default {
     class: [
       'block leading-5',
 
-      props.display === 'chip' && props?.modelValue?.length > 0 ? 'py-1 px-3' : 'py-1.5 px-3',
+      props.display === 'chip' && props?.modelValue?.length > 0 ? 'py-1 px-2' : 'py-1.5 px-2',
 
       // Color
       { 'text-surface-800 dark:text-white/80': props.modelValue?.length, 'text-surface-400 dark:text-surface-500': !props.modelValue?.length },
@@ -52,7 +52,7 @@ export default {
       'inline-flex items-center',
 
       // Spacing
-      'py-0.5 px-3 mr-2',
+      'py-0.5 px-2 mr-2',
 
       // Shape
       'rounded-[1.14rem]',
@@ -98,7 +98,7 @@ export default {
       // Shape
       'rounded-tr-md',
       'rounded-br-md',
-      'px-3',
+      'px-2',
     ],
   },
   panel: {
@@ -517,7 +517,7 @@ export default {
       'sm:text-sm',
 
       // Sizing
-      'py-1.5 px-3',
+      'py-1.5 px-2',
       'pr-7',
       '-mr-7',
       'w-full',

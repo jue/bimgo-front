@@ -41,6 +41,10 @@ provide('openPanel', (gid) => {
     panelRef.value.getData(gid)
   })
 })
+
+function handleHide() {
+  useTaskStore().getTasks()
+}
 </script>
 
 <template>
@@ -64,6 +68,7 @@ provide('openPanel', (gid) => {
             class: ['!right-0 !w-[900px] !left-auto'],
           }),
         }"
+        @hide="handleHide"
       >
         <template #container>
           <Panel ref="panelRef" cate="task" />

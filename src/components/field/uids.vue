@@ -89,18 +89,25 @@ async function saveData() {
     <template #value="slotProps">
       <div
         v-if="slotProps.value && slotProps.value.length"
-        class="px-4"
+        class="px-4 flex items-center"
         :class="{
-          '!-mx-3 !pr-0': inline,
+          '!-mx-2 !pr-0': inline,
         }"
       >
         <AvatarGroup>
-          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2" :uid="uid" size="small" />
+          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2 last:mr-0" :uid="uid" />
           <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
         </AvatarGroup>
       </div>
-      <span v-else class="flex items-center">
-        <Avatar icon="icon-[lucide--user]" class="mr-2" shape="circle" size="small" />{{ slotProps.placeholder }}
+      <span
+        v-else
+        class="flex items-center space-x-1"
+        :class="{
+          '!-mx-2 !pr-0': inline,
+        }"
+      >
+        <Avatar icon="icon-[lucide--user]" shape="circle" size="small" />
+        <span v-if="!inline">{{ slotProps.placeholder }}</span>
       </span>
     </template>
 

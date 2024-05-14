@@ -30,10 +30,14 @@
 
     --p-anchor-gutter: 8px;
   }
+  
 
 }
  
 @layer base {
+  *, ::before, ::after {
+    border-color: #e5e7ebb5;
+  }
   body {
     @apply text-sm;
   }
@@ -47,6 +51,10 @@
 
   .box-shadow-b {
     box-shadow: 0 1px #0000000d;
+  }
+
+  .box-shadow {
+    box-shadow: 0 0 0 .5px rgba(0, 0, 0, .08), 0 1px 3px 0 rgba(0, 0, 0, .08);
   }
 
   

@@ -50,7 +50,7 @@ defineProps({
       <div class="text-gray-400 text-xs font-medium">
         实际完工日期
       </div>
-      <FieldDate v-model="task.end_time" class="!h-10 bg-white" field="end_time" :data="task" />
+      <FieldDate v-model="task.done_time" class="!h-10 bg-white" field="done_time" :data="task" />
     </div>
 
     <!-- 结束 -->

@@ -101,11 +101,12 @@ const isShow = ref(false)
 
 <template>
   <div
-    class="px-3 w-full h-full flex items-center cursor-pointer select-none ring-1 ring-surface-300 ring-inset rounded-md shadow-sm"
-    :class="[$attrs.class, { 'text-red-400': isLate, 'ring-2 !ring-primary-500': isShow }]"
+    class="px-2 w-full h-full flex items-center justify-between cursor-pointer select-none ring-1 ring-surface-300 ring-inset rounded-md shadow-sm group"
+    :class="[$attrs.class, { 'text-red-400': isLate, 'ring-2 !ring-primary-500': isShow, 'text-gray-400': !modelValue }]"
     @click="toggle"
   >
-    {{ modelValue || '' }}
+    <span>{{ modelValue || '未设定' }}</span>
+    <span class="icon-[lucide--calendar] hidden group-hover:block" :class="{ '!block': isShow }" />
   </div>
   <OverlayPanel
     ref="op"
