@@ -105,6 +105,8 @@ declare module 'vue' {
     NpButton: typeof import('./src/components/np/button/index.vue')['default']
     NpDatapicker: typeof import('./src/components/np/datapicker/index.vue')['default']
     NpDropdown: typeof import('./src/components/np/dropdown/index.vue')['default']
+    NpDropdownItem: typeof import('./src/components/np/dropdown/item.vue')['default']
+    NpDropdownMenu: typeof import('./src/components/np/dropdown/menu.vue')['default']
     NpEditor: typeof import('./src/components/np/Editor.vue')['default']
     NpTable: typeof import('./src/components/np/table/index.vue')['default']
     NpTableRow: typeof import('./src/components/np/table/Row.vue')['default']

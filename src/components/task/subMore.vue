@@ -85,22 +85,22 @@ async function uploader(event) {
   }
   loading.value = false
 }
+
+function handleShow(val) {
+  console.log(val)
+}
 </script>
 
 <template>
-  <div class="space-x-3">
-    <Button icon="icon-[lucide--ellipsis]" size="small" text plain :loading="loading" @click="toggle" />
-    <OverlayPanel ref="op" @show="value = ''" @hide="hangleChange">
-      <div>dddd</div>
-      <!-- <Listbox v-model="value" :options="options" option-label="label" option-value="value" @change="toggle">
-        <template #option="{ option }">
-          <div class="flex items-center">
-            <span :class="{ 'text-red-500': option.value === 'delete' }">{{ option.label }}</span>
-          </div>
-        </template>
-      </Listbox> -->
-    </OverlayPanel>
-
-    <input ref="uploadInput" accept="*/*" type="file" class="hidden" @change="uploader">
-  </div>
+  <np-dropdown @show="handleShow" @hide="handleShow">
+    <Button icon="icon-[lucide--ellipsis]" size="small" text plain />
+    <template #menu>
+      <np-dropdown-item label="新窗口打开" />
+      <np-dropdown-item label="新窗口打开" icon />
+      <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" />
+      <np-dropdown-item label="复制链接" icon="icon-[lucide--link]" />
+      <np-dropdown-item label="更改父任务" icon="icon-[lucide--list-tree]" />
+      <np-dropdown-item label="删除" icon="icon-[lucide--trash]" danger />
+    </template>
+  </np-dropdown>
 </template>

@@ -31,7 +31,6 @@ onMounted(() => {
           <Button icon="icon-[lucide--plus]" size="large" severity="danger" />
         </div>
       </div>
-      <!-- <TaskFilter :form="form" /> -->
       <div class="flex items-center space-x-2">
         <IconField icon-position="left">
           <InputIcon>
