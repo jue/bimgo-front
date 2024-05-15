@@ -101,6 +101,7 @@ declare module 'vue' {
     Loading: typeof import('./src/components/Loading.vue')['default']
     LogList: typeof import('./src/components/log/list.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']
+    Message: typeof import('primevue/message')['default']
     MultiSelect: typeof import('primevue/multiselect')['default']
     NpButton: typeof import('./src/components/np/button/index.vue')['default']
     NpDatapicker: typeof import('./src/components/np/datapicker/index.vue')['default']

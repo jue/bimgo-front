@@ -1,35 +1,20 @@
 <script setup>
 import Menu from './menu.vue'
-import Item from './item.vue'
 
-const show = ref(false)
+defineEmits(['show', 'hide'])
 
-const op = ref(null)
-function toggle(event) {
-  op.value.toggle(event)
-}
+const menuRef = ref(null)
 </script>
 
 <template>
-  <div class="inline-block">
-    <div class="inline-block" @click="toggle">
-      <slot />
-    </div>
-    <OverlayPanel
-      ref="op"
-      :pt="{
-        root: {
-          class: ['shadow-none border-none'],
-        },
-      }"
-      @show="$emit('show', true)"
-      @hide="$emit('show', false)"
-    >
-      <Menu @click="toggle">
-        <slot name="menu" />
-      </Menu>
-    </OverlayPanel>
-
-    <input ref="uploadInput" accept="*/*" type="file" class="hidden" @change="uploader">
+  <div @click="menuRef.toggle">
+    <slot />
   </div>
+  <Menu
+    ref="menuRef"
+    @show="$emit('show', true)"
+    @hide="$emit('hide', false)"
+  >
+    <slot name="menu" />
+  </Menu>
 </template>

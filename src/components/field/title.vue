@@ -102,6 +102,7 @@ const updateSelectedCell = inject('updateSelectedCell')
 const unexpandedKeys = inject('unexpandedKeys')
 // 创建子任务
 async function addNew(data) {
+  console.log(data)
   const index = unexpandedKeys.value.indexOf(data.gid)
   if (index > -1)
     unexpandedKeys.value.splice(index, 1)
@@ -147,6 +148,17 @@ function handleOpenPanel(gid) {
         <span v-tooltip.bottom="'编辑'" class="cursor-pointer w-4 h-4 rounded flex items-center justify-center" @click.stop="editInput">
           <span class="icon-[lucide--pencil-line] text-xs text-gray-400 hover:text-green-500" />
         </span>
+        <np-dropdown>
+          <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" />
+          <template #menu>
+            <np-dropdown-item label="查看详细信息" icon @click="handleOpenPanel(data.gid)" />
+            <np-dropdown-item label="复制链接" icon="icon-[lucide--copy]" />
+            <np-dropdown-item label="收藏" icon="icon-[lucide--star]" divider />
+            <np-dropdown-item label="添加子任务" icon="icon-[lucide--circle-plus]" @click="addNew(data)" />
+            <np-dropdown-item label="重命名" icon divider />
+            <np-dropdown-item label="删除" icon="icon-[lucide--trash]" danger />
+          </template>
+        </np-dropdown>
       </div>
     </div>
 

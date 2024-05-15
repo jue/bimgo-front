@@ -10,8 +10,6 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['created'])
-
 const isEdit = ref(false)
 // 输入input
 const inputRef = ref(null)
@@ -42,7 +40,7 @@ async function saveData() {
     value.value = ''
     isEdit.value = false
     props.subTask.push(res.data)
-    emit('created', res.data)
+    useTaskStore().getTasks()
   }
 }
 
@@ -50,12 +48,18 @@ function handleCancel() {
   isEdit.value = false
   value.value = ''
 }
+
+function handleDeleted(task) {
+  props.subTask.splice(props.subTask.indexOf(task), 1)
+}
 </script>
 
 <template>
-  <!-- <pre>{{ subTask }}</pre> -->
+  <!-- 测试用例 -->
+  <!-- <TaskTimeline /> -->
+
   <div>
-    <div class="box-shadow divide-y rounded">
+    <div v-if="subTask.length" class="box-shadow divide-y rounded">
       <div v-for="(task, index) in subTask" :key="index" class="flex items-center h-10 px-2 justify-between hover:bg-gray-100/70 cursor-pointer">
         <div class="space-x-3  rounded-lg">
           <span class="text-sm text-gray-400">#{{ task?.id }}</span>
@@ -66,9 +70,12 @@ function handleCancel() {
           <FieldPriority v-model="task.priority" :data="task" class="!shadow-none !ring-0 !px-0 bg-transparent" inline />
           <FieldStatus v-model="task.status" :data="task" class="!shadow-none !ring-0 !px-0 bg-transparent" inline />
           <FieldUids v-model="task.uids" :data="task" class="!shadow-none !ring-0 !px-0 !py-0 bg-transparent" inline />
-          <TaskSubMore :task="task" />
+          <TaskSubMore :task="task" @deleted="handleDeleted" />
         </div>
       </div>
+    </div>
+    <div v-else class="flex items-center justify-center h-10 border border-dashed rounded">
+      <span class="text-gray-400">没有子任务</span>
     </div>
     <!-- 添加任务 -->
     <div v-if="isEdit" class="border mt-3 rounded-lg h-9 pr-2 pl-4 flex items-center">

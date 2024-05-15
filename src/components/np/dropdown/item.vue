@@ -12,15 +12,39 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  href: {
+    type: String,
+    default: '',
+  },
+  target: {
+    type: String,
+    default: '_self',
+  },
+  divider: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const emit = defineEmits(['click'])
+function handleClick(event) {
+  emit('click', event)
+}
 </script>
 
 <template>
-  <div
+  <template v-if="divider">
+    <div class="box-shadow2 border-t -mx-1" />
+  </template>
+  <component
+    :is="href ? 'a' : 'div'"
+    :href="href"
+    :target="href ? target : undefined"
     class="py-1.5 px-2 cursor-pointer rounded-md flex items-center"
     :class="{ 'text-red-500 hover:bg-red-50': danger, 'hover:bg-stone-100': !danger }"
+    @click="handleClick($event)"
   >
     <span v-if="icon !== null" :class="{ [icon]: !!icon, 'w-4 h-4': !icon }" class="mr-2" />
     <span>{{ label }}</span>
-  </div>
+  </component>
 </template>

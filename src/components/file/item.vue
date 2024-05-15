@@ -35,8 +35,8 @@ function deleteFiles() {
   <div class="border rounded-lg bg-white relative overflow-hidden" :class="{ 'border-red-200': !file.status }">
     <div class="flex items-center p-2 relative z-10">
       <FilePreview class="shrink-0" :file="file" />
-      <div class="flex-1 overflow-hidden whitespace-nowrap text-ellipsis px-2" :title="file.file_name">
-        <div class="text-sm">
+      <div class="flex-1 overflow-hidden px-2" :title="file.file_name">
+        <div class="text-sm truncate">
           {{ file.file_name }}
         </div>
         <div class="text-xs text-gray-400">

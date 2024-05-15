@@ -1,106 +1,75 @@
 <script setup>
 import Button from 'primevue/button'
+import { useToast } from 'primevue/usetoast'
 
 const props = defineProps({
-  id: {
-    type: String,
-    default: '',
-  },
   cate: {
     type: String,
     default: 'task',
   },
+  task: {
+    type: Object,
+    default: () => {
+      return {}
+    },
+  },
 })
 
-const emit = defineEmits(['uploaded'])
+const emit = defineEmits(['deleted'])
 
-const op = ref(null)
-function toggle(event) {
-  op.value.toggle(event)
-}
+const url = computed(() => {
+  if (props.cate === 'task')
+    return `${location.origin}/task/detail?id=${props.task.id}`
+  if (props.cate === 'issue')
+    return `${location.origin}/issue/detail?id=${props.task.id}`
+})
 
-const options = ref([
-  {
-    label: '新窗口打开',
-    value: 'open',
-  },
-  {
-    label: '复制链接',
-    value: 'copy',
-  },
-  {
-    label: '更改父任务',
-    value: 'update',
-  },
-  {
-    label: '删除',
-    value: 'delete',
-  },
-])
+const { copy, copied } = useClipboard()
 
-const value = ref('')
+const toast = useToast()
 
-// 选择上传
-const uploadInput = ref(null)
+// function copy() {
+//   navigator.clipboard.writeText(url.value)
+//   toast.add({ severity: 'success', summary: '复制成功', life: 3000, closable: false })
+// }
 
-function hangleChange() {
-  if (value.value === 'local') {
-    uploadInput.value.click()
-  }
-  else {
-    // 弹出网盘文件
-    console.log('弹出网盘文件', value.value)
-  }
-}
-
-// 本地上传
-const loading = ref(false)
-const files = ref([])
-async function uploader(event) {
-  loading.value = true
-  // 在files里插入临时数据
-  files.value.push({
-    file_name: event.target.files[0].name,
-    file_type: 'loading',
-    file_size: formatSize(event.target.files[0].size),
-  })
-
-  const formData = new FormData()
-  formData.append('id', props.id)
-  formData.append('cate', props.cate)
-  formData.append('file', event.target.files[0])
-
-  const { data: res } = await http.post('/file/upload', formData)
-  if (res.code === 200) {
-    ElMessage.success('上传成功')
-    uploadInput.value.value = null
-
-    files.value[files.value.length - 1] = res.data
-
-    emit('uploaded', res.data)
-  }
-  else {
-    files.value.pop()
-    ElMessage.error('上传失败')
-  }
-  loading.value = false
-}
-
+const isDelete = ref(false)
+const isShow = ref(false)
 function handleShow(val) {
-  console.log(val)
+  if (!val)
+    isDelete.value = false
+
+  isShow.value = val
+}
+
+// 删除功能
+const apiDeleteUrl = computed(() => {
+  if (props.cate === 'task')
+    return '/task/delete'
+  if (props.cate === 'issue')
+    return '/issue/delete'
+})
+
+async function handleDelte() {
+  const { data: res } = await http.post(apiDeleteUrl.value, { gid: props.task.gid })
+
+  if (res.code === 200) {
+    toast.add({ severity: 'success', summary: '删除成功', life: 3000, closable: false })
+    emit('deleted', props.task)
+    useTaskStore().getTasks()
+  }
 }
 </script>
 
 <template>
   <np-dropdown @show="handleShow" @hide="handleShow">
-    <Button icon="icon-[lucide--ellipsis]" size="small" text plain />
+    <Button icon="icon-[lucide--ellipsis]" size="small" text plain :class="{ 'ring-2 ring-primary-500': isShow }" />
     <template #menu>
-      <np-dropdown-item label="新窗口打开" />
-      <np-dropdown-item label="新窗口打开" icon />
-      <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" />
-      <np-dropdown-item label="复制链接" icon="icon-[lucide--link]" />
+      <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" :href="`/task/detail?id=${task.id}`" target="_blank" />
+      <np-dropdown-item :label="copied ? '已复制' : '复制链接'" :icon="copied ? 'icon-[lucide--check]' : 'icon-[lucide--copy]'" :class="{ 'text-green-500': copied }" @click.stop="copy(url)" />
       <np-dropdown-item label="更改父任务" icon="icon-[lucide--list-tree]" />
-      <np-dropdown-item label="删除" icon="icon-[lucide--trash]" danger />
+      <np-dropdown-item v-if="!isDelete" label="删除" icon="icon-[lucide--trash]" danger @click.stop="isDelete = true" />
+      <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click="handleDelte" />
     </template>
   </np-dropdown>
 </template>
