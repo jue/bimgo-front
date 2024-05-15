@@ -158,7 +158,7 @@ function handleBlur() {
       :editor="editorRef"
       :default-config="toolbarConfig"
       mode="simple"
-      :class="{ hidden: !isFocus }"
+      :class="{ 'opacity-0': !isFocus }"
     />
     <Editor
       v-model="value"

@@ -48,6 +48,10 @@ function editInput() {
   nextTick(() => {
     input.value?.focus()
   })
+  updateSelectedCell({
+    gid: props.data.gid,
+    field: 'title',
+  })
 }
 
 function handleEnter() {
@@ -133,6 +137,11 @@ const openPanel = inject('openPanel')
 function handleOpenPanel(gid) {
   openPanel(gid)
 }
+
+const isShow = ref(false)
+function handleShow(val) {
+  isShow.value = val
+}
 </script>
 
 <template>
@@ -145,18 +154,17 @@ function handleOpenPanel(gid) {
         <span v-tooltip.bottom="'添加子任务'" class="cursor-pointer bg-gray-300 hover:bg-gray-500 w-4 h-4 rounded flex items-center justify-center" @click.stop="addNew(data)">
           <span class="icon-[lucide--plus] text-xs text-white" />
         </span>
-        <span v-tooltip.bottom="'编辑'" class="cursor-pointer w-4 h-4 rounded flex items-center justify-center" @click.stop="editInput">
-          <span class="icon-[lucide--pencil-line] text-xs text-gray-400 hover:text-green-500" />
-        </span>
-        <np-dropdown>
-          <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" />
+        <np-dropdown @show="handleShow" @hide="handleShow">
+          <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" />
           <template #menu>
             <np-dropdown-item label="查看详细信息" icon @click="handleOpenPanel(data.gid)" />
-            <np-dropdown-item label="复制链接" icon="icon-[lucide--copy]" />
+            <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" :href="`/task/detail?gid=${data.gid}`" target="_blank" />
+            <TaskCopyItem :task="data" cate="task" />
             <np-dropdown-item label="收藏" icon="icon-[lucide--star]" divider />
             <np-dropdown-item label="添加子任务" icon="icon-[lucide--circle-plus]" @click="addNew(data)" />
-            <np-dropdown-item label="重命名" icon divider />
-            <np-dropdown-item label="删除" icon="icon-[lucide--trash]" danger />
+            <TaskParentItem :task="task" cate="task" />
+            <np-dropdown-item label="重命名" icon divider @click="editInput" />
+            <TaskDeleteItem :task="data" cate="task" />
           </template>
         </np-dropdown>
       </div>

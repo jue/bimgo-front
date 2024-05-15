@@ -40,7 +40,7 @@ function handleClick(event) {
     :is="href ? 'a' : 'div'"
     :href="href"
     :target="href ? target : undefined"
-    class="py-1.5 px-2 cursor-pointer rounded-md flex items-center"
+    class="py-1.5 px-2 cursor-pointer rounded-md flex items-center select-none"
     :class="{ 'text-red-500 hover:bg-red-50': danger, 'hover:bg-stone-100': !danger }"
     @click="handleClick($event)"
   >
