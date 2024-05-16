@@ -1,20 +1,44 @@
 <script setup>
-import Menu from './menu.vue'
-
 defineEmits(['show', 'hide'])
+const op = ref(null)
 
-const menuRef = ref(null)
+function toggle(event) {
+  op.value.toggle(event)
+}
+
+function show(event) {
+  op.value.show(event)
+}
+
+function hide() {
+  if (op.value)
+    op.value.hide()
+}
+
+defineExpose({
+  toggle,
+  show,
+  hide,
+})
 </script>
 
 <template>
-  <div @click="menuRef.toggle">
+  <div @click="show">
     <slot />
   </div>
-  <Menu
-    ref="menuRef"
+  <OverlayPanel
+    ref="op"
+    :pt="{
+      root: {
+        class: ['shadow-none border-none'],
+      },
+    }"
     @show="$emit('show', true)"
     @hide="$emit('hide', false)"
+    @click="hide"
   >
-    <slot name="menu" />
-  </Menu>
+    <div class="box-shadow rounded-md p-1 min-w-44 space-y-0.5">
+      <slot name="menu" />
+    </div>
+  </OverlayPanel>
 </template>

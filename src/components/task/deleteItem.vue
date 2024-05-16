@@ -20,6 +20,8 @@ const apiDeleteUrl = computed(() => {
     return '/issue/delete'
 })
 
+const updateSelectedCell = inject('updateSelectedCell')
+
 const isDelete = ref(false)
 
 async function handleDelte() {
@@ -31,9 +33,17 @@ async function handleDelte() {
     useTaskStore().getTasks()
   }
 }
+
+function changeDelete() {
+  isDelete.value = true
+  updateSelectedCell({
+    gid: props.task.gid,
+    field: 'title',
+  })
+}
 </script>
 
 <template>
-  <np-dropdown-item v-if="!isDelete" label="删除" icon="icon-[lucide--trash]" danger @click.stop="isDelete = true" />
+  <np-dropdown-item v-if="!isDelete" label="删除" icon="icon-[lucide--trash]" danger @click.stop="changeDelete" />
   <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click="handleDelte" />
 </template>

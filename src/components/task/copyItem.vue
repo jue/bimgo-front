@@ -20,5 +20,6 @@ const url = computed(() => {
 </script>
 
 <template>
-  <np-dropdown-item :label="copied ? '已复制' : '复制链接'" :icon="copied ? 'icon-[lucide--check]' : 'icon-[lucide--copy]'" :class="{ 'text-green-500': copied }" @click.stop="copy(url)" />
+  <np-dropdown-item v-if="copied" label="已复制" icon="icon-[lucide--check]" class="!text-green-500" />
+  <np-dropdown-item v-else label="复制链接" icon="icon-[lucide--copy]" @click.stop="copy(url)" />
 </template>

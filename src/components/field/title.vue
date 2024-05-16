@@ -27,6 +27,8 @@ watch(() => props.modelValue, (val) => {
   value.value = val
 })
 
+const updateSelectedCell = inject('updateSelectedCell')
+
 const apiUpdateUrl = computed(() => {
   if (props.cate === 'task')
     return '/task/title/update'
@@ -101,12 +103,9 @@ async function saveEdit() {
     value.value = props.data.title
 }
 
-const updateSelectedCell = inject('updateSelectedCell')
-
 const unexpandedKeys = inject('unexpandedKeys')
 // 创建子任务
 async function addNew(data) {
-  console.log(data)
   const index = unexpandedKeys.value.indexOf(data.gid)
   if (index > -1)
     unexpandedKeys.value.splice(index, 1)
@@ -142,6 +141,15 @@ const isShow = ref(false)
 function handleShow(val) {
   isShow.value = val
 }
+
+const dropdownRef = ref(null)
+function handleParent() {
+  updateSelectedCell({
+    gid: props.data.gid,
+    field: 'title',
+  })
+  console.log('323424')
+}
 </script>
 
 <template>
@@ -154,17 +162,30 @@ function handleShow(val) {
         <span v-tooltip.bottom="'添加子任务'" class="cursor-pointer bg-gray-300 hover:bg-gray-500 w-4 h-4 rounded flex items-center justify-center" @click.stop="addNew(data)">
           <span class="icon-[lucide--plus] text-xs text-white" />
         </span>
-        <np-dropdown @show="handleShow" @hide="handleShow">
+        <np-dropdown ref="dropdownRef" @show="handleShow" @hide="handleShow">
           <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" />
           <template #menu>
             <np-dropdown-item label="查看详细信息" icon @click="handleOpenPanel(data.gid)" />
             <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" :href="`/task/detail?gid=${data.gid}`" target="_blank" />
-            <TaskCopyItem :task="data" cate="task" />
+            <TaskCopyItem
+              :task="data"
+              cate="task"
+              @click="updateSelectedCell({
+                gid: data.gid,
+                field: 'title',
+              })"
+            />
             <np-dropdown-item label="收藏" icon="icon-[lucide--star]" divider />
             <np-dropdown-item label="添加子任务" icon="icon-[lucide--circle-plus]" @click="addNew(data)" />
-            <TaskParentItem :task="task" cate="task" />
+            <!-- <TaskParentItem
+              :task="task"
+              cate="task"
+              @click="handleParent"
+            /> -->
+            <!-- <np-dropdown-item label="选择父任务" icon="icon-[lucide--list-tree]" @click="handleParent" /> -->
             <np-dropdown-item label="重命名" icon divider @click="editInput" />
             <TaskDeleteItem :task="data" cate="task" />
+            <np-dropdown-item label="测试点击" icon />
           </template>
         </np-dropdown>
       </div>
