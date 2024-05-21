@@ -6,9 +6,9 @@ const props = defineProps({
   },
 })
 const { users } = storeToRefs(useSettingsStore())
-const value = users.value.find(item => item.uid === props.uid)
+const info = computed(() => users.value.find(item => item.uid === props.uid))
 </script>
 
 <template>
-  <span>{{ value?.realname }}</span>
+  <span class="shrink-0">{{ info?.realname || '' }}</span>
 </template>

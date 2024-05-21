@@ -20,6 +20,10 @@ const seletParentRef = ref(null)
 function handleParent() {
   seletParentRef.value.open(props.task.gid)
 }
+
+function handleDeleted(task) {
+  emit('deleted', task)
+}
 </script>
 
 <template>
@@ -30,7 +34,7 @@ function handleParent() {
       <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" :href="`/task/detail?gid=${task.gid}`" target="_blank" />
       <TaskCopyItem :task="task" cate="task" />
       <!-- <np-dropdown-item label="选择父任务" icon="icon-[lucide--list-tree]" @click="handleParent" /> -->
-      <TaskDeleteItem :task="task" cate="task" @deleted="emit('deleted', task)" />
+      <TaskDeleteItem :task="task" cate="task" @deleted="handleDeleted" />
     </template>
   </np-dropdown>
   <TaskSeletParent ref="seletParentRef" />

@@ -5,8 +5,8 @@ export const useLogsStore = defineStore('logs', {
     logs: [],
   }),
   actions: {
-    async getLogs(id, cate) {
-      const { data: res } = await http.post('/logs/list', { id, cate })
+    async getLogs(id, cate, action = []) {
+      const { data: res } = await http.post('/logs/list', { id, cate, action })
       if (res.code === 200)
         this.logs = res.data // 更新日志数据
     },

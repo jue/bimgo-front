@@ -29,7 +29,7 @@ defineProps({
       <div class="text-gray-400 text-xs font-medium">
         优先级
       </div>
-      <FieldPriority v-model="task.priority" class="h-10" />
+      <FieldPriority v-model="task.priority" :data="task" class="h-10" />
     </div>
 
     <div class="space-y-2">

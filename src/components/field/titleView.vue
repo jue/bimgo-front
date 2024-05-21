@@ -32,10 +32,12 @@ async function saveData() {
     title: value.value,
     gid: props.task.gid,
   })
-  if (res.code === 200)
+  if (res.code === 200) {
     props.task.title = value.value
-  else
-    value.value = props.task.title
+    const { getLogs } = useLogsStore()
+    getLogs(props.task.gid, props.cate)
+  }
+  else { value.value = props.task.title }
 }
 
 function handleEnter() {

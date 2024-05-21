@@ -46,8 +46,6 @@ const apiClearUrl = computed(() => {
     return `/issue/time/clear`
 })
 
-const getTaskList = inject('getTaskList')
-
 function handleChange() {
   if (props.data.gid)
     saveData()
@@ -66,7 +64,8 @@ async function saveData() {
 
   if (res.code === 200) {
     emit('update:modelValue', dayjs(value.value).format('YYYY-MM-DD'))
-    getTaskList()
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.gid, props.cate)
   }
   else { value.value = props.modelValue ? new Date(props.modelValue) : '' }
 }
@@ -80,7 +79,8 @@ async function clear() {
 
   if (res.code === 200) {
     emit('update:modelValue', '')
-    getTaskList()
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.gid, props.cate)
   }
   else { value.value = props.modelValue ? new Date(props.modelValue) : '' }
 

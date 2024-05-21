@@ -97,10 +97,12 @@ async function saveEdit() {
     gid: props.data.gid,
     title: value.value,
   })
-  if (res.code === 200)
+  if (res.code === 200) {
     emit('update:modelValue', value.value)
-  else
-    value.value = props.data.title
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.gid, props.cate)
+  }
+  else { value.value = props.data.title }
 }
 
 const unexpandedKeys = inject('unexpandedKeys')

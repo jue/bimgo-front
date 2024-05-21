@@ -34,6 +34,9 @@ onClickOutside(treeRef, () => {
     field: null,
   }
 })
+
+// 以下信息为开发信息
+const tmpTask = ref([])
 </script>
 
 <template>
@@ -74,8 +77,12 @@ onClickOutside(treeRef, () => {
           :columns="filterColumns"
           :selected-cell="selectedCell"
           @cell:select="handleCellClick"
+          @dev="tmpTask = $event"
         />
       </template>
     </div>
+    <pre>
+      {{ tmpTask }}
+    </pre>
   </div>
 </template>

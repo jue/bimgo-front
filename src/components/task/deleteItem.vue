@@ -24,26 +24,31 @@ const updateSelectedCell = inject('updateSelectedCell')
 
 const isDelete = ref(false)
 
-async function handleDelte() {
+async function handleDelete() {
   const { data: res } = await http.post(apiDeleteUrl.value, { gid: props.task.gid })
 
   if (res.code === 200) {
     toast.add({ severity: 'success', summary: '删除成功', life: 3000, closable: false })
-    emit('deleted', props.task)
     useTaskStore().getTasks()
+    emit('deleted', props.task)
   }
 }
 
 function changeDelete() {
   isDelete.value = true
-  updateSelectedCell({
-    gid: props.task.gid,
-    field: 'title',
-  })
+  try {
+    updateSelectedCell({
+      gid: props.task.gid,
+      field: 'title',
+    })
+  }
+  catch (error) {
+
+  }
 }
 </script>
 
 <template>
   <np-dropdown-item v-if="!isDelete" label="删除" icon="icon-[lucide--trash]" danger @click.stop="changeDelete" />
-  <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click="handleDelte" />
+  <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click.stop="handleDelete" />
 </template>

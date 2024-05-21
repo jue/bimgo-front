@@ -47,7 +47,7 @@ function handleToggle(gid) {
 <template>
   <div
     :class="{ 'bg-[#ebf6ff]/50': task.gid === gid }"
-    class="flex items-center select-none"
+    class="uf-row flex items-center select-none"
     @mouseenter="gid = task.gid"
     @mouseleave="gid = ''"
   >

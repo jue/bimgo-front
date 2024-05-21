@@ -78,7 +78,7 @@ function close() {
     <div class="h-full flex overflow-auto bg-gray-100">
       <div class="flex-1 flex items-center justify-center p-10">
         <!-- 预览图片 -->
-        <el-image v-if="file.file_type.startsWith('image/')" class="h-full" :src="fileUrl" />
+        <el-image v-if="file.file_type.startsWith('image/')" class="max-w-full max-h-full" :src="fileUrl" />
         <!-- 预览pdf -->
         <VuePdfEmbed
           v-else-if="file.file_type.startsWith('application/pdf')" :source="fileUrl" class="w-2/3"

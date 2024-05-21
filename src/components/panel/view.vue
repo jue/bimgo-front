@@ -4,6 +4,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  cate: {
+    type: String,
+    default: 'task',
+  },
 })
 
 const subTasks = computed(() => props.dataList.children)
@@ -17,18 +21,18 @@ const subTaskRef = ref(null)
 </script>
 
 <template>
-  <div class="px-4">
-    <div class="flex items-center justify-between pt-3">
-      <div><span class="text-gray-400 cursor-pointer hover:text-blue-400">#8</span></div>
-      <div />
+  <div class="px-4 flex flex-col h-full">
+    <div class="shrink-0">
+      <div class="flex items-center justify-between pt-3">
+        <div><span class="text-gray-400 cursor-pointer hover:text-blue-400">#8</span></div>
+        <div />
+      </div>
+      <FieldTitleView :task="dataList?.task" />
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-5 flex-1 overflow-y-auto">
       <!-- 标题/描述区域 -->
-      <div v-if="dataList && dataList.task" class="pt-2">
-        <FieldTitleView :task="dataList?.task" />
-        <FieldDescription v-model="dataList.task.description" :data="dataList?.task" />
-      </div>
+      <FieldDescription v-if="dataList?.task" v-model="dataList.task.description" :data="dataList?.task" />
 
       <!-- 附件区域 -->
       <div>
@@ -50,11 +54,33 @@ const subTaskRef = ref(null)
           <Button icon="icon-[lucide--plus]" size="small" plain text @click="subTaskRef.openEdit()" />
         </div>
 
-        <!-- 附件列表 -->
         <TaskSub :id="dataList?.task?.gid" ref="subTaskRef" :sub-task="subTasks" />
       </div>
-    </div>
 
+      <!-- 关联的模型 -->
+      <div>
+        <div class="flex justify-between items-center py-3">
+          <span class="text-base font-bold">关联模型</span>
+          <Button v-tooltip.bottom="'全屏'" icon="icon-[lucide--maximize]" size="small" plain text />
+        </div>
+
+        <Placeholder />
+      </div>
+
+      <!-- 操作日志 -->
+      <div>
+        <div class="flex items-center py-3">
+          <span class="text-base font-bold">活动日志</span>
+        </div>
+
+        <Comment :id="dataList?.task?.gid" :cate="cate" />
+      </div>
+
+      <!-- 结束 -->
+    </div>
+    <div class="shrink-0 py-5 border-t">
+      <CommentSection :id="dataList?.task?.gid" :cate="cate" />
+    </div>
     <!-- 结束 -->
   </div>
 </template>

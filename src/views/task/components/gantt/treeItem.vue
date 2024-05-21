@@ -1,5 +1,4 @@
 <script setup>
-import { VueDraggable } from 'vue-draggable-plus'
 import TreeLine from './treeLine.vue'
 
 const props = defineProps({
@@ -22,6 +21,8 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['dev'])
+
 const gid = inject('gid')
 const unexpandedKeys = inject('unexpandedKeys')
 
@@ -29,31 +30,108 @@ const tasks = ref(props.tasks)
 watch(() => props.tasks, () => {
   tasks.value = props.tasks
 }, { deep: true })
-const updateData = inject('updateData')
 
-function onStart(event) {
-  console.log('onStart::', event)
-  event.item.style.backgroundColor = '#ffffff22'
+document.body.ondrop = function (event) {
+  event.preventDefault()
+  event.stopPropagation()
 }
 
-function onEnd(event) {
-  updateData(tasks.value)
+// 当前被拖动的任务
+const draggedTask = ref(null)
+const currentDropTarget = ref(null)
+
+function handleDragStart(event, task, index) {
+  draggedTask.value = { task, index }
+  event.dataTransfer.effectAllowed = 'move'
+  event.currentTarget.style.opacity = '0.4'
+}
+
+function handleDragEnd(event) {
+  event.currentTarget.style.opacity = '1'
+  console.log(event.currentTarget)
+  if (currentDropTarget.value)
+    currentDropTarget.value.classList.remove('drag-over', 'drag-over-before', 'drag-over-after')
+
+  draggedTask.value = null
+  currentDropTarget.value = null
+}
+
+function handleDragOver(event, task) {
+  event.preventDefault()
+  event.dataTransfer.dropEffect = 'move'
+
+  const targetElement = event.currentTarget
+  const targetRect = targetElement.getBoundingClientRect()
+
+  const dropY = event.clientY - targetRect.top
+
+  targetElement.classList.remove('drag-over', 'drag-over-before', 'drag-over-after')
+
+  if (dropY <= 10)
+    targetElement.classList.add('drag-over-before')
+
+  if (dropY > 10 && dropY < targetRect.height - 10)
+    targetElement.classList.add('drag-over')
+
+  if (dropY >= targetRect.height - 10)
+    targetElement.classList.add('drag-over-after')
+
+  currentDropTarget.value = targetElement
+}
+
+function handleDrop(event, targetTask) {
+  event.preventDefault()
+  if (currentDropTarget.value)
+    currentDropTarget.value.classList.remove('drag-over', 'drag-over-before', 'drag-over-after')
+
+  if (!draggedTask.value || draggedTask.value.task === targetTask)
+    return
+
+  const dragged = draggedTask.value.task
+  const draggedIndex = draggedTask.value.index
+  const targetIndex = tasks.value.indexOf(targetTask)
+
+  const targetRect = event.target.getBoundingClientRect()
+  const dropY = event.clientY - targetRect.top
+  const dropPosition = dropY / targetRect.height
+
+  tasks.value.splice(draggedIndex, 1)
+  if (dropPosition < 0.25) {
+    // Drop before target
+    tasks.value.splice(targetIndex, 0, dragged)
+  }
+  else if (dropPosition > 0.75) {
+    // Drop after target
+    tasks.value.splice(targetIndex + 1, 0, dragged)
+  }
+  else {
+    // Drop as child
+    if (!targetTask.children)
+      targetTask.children = []
+
+    targetTask.children.push(dragged)
+  }
+
+  draggedTask.value = null
+  currentDropTarget.value = null
 }
 </script>
 
 <template>
-  <VueDraggable
-    v-model="tasks"
-    class="drag-area"
-    tag="ul"
-    group="g1"
-    handle=".drag-button"
-    :force-fallback="true"
-    :fallback-on-body="false"
-    @start="onStart"
-    @end="onEnd"
-  >
-    <li v-for="(task, index) in tasks" :key="index" class="w-fit">
+  <ul>
+    <li
+      v-for="(task, index) in tasks"
+      :id="task.id"
+      :key="index"
+      class="uf-block w-fit relative"
+      draggable="true"
+      :gid="task.gid"
+      :parent_gid="task.parent_gid"
+      @dragstart.stop="handleDragStart($event, task, index)"
+      @dragend.stop="handleDragEnd"
+      @dragover.stop="handleDragOver($event, task)"
+      @drop.stop="handleDrop($event, task)"
+    >
       <TreeLine :task="task" :level="level" :columns="columns" :selected-cell="selectedCell" @cell:select="$emit('cell:select', $event)" />
       <!-- 这里递归children -->
       <template v-if="task.children && task.children.length > 0 && !unexpandedKeys.includes(task.gid)">
@@ -67,17 +145,31 @@ function onEnd(event) {
         />
       </template>
     </li>
-  </VueDraggable>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
-.sortable-chosen{
-  @apply border border-blue-500;
+.drag-over {
+  &::after {
+    @apply absolute left-0.5 right-0 top-0 bottom-0 h-10;
+    content: '';
+    @apply outline outline-1 outline-blue-600 -outline-offset-1 bg-transparent rounded;
+  }
 }
-.sortable-ghost {
-  @apply text-red-500
+
+.drag-over-before {
+  &::after {
+    @apply absolute left-0.5 right-0 top-0 bottom-0 h-0.5;
+    content: '';
+    @apply outline outline-1 outline-blue-600 -outline-offset-1 bg-transparent rounded;
+  }
 }
-.sortable-drag {
-  @apply bg-yellow-500
+
+.drag-over-after {
+  &::after {
+    @apply absolute left-0.5 right-0 top-10 bottom-0 h-0.5;
+    content: '';
+    @apply outline outline-1 outline-blue-600 -outline-offset-1 bg-transparent rounded;
+  }
 }
 </style>

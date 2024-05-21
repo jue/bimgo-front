@@ -62,10 +62,12 @@ async function saveData() {
     status: value.value,
     gid: props.data.gid,
   })
-  if (res.code === 200)
+  if (res.code === 200) {
     emit('update:modelValue', value.value)
-  else
-    value.value = props.modelValue
+    const { getLogs } = useLogsStore()
+    getLogs(props.data.gid, props.cate)
+  }
+  else { value.value = props.modelValue }
 
   loading.value = false
 }
