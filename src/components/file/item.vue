@@ -29,10 +29,14 @@ function deleteFiles() {
     .catch(() => {
     })
 }
+
+const status = computed(() => {
+  return props.file.status === 'active'
+})
 </script>
 
 <template>
-  <div class="border rounded-lg bg-white relative overflow-hidden" :class="{ 'border-red-200': !file.status }">
+  <div class="border rounded-lg bg-white relative overflow-hidden" :class="{ 'border-red-200': !status }">
     <div class="flex items-center p-2 relative z-10">
       <FilePreview class="shrink-0" :file="file" />
       <div class="flex-1 overflow-hidden px-2" :title="file.file_name">
@@ -43,17 +47,17 @@ function deleteFiles() {
           {{ file.file_size }}
         </div>
       </div>
-      <template v-if="file.status">
+      <template v-if="status">
         <el-tooltip content="下载">
           <el-button
-            text class="w-6 h-6 p-0" :disabled="!file.status || file.file_type === 'loading'"
+            text class="w-6 h-6 p-0" :disabled="!status || file.file_type === 'loading'"
             @click="downloadFile(file.fid)"
           >
             <span class="icon-[lucide--download] text-sm" />
           </el-button>
         </el-tooltip>
-        <el-dropdown trigger="click" class="ml-0.5" :disabled="!file.status || file.file_type === 'loading'">
-          <el-button text class="w-6 h-6 p-0" :disabled="!file.status || file.file_type === 'loading'">
+        <el-dropdown trigger="click" class="ml-0.5" :disabled="!status || file.file_type === 'loading'">
+          <el-button text class="w-6 h-6 p-0" :disabled="!status || file.file_type === 'loading'">
             <span class="icon-[lucide--more-vertical] text-sm" />
           </el-button>
           <template #dropdown>
@@ -74,10 +78,10 @@ function deleteFiles() {
       </template>
     </div>
     <div
-      v-if="!file.status"
+      v-if="!status"
       class="flex absolute top-0 bottom-0 right-0 left-0 z-50 bg-gray-50/50 items-center justify-end p-2"
     >
-      <span class="text-xs text-red-400">已删除</span>
+      <span class="text-red-400 icon-[lucide--bookmark-x] opacity-30">已删除</span>
     </div>
   </div>
 </template>

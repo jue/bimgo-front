@@ -85,20 +85,29 @@ async function handleSubmit() {
       <UserAvatar :uid="user?.uid" :size="32" shape="square" />
       <div class="flex-1 space-y-3">
         <div
-          class="w-full bg-gray-100 py-2 px-3 rounded-lg outline-[3px] outline-blue-100 border border-transparent"
-          :class="{ 'outline border-blue-800 bg-white': isFocus }"
+          class="w-full bg-gray-100 py-2 px-3 rounded-lg border border-gray-100 focus:bg-yellow-200"
+          :class="{ '!border-green-600 ring-2 ring-green-100 bg-white': isFocus }"
+          @click="textareaRef?.focus()"
         >
-          <el-input
-            ref="textareaRef" v-model="value" type="textarea" :autosize="{ minRows: 2 }"
-            placeholder="尝试上传文件并添加评论…" @focus="isFocus = true" @blur="isFocus = false"
+          <Textarea
+            ref="textareaRef"
+            v-model="value"
+            class="w-full h-full !bg-transparent !shadow-none !ring-0 !p-0 resize-none"
+            auto-resize
+            placeholder="尝试上传文件并添加评论…"
+            @focus="isFocus = true"
+            @blur="isFocus = false"
           />
           <div class="flex items-end justify-between">
-            <FileUploader :id="id" cate="issue" :status="0" @add="addFile" @update="updateFile">
-              <np-button icon="paperclip" class="hover:bg-gray-200 hover:text-blue-500 opacity-60" shape="square" />
-            </FileUploader>
-            <el-button type="primary" :disabled="!value && files.length === 0" @click="handleSubmit">
-              提交
-            </el-button>
+            <div class="space-x-1 flex items-center">
+              <UploadButton :id="id" cate="task" status="no-status" @add="addFile" @update="updateFile">
+                <Button icon="icon-[lucide--paperclip]" class="opacity-80" plain text size="small" />
+              </UploadButton>
+              <!-- <Button icon="icon-[lucide--at-sign]" class="opacity-80" plain text size="small" /> -->
+            </div>
+            <div>
+              <Button label="发送" icon="icon-[lucide--send]" :disabled="!value && files.length === 0" @click.stop="handleSubmit" />
+            </div>
           </div>
         </div>
       </div>

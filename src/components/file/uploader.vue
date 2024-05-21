@@ -11,8 +11,8 @@ const props = defineProps({
     default: 'issue',
   },
   status: {
-    type: Number,
-    default: 1,
+    type: String,
+    default: 'active',
   },
 })
 const emit = defineEmits(['add', 'update'])

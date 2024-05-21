@@ -78,7 +78,7 @@ const subTaskRef = ref(null)
 
       <!-- 结束 -->
     </div>
-    <div class="shrink-0 py-5 border-t">
+    <div class="shrink-0 py-5">
       <CommentSection :id="dataList?.task?.gid" :cate="cate" />
     </div>
     <!-- 结束 -->

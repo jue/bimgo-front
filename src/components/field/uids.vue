@@ -19,6 +19,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+const inputRef = ref(null)
 
 const { users } = storeToRefs(useSettingsStore())
 
@@ -37,11 +38,18 @@ const apiUpdateUrl = computed(() => {
 
 const isShow = ref(false)
 
+// 打开选择框
+function handleShow() {
+  isShow.value = true
+  value.value = props.modelValue
+}
+
 async function handleChange() {
   return false
 }
 
-async function handleHide() {
+async function handleSave() {
+  inputRef.value.hide()
   isShow.value = false
   if (props.data.gid)
     saveData()
@@ -61,10 +69,18 @@ async function saveData() {
   }
   else { value.value = props.modelValue }
 }
+
+// 取消选择
+function handleCancel() {
+  inputRef.value.hide()
+  isShow.value = false
+  value.value = props.modelValue
+}
 </script>
 
 <template>
   <MultiSelect
+    ref="inputRef"
     v-model="value"
     :options="users"
     filter
@@ -84,21 +100,21 @@ async function saveData() {
         ],
       },
     }"
-    @show="isShow = true"
+    @show="handleShow"
     @hide="handleHide"
     @change="handleChange"
   >
     <template #value="slotProps">
       <div
-        v-if="slotProps.value && slotProps.value.length"
+        v-if="modelValue.length > 0"
         class="px-4 flex items-center"
         :class="{
           '!-mx-2 !pr-0': inline,
         }"
       >
         <AvatarGroup>
-          <UserAvatar v-for="uid in slotProps.value.slice(0, 5)" :key="uid" class="mr-2 last:mr-0" :uid="uid" />
-          <Avatar v-if="slotProps.value.length > 5" :label="`+${slotProps.value.length - 5}`" shape="circle" size="small" />
+          <UserAvatar v-for="uid in modelValue.slice(0, 5)" :key="uid" class="mr-2 last:mr-0" :uid="uid" />
+          <Avatar v-if="modelValue.length > 5" :label="`+${modelValue.length - 5}`" shape="circle" size="small" />
         </AvatarGroup>
       </div>
       <span
@@ -119,8 +135,9 @@ async function saveData() {
       </div>
     </template>
     <template #footer>
-      <div class="py-2 px-3">
-        已选择 <b>{{ value ? value.length : 0 }}</b> 位用户
+      <div class="flex items-center justify-between p-2 px-3">
+        <Button label="取消" class="w-24" outlined @click="handleCancel" />
+        <Button label="确定" class="w-24" @click="handleSave" />
       </div>
     </template>
   </MultiSelect>

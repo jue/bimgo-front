@@ -11,9 +11,13 @@ const props = defineProps({
     type: String,
     default: 'task',
   },
+  status: {
+    type: String,
+    default: 'active',
+  },
 })
 
-const emit = defineEmits(['uploaded'])
+const emit = defineEmits(['add', 'update', 'uploaded'])
 
 const toast = useToast()
 
@@ -54,6 +58,12 @@ function hangleChange() {
 const loading = ref(false)
 const files = ref([])
 async function uploader(event) {
+  emit('add', {
+    file_name: event.target.files[0].name,
+    file_type: 'loading',
+    file_size: formatSize(event.target.files[0].size),
+  })
+
   loading.value = true
   // 在files里插入临时数据
   files.value.push({
@@ -64,22 +74,29 @@ async function uploader(event) {
 
   const formData = new FormData()
   formData.append('id', props.id)
+  formData.append('status', props.status)
   formData.append('cate', props.cate)
   formData.append('file', event.target.files[0])
 
   const { data: res } = await http.post('/file/upload', formData)
   if (res.code === 200) {
-    toast.add({ severity: 'success', summary: '上传成功', detail: 'Message Content', life: 3000 })
+    toast.add({ severity: 'success', summary: '上传成功', life: 3000 })
 
     uploadInput.value.value = null
 
     files.value[files.value.length - 1] = res.data
 
     emit('uploaded', res.data)
+    emit('update', res.data)
   }
   else {
+    emit('update', {
+      file_name: event.target.files[0].name,
+      file_type: 'error',
+      file_size: formatSize(event.target.files[0].size),
+    })
     files.value.pop()
-    toast.add({ severity: 'error', summary: '上传失败', detail: res.message, life: 3000 })
+    toast.add({ severity: 'error', summary: '上传失败', life: 3000 })
   }
   loading.value = false
 }
