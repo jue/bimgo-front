@@ -30,7 +30,6 @@ function handleDeleted(task) {
   <np-dropdown @show="handleShow" @hide="handleShow">
     <Button icon="icon-[lucide--ellipsis]" size="small" text plain :class="{ 'ring-2 ring-primary-500': isShow }" />
     <template #menu>
-      <np-dropdown-item label="测试点击" icon />
       <np-dropdown-item label="新窗口打开" icon="icon-[lucide--external-link]" :href="`/task/detail?gid=${task.gid}`" target="_blank" />
       <TaskCopyItem :task="task" cate="task" />
       <!-- <np-dropdown-item label="选择父任务" icon="icon-[lucide--list-tree]" @click="handleParent" /> -->

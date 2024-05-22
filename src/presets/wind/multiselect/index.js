@@ -115,24 +115,24 @@ export default {
       // Color
       'bg-surface-0 dark:bg-surface-800',
       'text-surface-800 dark:text-white/80',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+      'dark:ring-surface-700',
     ],
   },
   header: {
     class: [
       'flex items-center justify-between',
       // Spacing
-      'py-2 px-4',
+      'px-2 py-1.5',
       'm-0',
 
       // Shape
-      'border-b',
+      // 'border-b',
       'rounded-tl-md',
       'rounded-tr-md',
 
       // Color
       'text-surface-700 dark:text-white/80',
-      'bg-surface-50 dark:bg-surface-800',
+      'bg-white dark:bg-surface-800',
       'border-surface-200 dark:border-surface-700',
     ],
   },
@@ -184,6 +184,7 @@ export default {
   headerCheckbox: {
     root: {
       class: [
+        'hidden',
         'relative',
 
         // Alignment
@@ -402,7 +403,7 @@ export default {
       'relative',
 
       // Flexbox and Alignment
-      'flex items-center justify-center',
+      'flex items-center justify-center hidden',
 
       // Size and Spacing
       'mr-2',
@@ -450,14 +451,13 @@ export default {
     ],
   },
   list: {
-    class: 'py-1 list-none m-0',
+    class: 'p-1 list-none space-y-0.5',
   },
   item: ({ context }) => ({
     class: [
       // Font
       'sm:text-sm',
       'leading-none',
-      { 'font-normal': !context.selected, 'font-bold': context.selected },
 
       // Flexbox
       'flex items-center',
@@ -467,20 +467,20 @@ export default {
 
       // Shape
       'border-0',
-      'rounded-none',
+      'rounded-md',
 
       // Spacing
       'm-0',
-      'py-2 px-4',
+      'py-1.5 px-2',
 
       // Color
-      { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
-      { 'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected },
-      { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
-      { 'bg-transparent text-surface-700 dark:text-white/80': !context.focused && context.selected },
+      { 'dark:text-white/80': !context.focused && !context.selected },
+      { 'dark:bg-surface-600/60  dark:text-white/80': context.focused && !context.selected },
+      { 'dark:bg-primary-400 dark:text-surface-700': context.focused && context.selected },
+      { 'bg-transparent dark:text-white/80': !context.focused && context.selected },
 
       // States
-      'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
+      'hover:bg-stone-100 dark:hover:bg-primary-400 dark:hover:text-surface-700',
 
       // Misc
       'cursor-pointer',
@@ -507,7 +507,7 @@ export default {
     ],
   },
   filtercontainer: {
-    class: 'relative w-full mr-2',
+    class: 'relative w-full',
   },
   filterinput: {
     class: [
@@ -534,7 +534,7 @@ export default {
       'appearance-none',
 
       // States
-      'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
+      'focus:ring-1 focus:ring-inset focus:outline-none focus:outline-offset-0',
       'focus:ring-primary-600 dark:focus:ring-primary-500',
 
       // Misc

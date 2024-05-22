@@ -135,7 +135,7 @@ function handleCancel() {
       </div>
     </template>
     <template #footer>
-      <div class="flex items-center justify-between p-2 px-3">
+      <div class="flex items-center justify-between p-2 px-3 space-x-2">
         <Button label="取消" class="w-24" outlined @click="handleCancel" />
         <Button label="确定" class="w-24" @click="handleSave" />
       </div>

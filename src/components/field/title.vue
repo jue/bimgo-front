@@ -187,7 +187,6 @@ function handleParent() {
             <!-- <np-dropdown-item label="选择父任务" icon="icon-[lucide--list-tree]" @click="handleParent" /> -->
             <np-dropdown-item label="重命名" icon divider @click="editInput" />
             <TaskDeleteItem :task="data" cate="task" />
-            <np-dropdown-item label="测试点击" icon />
           </template>
         </np-dropdown>
       </div>

@@ -14,6 +14,10 @@ const form = reactive({
   groupby_field: '',
 })
 
+const para = reactive({
+  status: ['todo', 'doing'],
+})
+
 function getIssues() {
   tableRef.value.getIssues(form)
 }
@@ -22,32 +26,9 @@ function getIssues() {
 <template>
   <div class="flex flex-col h-full">
     <div class="px-5 space-x-3 flex items-center justify-between h-12 shrink-0">
-      <div class="flex items-center space-x-4">
-        <div class="inline-flex items-center h-8 bg-gray-200/70 p-0.5 rounded-lg shrink-0">
-          <div class="flex items-center space-x-1 px-4 bg-white rounded-lg h-full cursor-pointer">
-            <span class="icon-[lucide--table-2]" />
-            <span>表格</span>
-          </div>
-          <el-tooltip content="未开放" placement="top">
-            <div
-              class="flex items-center space-x-1 px-4 rounded-lg h-full cursor-pointer text-zinc-600 hover:text-blue-600"
-            >
-              <span class="icon-[lucide--square-kanban]" />
-              <span>看板</span>
-            </div>
-          </el-tooltip>
-          <el-tooltip content="未开放" placement="top">
-            <div
-              class="flex items-center space-x-1 px-4 rounded-lg h-full cursor-pointer text-zinc-600 hover:text-blue-600"
-            >
-              <span class="icon-[lucide--square-kanban]" />
-              <span>日历</span>
-            </div>
-          </el-tooltip>
-        </div>
-        <div class="flex items-center">
-          <GroupBy v-model="form.groupby_field" />
-        </div>
+      <div class="flex items-center space-x-2">
+        <InputText v-model="form.key" type="text" class="w-80" placeholder="按问题名搜索" />
+        <FilterStatus v-model="para.status" cate="issue" />
       </div>
       <div class="flex items-center space-x-4">
         <el-input v-model="form.key" placeholder="按问题名搜索" clearable class="w-80">

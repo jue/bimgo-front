@@ -59,7 +59,7 @@ onClickOutside(datePicker, () => {
       </div>
     </template>
     <template #footer>
-      <div class="flex items-center justify-between px-2">
+      <div class="flex items-center justify-between px-2 space-x-2">
         <Button label="清除" outlined class="w-24" severity="info" @click="handleRemove" />
         <Button label="确定" class="w-24" severity="info" @click="handleConfirm" />
       </div>
