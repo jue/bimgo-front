@@ -1,4 +1,9 @@
 <script setup>
+import { useDialog } from 'primevue/usedialog'
+
+const dialog = useDialog()
+const Invitation = defineAsyncComponent(() => import('@/components/user/Invitation.vue'))
+
 const { sideWidth, sideCollapsed } = storeToRefs(useSettingsStore())
 const { changeSideCollapsed } = useSettingsStore()
 const route = useRoute()
@@ -50,6 +55,15 @@ const menus = ref([
   },
 
 ])
+
+function handleInvitation() {
+  dialog.open(Invitation, {
+    props: {
+      header: '邀请人员加入',
+      modal: true,
+    },
+  })
+}
 </script>
 
 <template>
@@ -87,7 +101,7 @@ const menus = ref([
             <RouterLink v-for="menu in cate.children" :key="menu.path" :to="menu.path" class="block">
               <div
                 class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
-                :class="{ 'text-white bg-neutral-500/10': route.fullPath.startsWith(menu.path) }"
+                :class="{ 'bg-neutral-500/10': route.fullPath.startsWith(menu.path) }"
               >
                 <Icon :name="menu.icon" :size="16" />
                 <div>{{ menu.name }}</div>
@@ -97,14 +111,10 @@ const menus = ref([
         </div>
       </ScrollPanel>
       <div class="h-14 flex items-center px-2">
-        <UserInvitation class="w-full">
-          <template #default="{ toggleDialog }">
-            <Button class="w-full text-xs" severity="secondary" @click="toggleDialog">
-              <span class="icon-[lucide--user-round-plus] mr-1" />
-              邀请新的使用者
-            </Button>
-          </template>
-        </UserInvitation>
+        <Button class="w-full text-xs" severity="secondary" @click="handleInvitation">
+          <span class="icon-[lucide--user-round-plus] mr-1" />
+          邀请新的使用者
+        </Button>
       </div>
     </template>
   </div>

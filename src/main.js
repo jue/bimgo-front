@@ -5,6 +5,8 @@ import PrimeVue from 'primevue/config'
 import Tooltip from 'primevue/tooltip'
 import ToastService from 'primevue/toastservice'
 import StyleClass from 'primevue/styleclass'
+import ConfirmationService from 'primevue/confirmationservice'
+import DialogService from 'primevue/dialogservice'
 
 import './assets/index.css'
 
@@ -220,5 +222,7 @@ app.use(ToastService)
 
 app.directive('tooltip', Tooltip)
 app.directive('styleclass', StyleClass)
+app.use(ConfirmationService)
+app.use(DialogService)
 
 app.mount('#app')

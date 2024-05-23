@@ -34,13 +34,13 @@ function handleClick(event) {
 
 <template>
   <template v-if="divider">
-    <div class="box-shadow2 border-t -mx-1" />
+    <div class="h-px bg-stone-200 border-t -mx-1" />
   </template>
   <component
     :is="href ? 'a' : 'div'"
     :href="href"
     :target="href ? target : undefined"
-    class="py-1.5 px-2 cursor-pointer rounded-md flex items-center select-none"
+    class="py-1.5 px-2 cursor-pointer rounded-md flex items-center select-none w-full"
     :class="{ 'text-red-500 hover:bg-red-50': danger, 'hover:bg-stone-100': !danger }"
     @click="handleClick($event)"
   >
