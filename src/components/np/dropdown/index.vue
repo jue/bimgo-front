@@ -23,22 +23,24 @@ defineExpose({
 </script>
 
 <template>
-  <div @click="show">
-    <slot />
-  </div>
-  <OverlayPanel
-    ref="op"
-    :pt="{
-      root: {
-        class: ['shadow-none border-none'],
-      },
-    }"
-    @show="$emit('show', true)"
-    @hide="$emit('hide', false)"
-    @click="hide"
-  >
-    <div class="box-shadow rounded-md p-1 min-w-44 space-y-0.5">
-      <slot name="menu" />
+  <div class="inline">
+    <div class="w-full cursor-pointer" @click="show">
+      <slot @click="show" />
     </div>
-  </OverlayPanel>
+    <OverlayPanel
+      ref="op"
+      :pt="{
+        root: {
+          class: ['shadow-none border-none'],
+        },
+      }"
+      @show="$emit('show', true)"
+      @hide="$emit('hide', false)"
+      @click="hide"
+    >
+      <div class="box-shadow rounded-md p-1 min-w-44 space-y-0.5">
+        <slot name="menu" />
+      </div>
+    </OverlayPanel>
+  </div>
 </template>

@@ -4,6 +4,7 @@ import 'element-plus/es/components/message-box/style/index'
 import PrimeVue from 'primevue/config'
 import Tooltip from 'primevue/tooltip'
 import ToastService from 'primevue/toastservice'
+import StyleClass from 'primevue/styleclass'
 
 import './assets/index.css'
 
@@ -218,5 +219,6 @@ app.use(PrimeVue, {
 app.use(ToastService)
 
 app.directive('tooltip', Tooltip)
+app.directive('styleclass', StyleClass)
 
 app.mount('#app')

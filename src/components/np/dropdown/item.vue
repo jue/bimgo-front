@@ -44,7 +44,9 @@ function handleClick(event) {
     :class="{ 'text-red-500 hover:bg-red-50': danger, 'hover:bg-stone-100': !danger }"
     @click="handleClick($event)"
   >
-    <span v-if="icon !== null" :class="{ [icon]: !!icon, 'w-4 h-4': !icon }" class="mr-2" />
-    <span>{{ label }}</span>
+    <slot>
+      <span v-if="icon !== null" :class="{ [icon]: !!icon, 'w-4 h-4': !icon }" class="mr-2" />
+      <span>{{ label }}</span>
+    </slot>
   </component>
 </template>

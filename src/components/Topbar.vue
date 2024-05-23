@@ -7,29 +7,37 @@ const route = useRoute()
 
 <template>
   <div
-    class="flex items-center justify-between h-16 px-5 shrink-0 border-b "
+    class="flex items-center justify-between h-14 px-5 shrink-0 border-b "
   >
     <div class="flex items-center space-x-4">
-      <!-- <Logo v-if="sideCollapsed" class="w-12" /> -->
-      <el-tooltip v-if="sideCollapsed" :content="sideCollapsed ? '展开侧边栏' : '收起侧边栏'" :show-arrow="false">
-        <el-button text class="w-8 h-8" @click="changeSideCollapsed()">
-          <span
-            :class="{ '!icon-[lucide--menu]': sideCollapsed }"
-            class="icon-[lucide--panel-left-close] text-xl opacity-80 hover:opacity-100"
-          />
-        </el-button>
-      </el-tooltip>
+      <Button v-if="sideCollapsed" v-tooltip="'展开侧边栏'" plain text class="ring-0" @click="changeSideCollapsed()">
+        <span class="icon-[lucide--menu] text-xl" />
+      </Button>
+
       <div v-if="route.meta?.title" class="text-xl font-medium">
         {{ route.meta?.title }}
       </div>
     </div>
-    <div>
-      <!-- <el-button type="primary">
-        <div class="flex items-center space-x-1">
-          <span class="icon-[lucide--plus]" />
-          <span>创建事项</span>
-        </div>
-      </el-button> -->
+
+    <div class="flex items-center space-x-4">
+      <!-- <SplitButton
+        label="创建事项"
+        :model="items"
+        class="shrink-0"
+        :pt="{
+          button: {
+            root: {
+              class: ['!border-b-4 border-green-600 !ring-0 !rounded-none !rounded-l-md px-3'],
+            },
+          },
+          menubutton: {
+            root: {
+              class: ['!border-b-4 border-green-600 !ring-0 !rounded-none !rounded-r-md px-3 border-l'],
+            },
+          },
+        }"
+        @click="save"
+      /> -->
       <UserButton />
     </div>
   </div>

@@ -21,37 +21,22 @@ function logout() {
 </script>
 
 <template>
-  <el-dropdown trigger="click" placement="bottom-start">
-    <div class="flex items-center space-x-1">
-      <UserAvatar :uid="user?.uid" :size="32" />
+  <np-dropdown class="block w-full">
+    <div class="flex items-center justify-between space-x-1 w-full px-2">
+      <!-- <UserAvatar :uid="user?.uid" :size="32" /> -->
+      <User :uid="user?.uid" :size="32" />
       <span class="icon-[lucide--chevrons-up-down]" />
     </div>
-
-    <template #dropdown>
-      <el-dropdown-menu class="w-48">
-        <UserInvitation class="w-full">
-          <template #default="{ toggleDialog }">
-            <el-dropdown-item @click="toggleDialog">
-              <span class="icon-[lucide--user-plus] mr-2" />
-              <span>邀请用户</span>
-            </el-dropdown-item>
-          </template>
-        </UserInvitation>
-        <el-dropdown-item divided>
-          <span class="icon-[lucide--user] mr-2" />
-          <span>我的信息</span>
-        </el-dropdown-item>
-        <el-dropdown-item>
-          <span class="icon-[lucide--settings] mr-2" />
-          <span>设置</span>
-        </el-dropdown-item>
-        <el-dropdown-item class="!text-red-500" @click="logout()">
-          <span class="icon-[lucide--log-out] mr-2" />
-          <span>退出登陆</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
+    <template #menu>
+      <UserInvitation class="w-full">
+        <template #default="{ toggleDialog }">
+          <np-dropdown-item label="邀请用户" icon="icon-[lucide--user-plus]" @click.stop="toggleDialog" />
+        </template>
+      </UserInvitation>
+      <!-- <np-dropdown-item label="邀请用户" icon="icon-[lucide--user-plus]" /> -->
+      <np-dropdown-item label="我的信息" icon="icon-[lucide--user]" divider />
+      <np-dropdown-item label="设置" icon="icon-[lucide--settings]" />
+      <np-dropdown-item label="退出登陆" icon="icon-[lucide--log-out]" danger @click="logout()" />
     </template>
-  </el-dropdown>
-
-  <!-- <UserInvitation ref="invitationRef" /> -->
+  </np-dropdown>
 </template>

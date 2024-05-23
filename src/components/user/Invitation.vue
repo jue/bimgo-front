@@ -24,26 +24,26 @@ onMounted(() => {
 <template>
   <div class="inline-block">
     <slot :toggle-dialog="toggleDialog">
-      <el-button type="primary" text class="ml-2" @click="toggleDialog">
+      <Button type="primary" text class="ml-2" @click="toggleDialog">
         <span class="icon-[lucide--user-round-plus] mr-1" />
         邀请新的使用者
-      </el-button>
+      </Button>
     </slot>
-    <el-dialog v-model="visible" :title="`邀请人员加入${projectName}`" append-to-body width="300px">
+
+    <Dialog v-model:visible="visible" modal :header="`邀请人员加入${projectName}`" :style="{ width: '25rem' }">
       <div class="space-y-3 py-5">
-        {{ url }}
         <div class="w-40 mx-auto">
           <Qrcode :text="url" class="mx-auto block text-center" size="160" />
         </div>
         <div class="text-center">
-          <el-button link type="primary" @click="copy(source)">
+          <Button text plain severity="secondary" class="!ring-0" @click="copy(source)">
             <template v-if="copied">
               <span class="icon-[lucide--clipboard-check]" />复制成功
             </template>
             <span v-else>复制邀请链接，分享给微信好友</span>
-          </el-button>
+          </Button>
         </div>
       </div>
-    </el-dialog>
+    </Dialog>
   </div>
 </template>

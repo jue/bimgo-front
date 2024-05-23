@@ -4,7 +4,7 @@ const { sideWidth } = storeToRefs(useSettingsStore())
 
 <template>
   <div class="h-screen flex">
-    <Sidebar />
+    <Side />
     <div class="h-screen flex flex-col" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <Topbar />
       <div class="flex-1 overflow-y-auto">
