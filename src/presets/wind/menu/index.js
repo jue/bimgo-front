@@ -86,7 +86,7 @@ export default {
 
       // Spacing
       'm-0',
-      'py-1.5',
+      'py-1',
       'px-2',
 
       // Shape

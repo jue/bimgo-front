@@ -2,6 +2,8 @@
 const { task_columns } = storeToRefs(useUserStore())
 const op = ref(null)
 
+console.log(task_columns.value)
+
 const isShow = ref(false)
 
 function toggle(event) {

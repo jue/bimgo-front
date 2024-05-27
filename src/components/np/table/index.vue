@@ -1,5 +1,5 @@
 <script setup>
-import TableHeader from './TableHeader.vue'
+import Header from './header.vue'
 import Row from './Row.vue'
 import TreeItem from './TreeItem.vue'
 
@@ -86,14 +86,14 @@ const allOptions = computed(() => {
     <table ref="tableRef" class="min-w-full border-collapse divide-y table-fixed">
       <!-- 表头部分 -->
       <thead>
-        <TableHeader :id="id" :columns="columns" :size="size" :border="border" :options="allOptions">
+        <Header :id="id" :columns="columns" :size="size" :border="border" :options="allOptions">
           <template #id-th>
             <slot name="id-th" />
           </template>
           <template v-for="column in columns" #[`${column[allOptions.value]}-header`]="{ column }">
             <slot :name="`${column[allOptions.value]}-header`" :column="column" />
           </template>
-        </TableHeader>
+        </Header>
       </thead>
       <tbody class="divide-y">
         <tr v-if="!rows.length" class="h-8 text-center text-gray-300">
@@ -107,7 +107,7 @@ const allOptions = computed(() => {
           </td>
         </tr>
         <template v-else>
-          <template v-if="tree && rows.length">
+          <!-- <template v-if="tree && rows.length">
             <template v-for="(group, groupIndex) in rows" :key="groupIndex">
               <TreeItem
                 :id="id" :group="group" :columns="columns" :size="size" :border="border" :options="allOptions"
@@ -127,21 +127,21 @@ const allOptions = computed(() => {
             </template>
           </template>
 
-          <template v-else>
-            <Row
-              v-for="(row, index) in rows" :id="id" :key="index" :row="row" :columns="columns" :index="index"
-              :options="allOptions" :size="size" :border="border" class="hover:bg-gray-100"
-              :selected-cell="selectedCell" @hover="($event) => $emit('hover', $event)"
-              @mouseleave="($event) => $emit('mouseleave', $event)" @cell:select="handleCellClick"
-            >
-              <template #id-td="{ row, column, index }">
-                <slot name="id-td" :column="column" :row="row" :index="index" />
-              </template>
-              <template v-for="column in columns" #[`${column[allOptions.value]}-data`]="{ row, column, index }">
-                <slot :name="`${column[allOptions.value]}-data`" :column="column" :row="row" :index="index" />
-              </template>
-            </Row>
-          </template>
+          <template v-else> -->
+          <Row
+            v-for="(row, index) in rows" :id="id" :key="index" :row="row" :columns="columns" :index="index"
+            :options="allOptions" :size="size" :border="border" class="hover:bg-gray-100"
+            :selected-cell="selectedCell" @hover="($event) => $emit('hover', $event)"
+            @mouseleave="($event) => $emit('mouseleave', $event)" @cell:select="handleCellClick"
+          >
+            <template #id-td="{ row, column, index }">
+              <slot name="id-td" :column="column" :row="row" :index="index" />
+            </template>
+            <template v-for="column in columns" #[`${column[allOptions.value]}-data`]="{ row, column, index }">
+              <slot :name="`${column[allOptions.value]}-data`" :column="column" :row="row" :index="index" />
+            </template>
+          </Row>
+          <!-- </template> -->
         </template>
       </tbody>
     </table>

@@ -1,4 +1,5 @@
 <script setup>
+import dayjs from 'dayjs'
 import DragBtn from './dragBtn.vue'
 
 const props = defineProps({
@@ -85,6 +86,9 @@ function handleToggle(gid) {
         <FieldDate v-else-if="column.value === 'end_time'" v-model="task[column.value]" field="end_time" :data="task" class="!shadow-none !ring-0 bg-transparent" />
         <FieldDate v-else-if="column.value === 'done_time'" v-model="task[column.value]" field="done_time" :data="task" class="!shadow-none !ring-0 bg-transparent" />
         <User v-else-if="column.value === 'uid'" :uid="task[column.value]" class="px-2" />
+        <span v-else-if="column.value === 'created_at'" class="px-2">
+          {{ dayjs(task[column.value]).format('YYYY-MM-DD HH:mm') }}
+        </span>
         <span v-else>
           {{ task[column.value] }}
         </span>

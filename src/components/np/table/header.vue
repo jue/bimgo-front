@@ -2,11 +2,32 @@
 import { defineProps, useSlots } from 'vue'
 
 defineProps({
-  columns: Array,
-  size: Number,
-  border: Boolean,
-  id: Boolean,
-  options: Object,
+  columns: {
+    type: Array,
+    default: () => [],
+  },
+  size: {
+    type: Number,
+    default: 40,
+  },
+  border: {
+    type: Boolean,
+    default: false,
+  },
+  id: {
+    type: Boolean,
+    default: false,
+  },
+  options: {
+    type: Object,
+    default: () => {
+      return {
+        label: 'label',
+        value: 'value',
+        idWidth: '40',
+      }
+    },
+  },
 })
 </script>
 
