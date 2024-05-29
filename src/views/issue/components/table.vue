@@ -8,7 +8,7 @@ const { payload, issues } = storeToRefs(useIssueStore())
 
 <template>
   <div class="w-fit flex flex-col relative min-w-full">
-    <TableHeader />
+    <!-- <TableHeader /> -->
 
     <TableRow :tasks="issues" />
 

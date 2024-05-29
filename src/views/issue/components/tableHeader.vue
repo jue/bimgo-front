@@ -5,7 +5,7 @@ const columns = computed(() => {
     {
       label: '#',
       value: 'id',
-      width: 80,
+      width: 40,
       show: true,
     },
     ...issue_columns_v2.value,

@@ -22,7 +22,12 @@ async function addData() {
   })
   if (res.code === 200) {
     value.value = ''
-    useTaskStore().getTasks()
+
+    if (props.cate === 'task')
+      useTaskStore().getTasks()
+
+    if (props.cate === 'issue')
+      useIssueStore().getIssues()
   }
 }
 </script>

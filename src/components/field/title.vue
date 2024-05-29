@@ -128,8 +128,13 @@ async function addNew(data) {
 }
 
 onMounted(() => {
-  if (!props.data.gid)
-    editInput()
+  try {
+    if (!props.data.gid && props.cate === 'task')
+      editInput()
+  }
+  catch (error) {
+
+  }
 })
 
 // 打开任务详情

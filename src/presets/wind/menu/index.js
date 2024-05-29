@@ -83,6 +83,8 @@ export default {
   submenuheader: {
     class: [
       // Font
+      'text-xs',
+      'font-medium',
 
       // Spacing
       'm-0',
@@ -95,7 +97,7 @@ export default {
 
       // Colors
       'bg-surface-0 dark:bg-surface-700',
-      'text-neutral-400 dark:text-surface-0/60',
+      'text-zinc-600 dark:text-surface-0/60',
     ],
   },
   transition: {

@@ -40,11 +40,10 @@ defineProps({
   </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .divider {
   &:before {
-    content: '';
-    @apply absolute h-px -top-1 -left-1 -right-1 bg-stone-200;
+    @apply absolute h-px -top-1 -left-1 -right-1 bg-stone-200 content-[''];
   }
 }
 </style>

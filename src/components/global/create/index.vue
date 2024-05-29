@@ -12,7 +12,7 @@ const type = computed(() => {
 
 <template>
   <div class="flex items-center">
-    <Button label="创建任务" icon="icon-[lucide--plus]" severity="secondary" @click="open" />
+    <Button label="创建任务" icon="icon-[lucide--plus]" @click="open" />
     <Dialog v-model:visible="visible" modal maximizable class="!w-11/12 !max-w-[1360px] !p-0 !top-auto min-h-[500px]" dismissable-mask>
       <template #container="{ closeCallback }">
         <div class="bg-white rounded-lg">
