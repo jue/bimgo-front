@@ -45,7 +45,12 @@ function toggle(event) {
 </script>
 
 <template>
-  <Button icon="icon-[lucide--filter]" :label="labelText" text @click="toggle" />
+  <Button
+    icon="icon-[lucide--filter]" :label="labelText" text
+    class="text-zinc-800 hover:bg-transparent hover:text-blue-400"
+    :class="{ '!text-blue-400': payload.list !== 'all' }"
+    @click="toggle"
+  />
   <Menu ref="menuRef" :model="items" popup>
     <template #item="{ item }">
       <np-menu-item :label="item.label" :icon="payload.list === item.value ? 'icon-[lucide--check]' : ''" :divider="item.divider" :danger="item.danger" />

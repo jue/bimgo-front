@@ -11,9 +11,12 @@ import { ElementPlusResolver, PrimeVueResolver } from 'unplugin-vue-components/r
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 
+import vueDevTools from 'vite-plugin-vue-devtools'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    vueDevTools(),
     vue({
       template: {
         compilerOptions: {

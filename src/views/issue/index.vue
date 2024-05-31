@@ -48,7 +48,7 @@ const viewOptions = ref([
         <FilterGroup cate="issue" />
       </div>
       <div class="flex items-center space-x-4">
-        <IssuesAdd @close="getIssues" />
+        <!-- <IssuesAdd @close="getIssues" /> -->
       </div>
     </div>
     <ScrollPanel class="h-10 flex-1">

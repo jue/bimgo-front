@@ -7,7 +7,7 @@ export const useIssueStore = defineStore('issue', {
       key_field: '',
       sort_field: '',
       sort: '',
-      groupby_field: 'priority',
+      groupby_field: '',
       list: 'all',
     },
     issues: [],

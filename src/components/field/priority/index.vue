@@ -66,6 +66,12 @@ async function saveData() {
     emit('update:modelValue', value.value)
     const { getLogs } = useLogsStore()
     getLogs(props.data.gid, props.cate)
+
+    if (props.cate === 'task')
+      useTaskStore().getTasks()
+
+    if (props.cate === 'issue')
+      useIssueStore().getIssues()
   }
 
   else { value.value = props.modelValue }

@@ -21,12 +21,17 @@ const items = ref([
   {
     label: '分组方式',
     value: 'groupby_field',
+
     items: [
       {
         label: '无',
         value: '',
+        command: () => {
+          payload.value.groupby_field = ''
+          useIssueStore().getIssues()
+        },
       },
-      ...toRaw(options.value).map(item => ({
+      ...toRaw(options.value).filter(item => item.value !== 'title').map(item => ({
         ...item,
         command: () => {
           payload.value.groupby_field = item.value
@@ -54,7 +59,6 @@ const items = ref([
   //   ],
   // },
 ])
-console.log(items.value)
 
 const overlayVisible = ref(false)
 function toggle(event) {
@@ -63,7 +67,12 @@ function toggle(event) {
 </script>
 
 <template>
-  <Button icon="icon-[lucide--group]" label="分组" text class="hover:bg-transparent hover:text-blue-400" :class="{ 'text-blue-400': overlayVisible }" @click="toggle" />
+  <Button
+    icon="icon-[lucide--group]" label="分组" text
+    class="text-zinc-800 hover:bg-transparent hover:text-blue-400"
+    :class="{ '!text-blue-400': payload.groupby_field !== '' }"
+    @click="toggle"
+  />
   <Menu ref="menuRef" :model="items" popup>
     <template #item="{ item }">
       <np-menu-item :label="item.label" :icon="payload.groupby_field === item.value ? 'icon-[lucide--check]' : ''" :divider="item.divider" :danger="item.danger" />
