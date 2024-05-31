@@ -48,11 +48,10 @@ function handleHide() {
 </script>
 
 <template>
-  <div ref="ganttRef" class="flex h-full border-y overflow-y-auto">
+  <div ref="ganttRef" class="flex h-full overflow-y-auto">
     <div :style="{ width: `${tableWidth}px` }">
+      <!-- <np-tree /> -->
       <Tree />
-      <CreateData cate="task" />
-
       <Sidebar
         v-model:visible="visible"
         position="right"

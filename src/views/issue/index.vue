@@ -9,16 +9,16 @@ const para = reactive({
 })
 
 // 以下是主要程序
-const { payload, issues } = storeToRefs(useIssueStore())
+// const { payload, issues } = storeToRefs(useIssueStore())
 
-async function getIssuesData() {
-  const issueStore = useIssueStore()
-  await issueStore.getIssues()
-}
+// async function getIssuesData() {
+//   const issueStore = useIssueStore()
+//   await issueStore.getIssues()
+// }
 
-onMounted(() => {
-  getIssuesData()
-})
+// onMounted(() => {
+//   getIssuesData()
+// })
 
 // 显示方式
 const viewType = ref('table')
@@ -32,6 +32,13 @@ const viewOptions = ref([
     value: 'kanban',
   },
 ])
+
+const taskStore = useTaskStore()
+const { payload } = storeToRefs(taskStore)
+
+onMounted(async () => {
+  await taskStore.getTasks()
+})
 </script>
 
 <template>
@@ -51,9 +58,10 @@ const viewOptions = ref([
         <!-- <IssuesAdd @close="getIssues" /> -->
       </div>
     </div>
-    <ScrollPanel class="h-10 flex-1">
+    <!-- <ScrollPanel class="h-10 flex-1">
       <Table />
-    </ScrollPanel>
+    </ScrollPanel> -->
+    <np-tree />
 
     <pre>{{ payload }}</pre>
     <!-- <pre>

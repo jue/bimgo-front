@@ -43,6 +43,14 @@ router.beforeEach(async (to, from, next) => {
       await getAllUsers()
     }
 
+    // 这里设置分类，cate 为 task 或 issue
+    const { cate, setCate } = useTaskStore()
+    if (to.fullPath.startsWith('/task'))
+      setCate('task')
+
+    if (to.fullPath.startsWith('/issue'))
+      setCate('issue')
+
     next()
   }
   else {

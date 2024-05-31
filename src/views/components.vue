@@ -1,5 +1,58 @@
 <script setup>
 import Button from 'primevue/button'
+
+const items = ref([
+  {
+    label: '查看详细信息',
+    icon: '',
+    command: () => {
+      handleOpenPanel(props.data.gid)
+    },
+  },
+  {
+    label: '新窗口打开',
+    icon: 'icon-[lucide--external-link]',
+    command: () => {
+      window.open(`/task/detail?gid=${props.data.gid}`)
+    },
+  },
+  {
+    label: '复制链接',
+    icon: 'icon-[lucide--copy]',
+  },
+  {
+    divider: true,
+    label: '收藏',
+    icon: 'icon-[lucide--star]',
+  },
+  {
+    label: '添加子任务',
+    icon: 'icon-[lucide--circle-plus]',
+    command: () => {
+      addNew(props.data)
+    },
+  },
+  {
+    divider: true,
+    label: '重命名',
+    icon: 'icon-[lucide--edit]',
+    command: () => {
+      editInput()
+    },
+  },
+  {
+    danger: true,
+    label: '删除',
+    icon: 'icon-[lucide--trash]',
+    command: () => {
+      console.log('删除')
+    },
+  },
+])
+const menuRef = ref(null)
+function toggle(event) {
+  menuRef.value.toggle(event)
+}
 </script>
 
 <template>
@@ -84,5 +137,14 @@ import Button from 'primevue/button'
     </div>
 
     <!-- 结束 -->
+
+    <div class="text-right">
+      <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" @click="toggle" />
+      <Menu ref="menuRef" :model="items" popup>
+        <template #item="{ item }">
+          <np-menu-item :label="item.label" :icon="item.icon" :divider="item.divider" :danger="item.danger" />
+        </template>
+      </Menu>
+    </div>
   </div>
 </template>

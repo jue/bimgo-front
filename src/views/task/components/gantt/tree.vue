@@ -1,5 +1,4 @@
 <script setup>
-import ColumnOption from '../columnOption.vue'
 import TreeItem from './treeItem.vue'
 
 const { tasks } = storeToRefs(useTaskStore())
@@ -34,9 +33,6 @@ onClickOutside(treeRef, () => {
     field: null,
   }
 })
-
-// 以下信息为开发信息
-const tmpTask = ref([])
 </script>
 
 <template>
@@ -53,7 +49,7 @@ const tmpTask = ref([])
       </div>
       <div class="flex items-center divide-x">
         <div class="w-10 h-8 flex items-center justify-center shrink-0 border-b">
-          <ColumnOption />
+          @
         </div>
         <div
           v-for="(column, index) in filterColumns" :key="index"
@@ -81,8 +77,5 @@ const tmpTask = ref([])
         />
       </template>
     </div>
-    <pre>
-      {{ tmpTask }}
-    </pre>
   </div>
 </template>

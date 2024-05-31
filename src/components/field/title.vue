@@ -157,6 +157,60 @@ function handleParent() {
   })
   console.log('323424')
 }
+
+const items = ref([
+  {
+    label: '查看详细信息',
+    icon: '',
+    command: () => {
+      handleOpenPanel(props.data.gid)
+    },
+  },
+  {
+    label: '新窗口打开',
+    icon: 'icon-[lucide--external-link]',
+    command: () => {
+      window.open(`/task/detail?gid=${props.data.gid}`)
+    },
+  },
+  {
+    label: '复制链接',
+    icon: 'icon-[lucide--copy]',
+  },
+  {
+    divider: true,
+    label: '收藏',
+    icon: 'icon-[lucide--star]',
+  },
+  {
+    label: '添加子任务',
+    icon: 'icon-[lucide--circle-plus]',
+    command: () => {
+      addNew(props.data)
+    },
+  },
+  {
+    divider: true,
+    label: '重命名',
+    icon: 'icon-[lucide--edit]',
+    command: () => {
+      editInput()
+    },
+  },
+  {
+    danger: true,
+    label: '删除',
+    icon: 'icon-[lucide--trash]',
+    command: () => {
+      console.log('删除')
+    },
+  },
+])
+
+const menuRef = ref(null)
+function toggle(event) {
+  menuRef.value.toggle(event)
+}
 </script>
 
 <template>
@@ -166,9 +220,17 @@ function handleParent() {
         <span class="hover:text-blue-400 cursor-pointer" @click="handleOpenPanel(data.gid)">{{ data.title }}</span>
       </div>
       <div class="items-center space-x-2 hidden btns">
-        <span v-tooltip.bottom="'添加子任务'" class="cursor-pointer bg-gray-300 hover:bg-gray-500 w-4 h-4 rounded flex items-center justify-center" @click.stop="addNew(data)">
+        <span v-if="cate === 'task'" v-tooltip.bottom="'添加子任务'" class="cursor-pointer bg-gray-300 hover:bg-gray-500 w-4 h-4 rounded flex items-center justify-center" @click.stop="addNew(data)">
           <span class="icon-[lucide--plus] text-xs text-white" />
         </span>
+
+        <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" @click="toggle" />
+        <Menu ref="menuRef" :model="items" popup>
+          <template #item="{ item }">
+            <np-menu-item :label="item.label" :icon="item.icon" :divider="item.divider" :danger="item.danger" />
+          </template>
+        </Menu>
+
         <np-dropdown ref="dropdownRef" @show="handleShow" @hide="handleShow">
           <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" />
           <template #menu>

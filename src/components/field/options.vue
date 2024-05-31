@@ -1,14 +1,12 @@
 <script setup>
-const props = defineProps({
-  cate: {
-    type: String,
-    default: 'task',
-  },
-})
-const { issue_columns_v2, task_columns } = storeToRefs(useUserStore())
+// 原始数据
+const { task_columns, issue_columns_v2 } = storeToRefs(useUserStore())
+
+// 当前的任务数据
+const { cate, columns } = storeToRefs(useTaskStore())
 
 const options = computed(() => {
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return issue_columns_v2.value
   else
     return task_columns.value
@@ -45,13 +43,13 @@ function toggle(event) {
 }
 
 async function columnShow(item) {
-  const option = options.value.find(val => val.value === item.value)
-  option.show = !option.show
+  const column = columns.value.find(val => val.value === item.value)
+  column.show = !column.show
 
-  await http.post('/issue/column/update', {
+  await http.post(`/${cate.value}/column/update`, {
     data: {
       [item.value]: {
-        show: option.show,
+        show: column.show,
       },
     },
   })
@@ -59,23 +57,24 @@ async function columnShow(item) {
 </script>
 
 <template>
-  <div>
-    <Button icon="icon-[lucide--plus]" text plain size="small" @click="toggle" />
-    <OverlayPanel ref="opRef">
-      <Menu ref="menuRef" :model="splitFields">
-        <template #submenuheader="{ item }">
-          <span class="text-gray-400 text-xs font-bold h-7">{{ item.label }}</span>
-        </template>
-        <template #item="{ item }">
-          <div class="py-1.5 px-2 cursor-pointer rounded-md flex items-center select-none w-full space-x-2" @click="columnShow(item)">
-            <span class="w-4 h-4" :class="{ 'icon-[lucide--check]': item.show }" />
-            <span class="w-4 h-4 text-slate-600" :class="{ [item.icon]: !!item.icon }" />
-            <span>
-              {{ item.label }}</span>
-          </div>
-        </template>
-      </Menu>
-    </OverlayPanel>
-    <!-- <Menu id="overlay_menu" ref="menuRef" :model="options" :popup="true" /> -->
+  <div class="inline-block" @click="toggle">
+    <slot>
+      <Button icon="icon-[lucide--settings]" text plain size="small" />
+    </slot>
   </div>
+  <OverlayPanel ref="opRef">
+    <Menu ref="menuRef" :model="splitFields">
+      <template #submenuheader="{ item }">
+        <span class="text-gray-400 text-xs font-bold h-7">{{ item.label }}</span>
+      </template>
+      <template #item="{ item }">
+        <div class="py-1.5 px-2 cursor-pointer rounded-md flex items-center select-none w-full space-x-2" @click="columnShow(item)">
+          <span class="w-4 h-4" :class="{ 'icon-[lucide--check]': item.show }" />
+          <!-- <span class="w-4 h-4 text-slate-600" :class="{ [item.icon]: !!item.icon }" /> -->
+          <span>
+            {{ item.label }}</span>
+        </div>
+      </template>
+    </Menu>
+  </OverlayPanel>
 </template>
