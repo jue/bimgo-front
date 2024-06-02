@@ -68,7 +68,13 @@ const columns = computed(() => {
       </div>
     </template>
     <template v-else>
-      <TableLine cate="issue" :columns="columns" :tasks="tasks" />
+      <!-- <TableLine cate="issue" :columns="columns" :tasks="tasks" /> -->
+      <template
+        v-for="(task, index) in tasks"
+        :key="index"
+      >
+        <np-tree-line :task="task" />
+      </template>
     </template>
     <CreateData cate="issue" />
   </div>

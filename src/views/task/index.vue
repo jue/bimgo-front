@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="ganttRef" class="flex h-full overflow-y-auto">
+  <div ref="ganttRef" class="flex max-h-full overflow-y-auto">
     <div :style="{ width: `${tableWidth}px` }">
       <np-tree />
     </div>

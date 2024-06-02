@@ -5,18 +5,26 @@ const config = reactive({
   dateWidth: 56,
   cellWidth: 40,
 })
-const gid = inject('gid')
 
 const { tasks: data } = storeToRefs(useTaskStore())
 
-const { earliestStart, latestEnd } = getEarliestStartAndLatestEnd(data.value)
-const timeLines = getTimeLines(earliestStart, latestEnd)
+const earliestStart = ref(null)
+const latestEnd = ref(null)
+const timeLines = ref([])
+
+// 监听 tasks 数据的变化
+watch(data, (newData) => {
+  const { earliestStart: start, latestEnd: end } = getEarliestStartAndLatestEnd(newData)
+  earliestStart.value = start
+  latestEnd.value = end
+  timeLines.value = getTimeLines(start, end)
+}, { immediate: true }) // immediate: true 表示在侦听器初始化
 </script>
 
 <template>
-  <div class="overflow-auto flex-1">
+  <ScrollPanel class="overflow-auto flex-1">
     <!-- 表头 -->
-    <div class="flex items-center text-[#00021bf8] border-y">
+    <div class="flex items-center text-[#00021bf8] border-y min-w-full w-fit">
       <div v-for="(timeLine, index) in timeLines" :key="index" class="text-xs shrink-0 flex flex-wrap" :style="{ width: `${config.dateWidth * 7}px` }">
         <div class="w-full border-l border-b px-2">
           <div class="flex items-center h-8">
@@ -56,8 +64,8 @@ const timeLines = getTimeLines(earliestStart, latestEnd)
       </div>
       <!-- 横线结束 -->
     </div>
-    <div class="w-full h-10 border-b" />
-  </div>
+    <div class="w-full h-10 border-b min-w-full" />
+  </ScrollPanel>
 </template>
 
 <style lang="scss" scoped>

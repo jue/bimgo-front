@@ -47,6 +47,8 @@ export const useTaskStore = defineStore('task', {
     },
     setCate(newCate) {
       this.cate = newCate
+      this.columns = []
+      this.unexpandedKeys = []
     },
     setColumns(columns) {
       this.columns = columns

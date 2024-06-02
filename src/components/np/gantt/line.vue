@@ -23,26 +23,33 @@ function getEndDatePosition(endDate) {
   const endDateIndex = props.timeLines.flatMap(timeline => timeline.timeRange.map(date => date.date)).indexOf(endDate)
   return endDateIndex * props.config.dateWidth
 }
+
+console.log(props.task)
+console.log(props.config)
 </script>
 
 <template>
   <div
-    class=" w-full relative border-b border-transparent"
+    class="flex items-center w-full relative border-b border-transparent"
     :class="{ 'bg-[#ebf6ff]/50': task.gid === hoverGid }"
-    :style="{ width: `${totalLength * config.dateWidth}px` }"
+
     @mouseenter="hoverGid = task.gid"
     @mouseleave="hoverGid = ''"
   >
-    <div class="h-10 flex items-center">
-      <div
-        class="absolute left-0 w-2 h-2 rounded-full bg-green-500"
-        :style="{ transform: `translateX(${getStartDatePosition(task.start_time)}px)` }"
-      />
-      <div
-        class="absolute right-0 w-2 h-2 rounded-full bg-red-500"
-        :style="{ transform: `translateX(${getEndDatePosition(task.end_time)}px)` }"
-      />
+    <div
+      class="h-10 w-full bg-red-100"
+      :style="{ width: `${totalLength * config.dateWidth}px` }"
+    >
+      sdfsdsdf
     </div>
+    <!-- <div
+      class="absolute left-0 w-2 h-2 rounded-full bg-green-500"
+      :style="{ transform: `translateX(${getStartDatePosition(task.start_time)}px)` }"
+    />
+    <div
+      class="absolute right-0 w-2 h-2 rounded-full bg-red-500"
+      :style="{ transform: `translateX(${getEndDatePosition(task.end_time)}px)` }"
+    /> -->
   </div>
 
   <template v-if="task.children && task.children.length > 0 && !hideChildren">

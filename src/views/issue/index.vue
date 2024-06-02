@@ -1,4 +1,5 @@
 <script setup>
+import Panel from 'primevue/panel'
 import Table from './components/table.vue'
 import GroupBy from './components/GroupBy.vue'
 
@@ -34,7 +35,7 @@ const viewOptions = ref([
 ])
 
 const taskStore = useTaskStore()
-const { payload } = storeToRefs(taskStore)
+const { payload_issue: payload, tasks } = storeToRefs(taskStore)
 
 onMounted(async () => {
   await taskStore.getTasks()
@@ -58,10 +59,50 @@ onMounted(async () => {
         <!-- <IssuesAdd @close="getIssues" /> -->
       </div>
     </div>
-    <!-- <ScrollPanel class="h-10 flex-1">
-      <Table />
-    </ScrollPanel> -->
-    <np-tree />
+    <ScrollPanel class="h-10 flex-1">
+      <np-tree-header />
+      <template v-if="payload.groupby_field">
+        <div class="space-y-4">
+          <Panel
+            v-for="(item, index) in tasks"
+            :key="index"
+            :header="item.value"
+            toggleable
+            :pt="{
+              root: {
+                class: '',
+              },
+              header: {
+                class: 'flex-row-reverse h-10 !bg-gray-50',
+              },
+              togglericon: {
+                class: 'w-3 h-3 text-zinc-400',
+              },
+            }"
+          >
+            <template v-for="(row, index) in item.rows" :key="index">
+              <np-tree-line :task="row" />
+            </template>
+
+            <template #header>
+              <div class="flex items-center w-full px-2">
+                <FilterGroupName :group="item" />
+              </div>
+            </template>
+
+          <!-- <template #footer>
+            <CreateData cate="issue" class="border-none" />
+          </template> -->
+          </Panel>
+        </div>
+      </template>
+      <template v-else>
+        <template v-for="(task, index) in tasks" :key="index">
+          <np-tree-line :task="task" />
+        </template>
+      </template>
+    </ScrollPanel>
+    <!-- <np-tree /> -->
 
     <pre>{{ payload }}</pre>
     <!-- <pre>

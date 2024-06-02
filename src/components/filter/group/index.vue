@@ -6,7 +6,8 @@ const props = defineProps({
   },
 })
 
-const { payload } = storeToRefs(useIssueStore())
+const { payload_issue: payload } = storeToRefs(useTaskStore())
+const { getTasks } = useTaskStore()
 const { issue_columns_v2, task_columns } = storeToRefs(useUserStore())
 
 const options = computed(() => {
@@ -28,14 +29,14 @@ const items = ref([
         value: '',
         command: () => {
           payload.value.groupby_field = ''
-          useIssueStore().getIssues()
+          getTasks()
         },
       },
       ...toRaw(options.value).filter(item => item.value !== 'title').map(item => ({
         ...item,
         command: () => {
           payload.value.groupby_field = item.value
-          useIssueStore().getIssues()
+          getTasks()
         },
       })),
     ],

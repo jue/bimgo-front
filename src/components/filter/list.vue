@@ -1,12 +1,6 @@
 <script setup>
-const props = defineProps({
-  cate: {
-    type: String,
-    default: 'task',
-  },
-})
-
-const { payload } = storeToRefs(useIssueStore())
+const { payload_issue: payload } = storeToRefs(useTaskStore())
+const { getTasks } = useTaskStore()
 
 const menuRef = ref(null)
 const items = ref([
@@ -19,7 +13,7 @@ const items = ref([
         icon: '',
         command: () => {
           payload.value.list = 'all'
-          useIssueStore().getIssues()
+          getTasks()
         },
       },
       {
@@ -28,7 +22,7 @@ const items = ref([
         icon: '',
         command: () => {
           payload.value.list = 'mine'
-          useIssueStore().getIssues()
+          getTasks()
         },
       },
     ],

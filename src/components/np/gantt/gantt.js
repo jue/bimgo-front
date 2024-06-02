@@ -5,27 +5,37 @@ export function getEarliestStartAndLatestEnd(data) {
   // 遍历所有项目和任务
   for (const project of data) {
     // 检查当前项目的 start_time 和 end_time
-    if (earliestStart === null || new Date(project.start_time) < earliestStart)
-      earliestStart = new Date(project.start_time)
+    if (project.start_time) {
+      const projectStartTime = new Date(project.start_time)
+      if (!isNaN(projectStartTime)) {
+        if (earliestStart === null || projectStartTime < earliestStart)
+          earliestStart = projectStartTime
+      }
+    }
 
-    if (latestEnd === null || new Date(project.end_time) > latestEnd)
-      latestEnd = new Date(project.end_time)
+    if (project.end_time) {
+      const projectEndTime = new Date(project.end_time)
+      if (!isNaN(projectEndTime)) {
+        if (latestEnd === null || projectEndTime > latestEnd)
+          latestEnd = projectEndTime
+      }
+    }
 
     // 递归检查子任务
     const { children } = project
     if (children && children.length > 0) {
       const { earliestStartChild, latestEndChild } = getEarliestStartAndLatestEnd(children)
-      if (earliestStartChild < earliestStart)
+      if (earliestStartChild && (earliestStart === null || earliestStartChild < earliestStart))
         earliestStart = earliestStartChild
 
-      if (latestEndChild > latestEnd)
+      if (latestEndChild && (latestEnd === null || latestEndChild > latestEnd))
         latestEnd = latestEndChild
     }
   }
 
   return {
-    earliestStart: earliestStart?.toISOString().slice(0, 10),
-    latestEnd: latestEnd?.toISOString().slice(0, 10),
+    earliestStart: earliestStart ? earliestStart.toISOString().slice(0, 10) : null,
+    latestEnd: latestEnd ? latestEnd.toISOString().slice(0, 10) : null,
   }
 }
 
