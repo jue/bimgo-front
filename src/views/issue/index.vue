@@ -1,27 +1,7 @@
 <script setup>
 import Panel from 'primevue/panel'
-import Table from './components/table.vue'
-import GroupBy from './components/GroupBy.vue'
 
 const router = useRouter()
-
-const para = reactive({
-  status: ['todo', 'doing'],
-})
-
-// 以下是主要程序
-// const { payload, issues } = storeToRefs(useIssueStore())
-
-// async function getIssuesData() {
-//   const issueStore = useIssueStore()
-//   await issueStore.getIssues()
-// }
-
-// onMounted(() => {
-//   getIssuesData()
-// })
-
-// 显示方式
 const viewType = ref('table')
 const viewOptions = ref([
   {
