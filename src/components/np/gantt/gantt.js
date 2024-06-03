@@ -1,89 +1,99 @@
-export function getEarliestStartAndLatestEnd(data) {
-  let earliestStart = null
-  let latestEnd = null
+import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
+import isoWeek from 'dayjs/plugin/isoWeek'
+import minMax from 'dayjs/plugin/minMax'
 
-  // 遍历所有项目和任务
-  for (const project of data) {
-    // 检查当前项目的 start_time 和 end_time
-    if (project.start_time) {
-      const projectStartTime = new Date(project.start_time)
-      if (!isNaN(projectStartTime)) {
-        if (earliestStart === null || projectStartTime < earliestStart)
-          earliestStart = projectStartTime
-      }
-    }
+dayjs.extend(weekday)
+dayjs.extend(isoWeek)
+dayjs.extend(minMax)
 
-    if (project.end_time) {
-      const projectEndTime = new Date(project.end_time)
-      if (!isNaN(projectEndTime)) {
-        if (latestEnd === null || projectEndTime > latestEnd)
-          latestEnd = projectEndTime
-      }
-    }
+export function getEarliestStartAndLatestEnd(tasks) {
+  const startTimes = []
+  const endTimes = []
 
-    // 递归检查子任务
-    const { children } = project
-    if (children && children.length > 0) {
-      const { earliestStartChild, latestEndChild } = getEarliestStartAndLatestEnd(children)
-      if (earliestStartChild && (earliestStart === null || earliestStartChild < earliestStart))
-        earliestStart = earliestStartChild
+  function collectTimes(taskList) {
+    taskList.forEach((task) => {
+      if (task.start_time)
+        startTimes.push(dayjs(task.start_time))
 
-      if (latestEndChild && (latestEnd === null || latestEndChild > latestEnd))
-        latestEnd = latestEndChild
-    }
+      if (task.end_time)
+        endTimes.push(dayjs(task.end_time))
+
+      if (task.children && task.children.length > 0)
+        collectTimes(task.children)
+    })
   }
 
-  return {
-    earliestStart: earliestStart ? earliestStart.toISOString().slice(0, 10) : null,
-    latestEnd: latestEnd ? latestEnd.toISOString().slice(0, 10) : null,
+  collectTimes(tasks)
+
+  // 获取当前月的第一天和最后一天
+  const now = new Date()
+  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
+  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0]
+
+  // 如果 startTimes 为空，添加当前月的第一天
+  if (startTimes.length === 0)
+    startTimes.push(firstDayOfMonth)
+
+  // 如果 endTimes 为空，添加当前月的最后一天
+  if (endTimes.length === 0)
+    endTimes.push(lastDayOfMonth)
+
+  try {
+    return {
+      startDay: dayjs.min([...startTimes, ...endTimes]).format('YYYY-MM-DD'),
+      endDay: dayjs.max([...startTimes, ...endTimes]).format('YYYY-MM-DD'),
+    }
+  }
+  catch (error) {
+    return {
+      startDay: firstDayOfMonth,
+      endDay: lastDayOfMonth,
+    }
   }
 }
 
-export function getTimeLines(earliestStart, latestEnd) {
-  if (!earliestStart || !latestEnd) {
-    // 如果earliestStart为空时，earliestStart为当前月第一天
-    const currentDate = new Date()
-    earliestStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
-    latestEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
-  }
+export function generateDateRanges(startTime, endTime) {
+  const startDate = dayjs(startTime)
+  const endDate = dayjs(endTime)
+  const daysOfWeek = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
-  const timeLines = []
-  const currentDate = new Date(earliestStart)
-  const endDate = new Date(latestEnd)
+  // 补全开始日期之前的天数到最近的星期一
+  const adjustedStartDate = startDate.isoWeekday(1)
 
-  while (currentDate <= endDate) {
-    const subTitle = new Date(currentDate)
-    subTitle.setDate(currentDate.getDate() - currentDate.getDay())
-    const weekEnd = new Date(currentDate)
-    weekEnd.setDate(currentDate.getDate() + (6 - currentDate.getDay()))
+  // 补全结束日期之后的天数到最近的星期日
+  const adjustedEndDate = endDate.isoWeekday(7)
 
-    const sameMonth = subTitle.getMonth() === weekEnd.getMonth()
-    const title = getTitleString(subTitle, weekEnd, sameMonth)
+  const result = []
+  let currentWeek = []
+  let currentDate = adjustedStartDate
 
-    const timeRange = []
-    const timeRangeDate = new Date(subTitle)
+  while (currentDate.isBefore(adjustedEndDate) || currentDate.isSame(adjustedEndDate, 'day')) {
+    const day = currentDate.date()
+    const month = currentDate.month() + 1 // months are 0-based in dayjs
+    const dayOfWeek = daysOfWeek[currentDate.day()]
 
-    while (timeRangeDate <= weekEnd) {
-      const dateString = timeRangeDate.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })
-      const dayOfWeek = timeRangeDate.toLocaleDateString('zh-CN', { weekday: 'long' }).replace('星期', '周')
-      timeRange.push({ date: dateString, subTitle: dayOfWeek })
-      timeRangeDate.setDate(timeRangeDate.getDate() + 1)
+    currentWeek.push({
+      date: currentDate.format('YYYY-MM-DD'),
+      dateTitle: `${month}月${day}日`,
+      subTitle: dayOfWeek,
+    })
+
+    if (currentDate.day() === 0) { // 周日
+      const startOfWeek = currentWeek[0].dateTitle
+      const endOfWeek = currentWeek[currentWeek.length - 1].dateTitle
+      const year = currentDate.year()
+
+      result.push({
+        title: `${startOfWeek}-${endOfWeek}, ${year}`,
+        timeRange: currentWeek,
+      })
+
+      currentWeek = []
     }
 
-    timeLines.push({ title, timeRange })
-    currentDate.setDate(currentDate.getDate() + 7)
+    currentDate = currentDate.add(1, 'day')
   }
 
-  return timeLines
-}
-
-function getTitleString(subTitle, weekEnd, sameMonth) {
-  if (sameMonth) {
-    return `${subTitle.getMonth() + 1}月${subTitle.getDate()}-${weekEnd.getDate()}, ${subTitle.getFullYear()}`
-  }
-  else {
-    const startMonthAndDay = subTitle.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })
-    const endMonthAndDay = weekEnd.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })
-    return `${startMonthAndDay}-${endMonthAndDay}, ${subTitle.getFullYear()}`
-  }
+  return result
 }

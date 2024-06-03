@@ -1,24 +1,17 @@
 <script setup>
-import { getEarliestStartAndLatestEnd, getTimeLines } from './gantt.js'
+import { generateDateRanges, getEarliestStartAndLatestEnd } from './gantt.js'
 
 const config = reactive({
   dateWidth: 56,
   cellWidth: 40,
 })
 
-const { tasks: data } = storeToRefs(useTaskStore())
+const { tasks } = storeToRefs(useTaskStore())
 
-const earliestStart = ref(null)
-const latestEnd = ref(null)
-const timeLines = ref([])
-
-// 监听 tasks 数据的变化
-watch(data, (newData) => {
-  const { earliestStart: start, latestEnd: end } = getEarliestStartAndLatestEnd(newData)
-  earliestStart.value = start
-  latestEnd.value = end
-  timeLines.value = getTimeLines(start, end)
-}, { immediate: true }) // immediate: true 表示在侦听器初始化
+const timeLines = computed(() => {
+  const { startDay, endDay } = getEarliestStartAndLatestEnd(tasks.value)
+  return generateDateRanges(startDay, endDay)
+})
 </script>
 
 <template>
@@ -32,7 +25,7 @@ watch(data, (newData) => {
           </div>
         </div>
         <div v-for="(date, dateIndex) in timeLine.timeRange" :key="dateIndex" :style="{ width: `${config.dateWidth}px` }" class="h-8 border-l border-l-[#efefef] flex items-center justify-center" :class="{ 'is-weekend': date.subTitle === '周日' || date.subTitle === '周六' }">
-          <span v-tooltip.bottom="date.date" class="hover:text-blue-400">{{ date.subTitle }}</span>
+          <span v-tooltip.bottom="date.dateTitle" class="hover:text-blue-400">{{ date.subTitle }}</span>
         </div>
       </div>
     </div>
@@ -49,12 +42,12 @@ watch(data, (newData) => {
       <div class="relative z-10">
         <!-- 如果data为空，显示空提示 -->
         <div
-          v-if="data.length === 0"
+          v-if="tasks.length === 0"
           class="w-full flex items-center justify-center h-40"
         />
         <template v-else>
           <np-gantt-line
-            v-for="(task, index) in data"
+            v-for="(task, index) in tasks"
             :key="index"
             :task="task"
             :config="config"
