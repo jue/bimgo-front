@@ -20,7 +20,7 @@ function jump() {
         微信登录
       </Button>
       <Button v-if="loginType === 'wechat'" variant="secondary" class="h-8" @click="loginType = 'password'">
-        <span class="icon-[ic--baseline-key] mr-1 text-lg text-indigo-500" />
+        <span class="icon-[ic--baseline-key] mr-1 text-lg" />
         密码登录
       </Button>
     </div>
