@@ -2,7 +2,7 @@
 import GanttDivider from './components/GanttDivider.vue'
 
 const ganttRef = ref(null)
-const { tableWidth, unexpandedKeys } = storeToRefs(useTaskStore())
+const { tableWidth } = storeToRefs(useTaskStore())
 const { setTableWidth } = useTaskStore()
 
 onMounted(() => {

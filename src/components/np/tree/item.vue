@@ -10,11 +10,19 @@ const props = defineProps({
   },
 })
 
-const { unexpandedKeys } = storeToRefs(useTaskStore())
+const { unexpandedKeys, selectedCell } = storeToRefs(useTaskStore())
+
+const treeRef = ref(null)
+onClickOutside(treeRef, () => {
+  selectedCell.value = {
+    gid: null,
+    field: null,
+  }
+})
 </script>
 
 <template>
-  <ul>
+  <ul ref="treeRef">
     <li
       v-for="(task, index) in tasks"
       :key="index"

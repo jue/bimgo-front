@@ -16,6 +16,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  href: {
+    type: String,
+    default: '',
+  },
 })
 </script>
 

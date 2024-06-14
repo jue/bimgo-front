@@ -76,6 +76,9 @@ function handleCancel() {
   isShow.value = false
   value.value = props.modelValue
 }
+
+function handleHide() {
+}
 </script>
 
 <template>

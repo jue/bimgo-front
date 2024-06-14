@@ -12,40 +12,12 @@ const props = defineProps({
   },
 })
 
-const { cate, columns, selectedGids, hoverGid } = storeToRefs(useTaskStore())
+const { cate, columns, selectedGids, hoverGid, unexpandedKeys, selectedCell } = storeToRefs(useTaskStore())
 
 const tabWith = computed(() => {
   const children = props.task.children || 0
   return props.level * 28 + (children <= 0 ? 36 : 8)
 })
-
-// 当前选中的单元格
-const selectedCell = ref({
-  gid: null, // 行gid
-  field: null, // Column field name
-})
-
-const cellRef = ref(null)
-onClickOutside(cellRef, () => {
-  selectedCell.value = {
-    gid: null,
-    field: null,
-  }
-})
-
-function handleSelectCell(obj) {
-  if (obj.field === 'id') {
-    selectedCell.value = {
-      gid: null,
-      field: null,
-    }
-    return
-  }
-  selectedCell.value = obj
-}
-
-// 当前的任务数据
-const { unexpandedKeys } = storeToRefs(useTaskStore())
 
 const hideChildren = computed(() => unexpandedKeys.value.includes(props.task.gid))
 function handleToggle(gid) {
@@ -61,7 +33,6 @@ function handleToggle(gid) {
 
 <template>
   <div
-    ref="cellRef"
     class="flex divide-x w-fit min-w-full border-b"
     :class="{ 'bg-[#ebf6ff]/50': task.gid === hoverGid }"
     @mouseenter="hoverGid = task.gid"
@@ -80,7 +51,7 @@ function handleToggle(gid) {
         'width': `${column.width}px`,
         'padding-left': `${cate === 'task' ? (column.value === 'title' ? tabWith : 0) : (column.value === 'title' ? 8 : 0)}px`,
       }"
-      @click="handleSelectCell({ gid: task.gid, field: column.value })"
+      @click="selectedCell = { gid: task.gid, field: column.value }"
     >
       <div
         v-if="task.children && task.children.length > 0 && column.value === 'title'"
@@ -92,7 +63,7 @@ function handleToggle(gid) {
         </div>
       </div>
 
-      <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" open-detail :cate="cate" />
+      <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" open-detail :cate="cate" @set-selected-cell="handleSelectCell" />
       <FieldUids v-else-if="column.value === 'uids'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />
       <FieldStatus v-else-if="column.value === 'status'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />
       <FieldPriority v-else-if="column.value === 'priority'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />

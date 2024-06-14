@@ -56,5 +56,8 @@ export const useTaskStore = defineStore('task', {
     setTableWidth(width) {
       this.tableWidth = width
     },
+    setSelectedCell(val) {
+      this.selectedCell = val
+    },
   },
 })
