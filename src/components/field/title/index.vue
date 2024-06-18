@@ -1,5 +1,6 @@
 <script setup>
 import { useDialog } from 'primevue/usedialog'
+import { useConfirm } from 'primevue/useconfirm'
 
 const props = defineProps({
   modelValue: {
@@ -17,6 +18,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const confirm = useConfirm()
 
 const TaskPanel = defineAsyncComponent(() => import('@/components/panel/index.vue'))
 
@@ -46,12 +49,15 @@ watch(() => props.modelValue, (val) => {
 const { unexpandedKeys, selectedCell } = storeToRefs(useTaskStore())
 // 是否重命名状态
 const isEdit = ref(false)
-// 重命名编辑状态
-const input = ref(null)
 
 // 打开任务详情面板
 function handleOpenPanel(gid) {
 
+}
+const menuButtonRef = ref(null)
+const menuRef = ref(null)
+function toggle(event) {
+  menuRef.value.toggle(event)
 }
 
 // 菜单项
@@ -59,6 +65,7 @@ const items = ref([
   {
     label: '查看详细信息',
     icon: '',
+    class: 'pl-6',
     command: () => {
       dialog.open(TaskPanel, {
         props: {
@@ -69,6 +76,7 @@ const items = ref([
       })
     },
   },
+
   {
     label: '新窗口打开',
     icon: 'icon-[lucide--external-link]',
@@ -77,7 +85,6 @@ const items = ref([
     },
   },
   {
-    copy: true,
     label: '复制链接',
     icon: 'icon-[lucide--copy]',
     command: () => {
@@ -88,7 +95,9 @@ const items = ref([
     },
   },
   {
-    divider: true,
+    separator: true,
+  },
+  {
     label: '收藏',
     icon: 'icon-[lucide--star]',
   },
@@ -96,31 +105,13 @@ const items = ref([
     label: '添加子任务',
     icon: 'icon-[lucide--circle-plus]',
     command: () => {
-      const index = unexpandedKeys.value.indexOf(props.data.gid)
-      if (index > -1)
-        unexpandedKeys.value.splice(index, 1)
-
-      // 检查props.data里有没有children属性, 如果没有就添加一个children，默认是空数组，然后pusht {title: ''}空对象作为第一个元素
-      if (!props.data.children) {
-        props.data.children = []
-        props.data.children.push({ title: '', parent_gid: props.data.gid, gid: null, edit: true })
-      }
-      else {
-        props.data.children.push({ title: '', parent_gid: props.data.gid, gid: null, edit: true })
-      }
-
-      selectedCell.value = {
-        gid: null,
-        field: 'title',
-      }
-
-      nextTick().then(() => {
-        input.value?.focus()
-      })
+      addChildren()
     },
   },
   {
-    divider: true,
+    separator: true,
+  },
+  {
     label: '重命名',
     icon: 'icon-[lucide--edit]',
     command: () => {
@@ -131,38 +122,105 @@ const items = ref([
     danger: true,
     label: '删除',
     icon: 'icon-[lucide--trash]',
-    command: () => {
-      console.log('删除')
+    class: 'np-delete',
+    command: ({ originalEvent, item }) => {
+      selectedCell.value = {
+        gid: props.data.gid,
+        field: 'title',
+      }
+
+      confirm.require({
+        message: '确定删除任务？',
+        header: '删除任务',
+        icon: 'icon-[lucide--trash]',
+        rejectLabel: '取消',
+        rejectProps: {
+          label: '取消',
+          severity: 'secondary',
+          outlined: true,
+        },
+        acceptLabel: '确定删除',
+        acceptProps: {
+          label: 'Delete',
+          severity: 'danger',
+        },
+        accept: () => {
+          // toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 })
+        },
+        reject: () => {
+          // toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
+        },
+      })
     },
+    // command: ({ originalEvent, item }) => {
+    //   selectedCell.value = {
+    //     gid: props.data.gid,
+    //     field: 'title',
+    //   }
+
+    //   // 阻止冒泡
+    //   item.label = '确定删除？'
+
+    //   return false
+    // },
   },
 ])
-const menuRef = ref(null)
-function toggle(event) {
-  menuRef.value.toggle(event)
+
+// 重命名编辑状态
+const inputRef = ref(null)
+// 添加子任务
+function addChildren() {
+  const index = unexpandedKeys.value.indexOf(props.data.gid)
+  if (index > -1)
+    unexpandedKeys.value.splice(index, 1)
+
+  // 检查props.data里有没有children属性, 如果没有就添加一个children，默认是空数组，然后pusht {title: ''}空对象作为第一个元素
+  if (!props.data.children) {
+    props.data.children = []
+    props.data.children.push({ title: '', parent_gid: props.data.gid, gid: null, edit: true })
+  }
+  else {
+    props.data.children.push({ title: '', parent_gid: props.data.gid, gid: null, edit: true })
+  }
+
+  selectedCell.value = {
+    gid: null,
+    field: 'title',
+  }
+
+  // nextTick(() => {
+  //   console.log(inputRef.value)
+  //   inputRef.value?.focus()
+  // })
+
+  // nextTick(() => {
+  //   inputRef.value?.focus()
+  // })
 }
 
 // 重命名任务名
 function editInput() {
-  isEdit.value = true
+  props.data.edit = true
 
   selectedCell.value = {
     gid: props.data.gid,
     field: 'title',
   }
+
   nextTick(() => {
-    input.value?.focus()
+    inputRef.value?.focus()
   })
 }
 
 function handleEnter() {
   nextTick(() => {
-    input.value?.blur()
+    inputRef.value?.blur()
   })
 }
 
 // 保存数据
 async function saveEdit() {
-  isEdit.value = false
+  delete props.data.edit
 
   // 如果props.data.gid不存在, 这表示是新增任务
   if (!props.data.gid) {
@@ -209,14 +267,24 @@ async function saveEdit() {
   }
   else { value.value = props.data.title }
 }
+
+// 页面更新时，如果当前任务是重命名状态，就让input获取焦点
+onMounted(() => {
+  if (props.data.edit) {
+    nextTick(() => {
+      inputRef.value?.focus()
+      return false
+    })
+  }
+})
 </script>
 
 <template>
   <div class="h-full w-full flex items-center justify-between min-h-[32px]">
     <!-- 编辑状态 -->
     <div v-if="data?.edit && selectedCell.gid === data.gid" class="bg-red-100">
-      <InputText
-        ref="input"
+      <input
+        ref="inputRef"
         v-model="value"
         type="text"
         class="w-full h-full !p-0  min-h-[32px] !shadow-none ring-0"
@@ -224,21 +292,36 @@ async function saveEdit() {
         placeholder="请输入"
         @keyup.enter="handleEnter"
         @blur="saveEdit"
-      />
+      >
     </div>
 
     <template v-else>
-      <div>{{ data.title }}/{{ isEdit }}</div>
-      <div>
+      <div>{{ data.title }}</div>
+      <div class="items-center space-x-2 flex btns invisible">
+        <span v-tooltip.bottom="'重新编辑'" class="cursor-pointer  w-4 h-4 rounded flex items-center justify-center" @click="editInput">
+          <span class="icon-[lucide--edit] text-gray-400" />
+        </span>
         <span>
-          <Button icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" @click="toggle" />
-          <Menu ref="menuRef" :model="items" popup append-to="body">
+          <Button ref="menuButtonRef" icon="icon-[lucide--ellipsis]" size="small" text plain class="!text-gray-400" :class="{ 'ring-2 ring-primary-500': isShow }" @click="toggle" />
+          <TieredMenu
+            ref="menuRef"
+            :model="items"
+            popup
+            append-to="body"
+          />
+          <!-- <Menu :model="items" popup append-to="body">
             <template #item="{ item }">
               <np-menu-item :label="item.label" :icon="item.icon" :divider="item.divider" :danger="item.danger" />
             </template>
-          </Menu>
+          </Menu> -->
         </span>
       </div>
     </template>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .focus .btns {
+    @apply visible;
+  }
+</style>

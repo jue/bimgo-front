@@ -16,7 +16,7 @@ const { cate, columns, selectedGids, hoverGid, unexpandedKeys, selectedCell } = 
 
 const tabWith = computed(() => {
   const children = props.task.children || 0
-  return props.level * 28 + (children <= 0 ? 36 : 8)
+  return props.level * 28 + (children <= 0 ? 28 : 8)
 })
 
 const hideChildren = computed(() => unexpandedKeys.value.includes(props.task.gid))

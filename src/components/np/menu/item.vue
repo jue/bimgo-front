@@ -21,6 +21,12 @@ defineProps({
     default: '',
   },
 })
+
+const allowBubble = ref(false)
+function handleClick(event) {
+  if (!allowBubble.value)
+    event.stopPropagation()
+}
 </script>
 
 <template>
