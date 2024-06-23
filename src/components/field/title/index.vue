@@ -16,7 +16,9 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue', 'openPanel'])
+const emit = defineEmits(['update:modelValue'])
+
+const { openedGid } = storeToRefs(useTaskStore())
 
 const confirm = useConfirm()
 
@@ -44,8 +46,9 @@ function handleOpenPanel() {
   //     cate: props.cate,
   //   },
   // })
+  openedGid.value = props.data.gid
 
-  emit('openPanel', props.data.gid)
+  // emit('openPanel', props.data.gid)
 }
 
 // 当前的任务标题

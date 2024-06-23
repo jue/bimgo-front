@@ -19,6 +19,7 @@ export const useTaskStore = defineStore('task', {
     tasks: [],
     hoverGid: '', // 鼠标悬浮的任务组
     selectedGids: [], // 选中的任务组
+    openedGid: '', // 展开的任务面板ID
 
     // 选中的任务单元格
     selectedCell: {

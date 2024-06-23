@@ -141,6 +141,11 @@ const logData = computed(() => {
                     <!-- <span class="italic text-gray-300 text-xs">(仅管理员可见)</span> -->
                   </div>
 
+                  <!-- 更新任务名 -->
+                  <div v-if="log.content?.field === 'title'">
+                    更新了{{ cateText }}名为<span class="text-zinc-800">{{ log.content?.newVal }}</span>
+                  </div>
+
                   <!-- 更新时间 -->
                   <div v-if="['start_time', 'end_time', 'done_time'].includes(log.content?.field) ">
                     将<span>{{ columns.find(item => item.value === log.content?.field)?.label }}</span>变更为<span class="text-zinc-800 px-1">{{ log.content?.newVal || '空' }}</span>
@@ -170,10 +175,7 @@ const logData = computed(() => {
 
                 <!-- upload时 -->
                 <div v-if="log.action === 'upload'" class="flex-1 space-y-1">
-                  <div>添加了新内容:</div>
-                  <div v-if="log.content?.newVal" class="px-4 py-3 bg-gray-100 rounded-lg">
-                    {{ log.content?.newVal }}
-                  </div>
+                  <div>上传了新内容:</div>
                   <div v-if="log.content?.files?.length" class="px-4 py-3 bg-gray-100 rounded-lg">
                     <FileList :files="log.content?.files" @deleted="getLogs(id, cate)" />
                   </div>
