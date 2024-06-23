@@ -1,6 +1,5 @@
 <script setup>
 import dayjs from 'dayjs'
-import More from './more.vue'
 import Preview from './preview.vue'
 import { downloadFile, formatSize } from '@/lib/file.js'
 

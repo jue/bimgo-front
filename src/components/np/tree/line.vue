@@ -29,6 +29,19 @@ function handleToggle(gid) {
   else
     unexpandedKeys.value.push(gid)
 }
+
+// 任务面板
+const taskPanleVisible = ref(false)
+const taskPanelRef = ref(null)
+function handleOpenPanel(gid) {
+  taskPanleVisible.value = true
+  nextTick(() => {
+    taskPanelRef.value.getData(gid)
+  })
+}
+function handlePanleHide() {
+  useTaskStore().getTasks()
+}
 </script>
 
 <template>
@@ -63,7 +76,7 @@ function handleToggle(gid) {
         </div>
       </div>
 
-      <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" open-detail :cate="cate" @set-selected-cell="handleSelectCell" />
+      <FieldTitle v-if="column.value === 'title'" v-model="task[column.value]" :data="task" :cate="cate" @open-panel="handleOpenPanel" @set-selected-cell="handleSelectCell" />
       <FieldUids v-else-if="column.value === 'uids'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />
       <FieldStatus v-else-if="column.value === 'status'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />
       <FieldPriority v-else-if="column.value === 'priority'" v-model="task[column.value]" :data="task" class="!shadow-none !ring-0 bg-transparent" :cate="cate" />
@@ -81,6 +94,29 @@ function handleToggle(gid) {
         {{ task[column.value] }}
       </span>
     </div>
+
+    <Sidebar
+      v-model:visible="taskPanleVisible"
+      position="right"
+      :show-close-icon="false"
+      :modal="false"
+      class="w-[900px] relative"
+      :dismissable="false"
+      :pt="{
+        root: ({ context }) => ({
+          class: ['max-w-[900px]'],
+        }),
+        mask: ({ props }) => ({
+          class: ['!right-0 !w-[900px] !left-auto'],
+        }),
+      }"
+      @hide="handlePanleHide"
+    >
+      <template #container>
+        <TaskPanel ref="taskPanelRef" :cate="cate" />
+        <Button icon="icon-[lucide--x]" raised rounded severity="contrast" class="!absolute top-3 left-0 -translate-x-1/2" @click="taskPanleVisible = false" />
+      </template>
+    </Sidebar>
   </div>
 </template>
 
@@ -93,13 +129,3 @@ function handleToggle(gid) {
     }
   }
 </style>
-
-<!-- <style lang="scss" scoped>
-  .focus {
-    @apply  outline outline-1 outline-green-600 hover:outline-green-600 bg-white ;
-    &:after {
-      content: '';
-      @apply bg-white absolute border border-green-600 w-2 h-2 rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 z-50;
-    }
-  }
-</style> -->

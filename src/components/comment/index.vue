@@ -46,7 +46,6 @@ const cateText = computed(() => {
 })
 
 const logData = computed(() => {
-  console.log('333')
   if (action.value === 'all')
     return logs.value
 

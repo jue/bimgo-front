@@ -1,6 +1,6 @@
 <script setup>
 import VuePdfEmbed from 'vue-pdf-embed'
-import { downloadFile } from '@/lib/index'
+import { downloadFile } from '@/lib/file.js'
 import 'vue-pdf-embed/dist/style/index.css'
 
 const props = defineProps({

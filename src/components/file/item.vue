@@ -1,5 +1,5 @@
 <script setup>
-import { downloadFile } from '@/lib/index'
+import { downloadFile } from '@/lib/file.js'
 
 const props = defineProps({
   file: {

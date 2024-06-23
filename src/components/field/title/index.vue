@@ -1,5 +1,4 @@
 <script setup>
-import { useDialog } from 'primevue/usedialog'
 import { useConfirm } from 'primevue/useconfirm'
 
 const props = defineProps({
@@ -17,13 +16,9 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'openPanel'])
 
 const confirm = useConfirm()
-
-const TaskPanel = defineAsyncComponent(() => import('@/components/panel/index.vue'))
-
-const dialog = useDialog()
 
 const apiUpdateUrl = computed(() => {
   if (props.cate === 'task')
@@ -42,13 +37,15 @@ const apiAddUrl = computed(() => {
 
 // 打开任务详情面板
 function handleOpenPanel() {
-  dialog.open(TaskPanel, {
-    props: {
-      position: 'topright',
-      gid: props.data.gid,
-      cate: props.cate,
-    },
-  })
+  // dialog.open(TaskPanel, {
+  //   props: {
+  //     position: 'topright',
+  //     gid: props.data.gid,
+  //     cate: props.cate,
+  //   },
+  // })
+
+  emit('openPanel', props.data.gid)
 }
 
 // 当前的任务标题
