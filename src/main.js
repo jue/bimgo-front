@@ -13,18 +13,17 @@ import './assets/index.css'
 
 import { createApp } from 'vue'
 
-// import Aura from '@primevue/themes/aura'
+import Wind from './presets/wind'
 import pinia from './store'
 
 import App from './App.vue'
 import router from './router'
 
-import Wind from '@/presets/wind'
-
 const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
+
 app.use(PrimeVue, {
   // ripple: true,
   unstyled: true,

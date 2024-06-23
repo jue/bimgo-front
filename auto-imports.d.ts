@@ -35,7 +35,7 @@ declare global {
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const deleteFile: typeof import('./src/api/file.js')['deleteFile']
-  const downloadFile: typeof import('./src/lib/index.js')['downloadFile']
+  const downloadFile: typeof import('./src/lib/file.js')['downloadFile']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']

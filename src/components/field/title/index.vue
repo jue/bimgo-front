@@ -40,6 +40,17 @@ const apiAddUrl = computed(() => {
     return '/issue/add'
 })
 
+// 打开任务详情面板
+function handleOpenPanel() {
+  dialog.open(TaskPanel, {
+    props: {
+      position: 'topright',
+      gid: props.data.gid,
+      cate: props.cate,
+    },
+  })
+}
+
 // 当前的任务标题
 const value = ref(props.modelValue)
 watch(() => props.modelValue, (val) => {
@@ -50,10 +61,6 @@ const { unexpandedKeys, selectedCell } = storeToRefs(useTaskStore())
 // 是否重命名状态
 const isEdit = ref(false)
 
-// 打开任务详情面板
-function handleOpenPanel(gid) {
-
-}
 const menuButtonRef = ref(null)
 const menuRef = ref(null)
 function toggle(event) {
@@ -65,15 +72,8 @@ const items = ref([
   {
     label: '查看详细信息',
     icon: '',
-    class: 'pl-6',
     command: () => {
-      dialog.open(TaskPanel, {
-        props: {
-          position: 'topright',
-          gid: props.data.gid,
-          cate: props.cate,
-        },
-      })
+      handleOpenPanel()
     },
   },
 
@@ -296,7 +296,9 @@ onMounted(() => {
     </div>
 
     <template v-else>
-      <div>{{ data.title }}</div>
+      <div class="hover:text-blue-400 cursor-pointer" @click="handleOpenPanel(data.gid)">
+        {{ data.title }}
+      </div>
       <div class="items-center space-x-2 flex btns invisible">
         <span v-tooltip.bottom="'重新编辑'" class="cursor-pointer  w-4 h-4 rounded flex items-center justify-center" @click="editInput">
           <span class="icon-[lucide--edit] text-gray-400" />
@@ -308,7 +310,13 @@ onMounted(() => {
             :model="items"
             popup
             append-to="body"
-          />
+          >
+            <template #item="{ item }">
+              <TaskDeleteItem v-if="item.label === '删除'" :task="data" :cate="cate" />
+              <np-menu-item v-else :label="item.label" :icon="item.icon" :divider="item.divider" :danger="item.danger" />
+            </template>
+          </TieredMenu>
+
           <!-- <Menu :model="items" popup append-to="body">
             <template #item="{ item }">
               <np-menu-item :label="item.label" :icon="item.icon" :divider="item.divider" :danger="item.danger" />

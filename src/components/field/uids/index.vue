@@ -102,12 +102,17 @@ function handleHide() {
           { ' !inline-flex': isShow && !inline, 'group-hover:inline-flex': !inline },
         ],
       },
+      list: {
+        class: [
+          'p-1',
+        ],
+      },
     }"
     @show="handleShow"
     @hide="handleHide"
     @change="handleChange"
   >
-    <template #value="slotProps">
+    <!-- <template #value="slotProps">
       <div
         v-if="modelValue.length > 0"
         class="px-4 flex items-center"
@@ -142,6 +147,6 @@ function handleHide() {
         <Button label="取消" class="w-24" outlined @click="handleCancel" />
         <Button label="确定" class="w-24" @click="handleSave" />
       </div>
-    </template>
+    </template> -->
   </MultiSelect>
 </template>

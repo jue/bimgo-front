@@ -1,5 +1,3 @@
-import FileSaver from 'file-saver'
-
 // import { useSettingsStore } from '@/store/modules/settings'
 
 // const { project } = useSettingsStore()
@@ -43,14 +41,6 @@ export function debounce(func, delay) {
       func(...args)
     }, delay)
   }
-}
-
-export async function downloadFile(fid) {
-  const { data: res } = await http.post('/file/url', {
-    fid,
-  })
-  if (res.code === 200)
-    FileSaver.saveAs(`https://bimgo-files.nipao.com${res.data.path}?_upt=${res.data.upt}`, res.data.name)
 }
 
 export function filterData(key, field, data) {

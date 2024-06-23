@@ -15,6 +15,7 @@ declare module 'vue' {
     Badge: typeof import('primevue/badge')['default']
     Bimgo: typeof import('./src/components/Bimgo.vue')['default']
     Button: typeof import('primevue/button')['default']
+    ButtonGroup: typeof import('primevue/buttongroup')['default']
     Calendar: typeof import('primevue/calendar')['default']
     Card: typeof import('primevue/card')['default']
     Checkbox: typeof import('primevue/checkbox')['default']

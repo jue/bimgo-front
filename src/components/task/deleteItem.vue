@@ -20,7 +20,7 @@ const apiDeleteUrl = computed(() => {
     return '/issue/delete'
 })
 
-const updateSelectedCell = inject('updateSelectedCell')
+const { unexpandedKeys, selectedCell } = storeToRefs(useTaskStore())
 
 const isDelete = ref(false)
 
@@ -37,10 +37,10 @@ async function handleDelete() {
 function changeDelete() {
   isDelete.value = true
   try {
-    updateSelectedCell({
+    selectedCell.value = {
       gid: props.task.gid,
       field: 'title',
-    })
+    }
   }
   catch (error) {
 
