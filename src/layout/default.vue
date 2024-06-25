@@ -3,20 +3,15 @@ const { sideWidth } = storeToRefs(useSettingsStore())
 </script>
 
 <template>
-  <el-container>
-    <!-- <LayoutHead /> -->
-    <el-header class="box-shadow-bottom">
-      <LayoutTopbar />
-    </el-header>
-    <el-container>
-      <LayoutSide />
-      <el-container>
-        <el-main>
-          <RouterView />
-        </el-main>
-      </el-container>
-    </el-container>
-  </el-container>
+  <div class="h-screen flex  bg-[#f3f6fd]">
+    <LayoutSide />
+    <div class="app-container" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
+      <LayoutNav />
+      <el-scrollbar class="app-body bg-white my-4 mr-4 rounded-md">
+        <RouterView />
+      </el-scrollbar>
+    </div>
+  </div>
 
   <!-- <div class="h-screen flex">
     <div class="h-screen flex flex-col" :style="{ width: `calc(100vw - ${sideWidth}px)` }">

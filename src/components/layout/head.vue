@@ -1,5 +1,6 @@
 <template>
-  <el-header class="box-shadow-bottom">
-    <LayoutTopbar />
-  </el-header>
+  <div class="flex">
+    <!-- <LayoutLogo /> -->
+    <LayoutNav />
+  </div>
 </template>

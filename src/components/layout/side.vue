@@ -67,54 +67,56 @@ function handleInvitation() {
 </script>
 
 <template>
-  <el-aside width="250px" class="box-shadow-bottom">
-    <div
-      class="shrink-0 flex flex-col h-screen bg-[#f3f5f7]"
-      :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
-    >
-      <template v-if="!sideCollapsed">
-        <div class="flex-1 box-shadow flex flex-col">
-          <ScrollPanel class="flex-1 overflow-y-auto">
-            <div class="px-2 space-y-1 py-2">
-              <SearchButton class="mb-5" />
-              <div
-                class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
-              >
-                <span class="icon-[lucide--bell]" />
-                <div>收件箱</div>
-              </div>
-              <div
-                class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
-              >
-                <span class="icon-[lucide--check-circle]" />
-                <div>已分配给我的</div>
-              </div>
+  <div
+    class="shrink-0 flex flex-col h-screen]"
+    :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
+  >
+    <template v-if="!sideCollapsed">
+      <div class="h-14 flex items-center px-2 justify-between  border-b shrink-0 bg-white">
+        <Logo class="w-12" />
+        <span v-tooltip.bottom="'收起侧边栏'" class="icon-[lucide--panel-left-close] text-neutral-400 text-xl cursor-pointer" @click="changeSideCollapsed()" />
+      </div>
+      <div class="app-container">
+        <div class="app-body">
+          <div class="px-4 space-y-1 py-4">
+            <SearchButton class="mb-5" />
+            <div
+              class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
+            >
+              <span class="icon-[lucide--bell]" />
+              <div>收件箱</div>
             </div>
-            <div v-for="(cate, index) in menus" :key="index" class="px-2 space-y-[8px] py-2">
-              <div class="flex items-center text-neutral-400 px-2 h-6 mb-2 text-xs">
-                {{ cate.label }}
-              </div>
-              <div class="space-y-1">
-                <RouterLink v-for="menu in cate.children" :key="menu.path" :to="menu.path" class="block">
-                  <div
-                    class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
-                    :class="{ 'bg-neutral-500/10': route.fullPath.startsWith(menu.path) }"
-                  >
-                    <Icon :name="menu.icon" :size="16" />
-                    <div>{{ menu.name }}</div>
-                  </div>
-                </RouterLink>
-              </div>
+            <div
+              class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
+            >
+              <span class="icon-[lucide--check-circle]" />
+              <div>已分配给我的</div>
             </div>
-          </ScrollPanel>
-          <div class="h-14 flex items-center px-2">
-            <Button class="w-full text-xs" severity="secondary" @click="handleInvitation">
-              <span class="icon-[lucide--user-round-plus] mr-1" />
-              邀请新的使用者
-            </Button>
+          </div>
+          <div v-for="(cate, index) in menus" :key="index" class="px-4 space-y-[8px] py-3">
+            <div class="flex items-center text-neutral-400 px-3 h-6 mb-2 text-xs">
+              {{ cate.label }}
+            </div>
+            <div class="space-y-1">
+              <RouterLink v-for="menu in cate.children" :key="menu.path" :to="menu.path" class="block">
+                <div
+                  class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-3 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
+                  :class="{ 'bg-neutral-500/10': route.fullPath.startsWith(menu.path) }"
+                >
+                  <Icon :name="menu.icon" :size="16" />
+                  <div>{{ menu.name }}</div>
+                </div>
+              </RouterLink>
+            </div>
           </div>
         </div>
-      </template>
-    </div>
-  </el-aside>
+        <div class="h-14 flex items-center px-4">
+          <Button class="w-full text-xs" severity="contrast" @click="handleInvitation">
+            <span class="icon-[lucide--user-round-plus] mr-1" />
+            邀请新的使用者
+          </Button>
+        </div>
+      </div>
+    </template>
+  </div>
 </template>

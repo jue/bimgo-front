@@ -84,11 +84,11 @@
   }
 
   .app-container {
-    @apply flex flex-col h-full relative;
+    @apply flex flex-col w-full h-full relative overflow-hidden;
   }
 
   .app-body {
-    @apply flex-1;
+    @apply flex-1 overflow-y-auto;
   }
 
   
