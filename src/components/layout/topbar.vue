@@ -7,20 +7,22 @@ const route = useRoute()
 
 <template>
   <div
-    class="flex items-center justify-between h-14 px-5 shrink-0 border-b "
+    class="flex items-center justify-between h-14 "
   >
-    <div class="flex items-center space-x-4">
-      <Button v-if="sideCollapsed" v-tooltip="'展开侧边栏'" plain text class="ring-0" @click="changeSideCollapsed()">
-        <span class="icon-[lucide--menu] text-xl" />
-      </Button>
+    <LayoutLogo />
+    <div class="flex items-center justify-center flex-1">
+      <div class="flex items-center space-x-4">
+        <Button v-if="sideCollapsed" v-tooltip="'展开侧边栏'" plain text class="ring-0" @click="changeSideCollapsed()">
+          <span class="icon-[lucide--menu] text-xl" />
+        </Button>
 
-      <div v-if="route.meta?.title" class="text-xl font-medium">
-        {{ route.meta?.title }}
+        <div v-if="route.meta?.title" class="text-xl font-medium">
+          {{ route.meta?.title }}
+        </div>
       </div>
-    </div>
 
-    <div class="flex items-center space-x-4">
-      <!-- <SplitButton
+      <div class="flex items-center space-x-4">
+        <!-- <SplitButton
         label="创建事项"
         :model="items"
         class="shrink-0"
@@ -38,7 +40,8 @@ const route = useRoute()
         }"
         @click="save"
       /> -->
-      <UserMenu />
+        <UserMenu />
+      </div>
     </div>
   </div>
 </template>

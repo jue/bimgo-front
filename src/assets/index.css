@@ -71,12 +71,24 @@
     box-shadow: 0 1px #0000000d;
   }
 
+  .box-shadow-top {
+    box-shadow: 0 -1px #0000000d;
+  }
+
   .box-shadow {
     box-shadow: 0 0 0 .5px rgba(0, 0, 0, .08), 0 1px 3px 0 rgba(0, 0, 0, .08);
   }
 
   .np-delete {
     @apply text-red-500 hover:bg-red-50 !important;
+  }
+
+  .app-container {
+    @apply flex flex-col h-full relative;
+  }
+
+  .app-body {
+    @apply flex-1;
   }
 
   
