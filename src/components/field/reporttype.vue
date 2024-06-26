@@ -23,7 +23,7 @@ const info = computed(() => {
 
   if (props.reporttype === 'monthly') {
     return {
-      type: 'success',
+      type: 'danger',
       label: '月报',
     }
   }

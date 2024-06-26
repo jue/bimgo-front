@@ -7,10 +7,8 @@ const { sideWidth } = storeToRefs(useSettingsStore())
     <LayoutSide />
     <div class="app-container h-screen" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <LayoutNav />
-      <div class="app-body h-full px-4 py-4">
-        <div class="app-container bg-white rounded-md border w-fit max-w-full">
-          <RouterView />
-        </div>
+      <div class="app-body h-full pr-4 py-4">
+        <RouterView />
       </div>
     </div>
   </div>

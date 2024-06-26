@@ -36,6 +36,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const deleteFile: typeof import('./src/api/file.js')['deleteFile']
   const downloadFile: typeof import('./src/lib/file.js')['downloadFile']
+  const downloadFileFid: typeof import('./src/lib/file.js')['downloadFileFid']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']

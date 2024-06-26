@@ -1,9 +1,11 @@
 <script setup>
+import { nanoid } from 'nanoid'
+
 const route = useRoute()
 const router = useRouter()
 
 const form = reactive({
-  rid: route.query.rid,
+  rid: route.query.rid || nanoid(),
   title: '',
   type: 'daily',
   content: '',
@@ -62,8 +64,13 @@ function back() {
 async function getReportByRid() {
   if (route.query.rid) {
     const { data: res } = await http.post('/report/detail', { rid: route.query.rid })
-    if (res.code === 200)
-      Object.assign(form, res.data)
+    if (res.code === 200) {
+      Object.assign(files, res.data.files)
+      for (const key in res.data) {
+        if (key !== 'files')
+          form[key] = res.data[key]
+      }
+    }
   }
 }
 
@@ -73,12 +80,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-container w-[1000px]">
+  <div class="app-container w-[1000px] bg-white rounded-md border">
     <div class="flex items-center justify-between box-shadow-bottom h-12 px-5">
       <div class="font-bold">
         编辑报告
       </div>
-      <Button label="返回" outlined @click="back" />
+      <el-button @click="back">
+        返回
+      </el-button>
     </div>
     <ScrollPanel class="flex-1">
       <div class="py-5 px-4">
@@ -114,8 +123,10 @@ onMounted(() => {
           </el-form-item>
           <el-form-item label="上传文档">
             <div class="w-full space-y-2">
-              <UploadButton cate="report">
-                <Button :id="form.rid" label="点击上传" @uploaded="onUploaded" />
+              <UploadButton :id="form.rid" cate="report" @uploaded="onUploaded">
+                <el-button type="primary">
+                  点击上传
+                </el-button>
               </UploadButton>
               <FileList :files="files" @deleted="files.splice(files.indexOf($event), 1)" />
             </div>
@@ -126,8 +137,14 @@ onMounted(() => {
     <div class="flex items-center justify-between box-shadow-top h-12 px-5">
       <div />
       <div class=" space-x-4">
-        <Button label="取消" icon="icon-[lucide--x]" severity="secondary" outlined @click="back" />
-        <Button label="提交报告" icon="icon-[lucide--check]" :loading="loading" @click="submitForm(formRef)" />
+        <el-button @click="back">
+          <span class="icon-[lucide--x]" />
+          取消
+        </el-button>
+        <el-button type="primary" :loading="loading" @click="submitForm(formRef)">
+          <span class="icon-[lucide--check]" />
+          提交报告
+        </el-button>
       </div>
     </div>
   </div>

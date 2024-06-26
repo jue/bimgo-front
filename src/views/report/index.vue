@@ -1,13 +1,16 @@
 <script setup>
-import { nanoid } from 'nanoid'
 import dayjs from 'dayjs'
 
 const router = useRouter()
 
 function toEdit(val) {
-  const rid = val || nanoid()
-  router.push(`/report/edit?rid=${rid}`)
+  if (val)
+    router.push(`/report/edit?rid=${val}`)
+  else
+    router.push('/report/edit')
 }
+
+const multipleTableRef = ref(null)
 
 const loading = ref(false)
 const dataList = ref({
@@ -75,7 +78,7 @@ function handleDelete(val) {
 </script>
 
 <template>
-  <div class="app-container w-[1000px]">
+  <div class="app-container w-[1000px] bg-white rounded-md border">
     <div class="flex items-center justify-between box-shadow-bottom h-12 px-5">
       <div class="font-bold">
         工程报告 ({{ dataList.total }})
@@ -84,24 +87,38 @@ function handleDelete(val) {
         <template v-if="selection.length">
           <span><span class="font-bold">{{ selection.length }}</span>个项目已选择</span>
           <el-button
-            label="批量删除"
             type="danger"
             @click="handleDelete(selection)"
           >
             <span class="icon-[lucide--trash-2]" />
-            批量删除
+            <span>批量删除</span>
+          </el-button>
+          <el-button
+            type="into"
+            @click="multipleTableRef.clearSelection()"
+          >
+            <!-- <span class="icon-[lucide--trash-2]" /> -->
+            <span>取消全选</span>
           </el-button>
         </template>
 
-        <Button v-else label="创建报告" icon="icon-[lucide--plus]" @click="toEdit('')" />
+        <el-button
+          v-else
+          type="primary"
+          @click="toEdit('')"
+        >
+          <span class="icon-[lucide--plus]" />
+          <span>创建报告</span>
+        </el-button>
       </div>
     </div>
     <div class="app-body">
       <el-table
+        ref="multipleTableRef"
         v-loading="loading"
         :data="dataList.data"
-        :style="{ width: '100%' }"
-        max-height="100%"
+        height="100%"
+        width="100%"
         stripe
         empty-text="没有相关报告数据"
         @selection-change="handleSelectionChange"
@@ -113,6 +130,11 @@ function handleDelete(val) {
             <FieldReporttype :reporttype="row.type" />
           </template>
         </el-table-column>
+        <!-- <el-table-column prop="type" label="附件文档">
+          <template #default="{ row }">
+            {{ row.files.length }}
+          </template>
+        </el-table-column> -->
         <el-table-column label="创建人">
           <template #default="{ row }">
             <User :uid="row.uid" />

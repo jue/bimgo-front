@@ -1,5 +1,5 @@
 <script setup>
-import { downloadFile } from '@/lib/file.js'
+import { downloadFileFid } from '@/lib/file.js'
 
 const props = defineProps({
   file: {
@@ -51,7 +51,7 @@ const status = computed(() => {
         <el-tooltip content="下载">
           <el-button
             text class="w-6 h-6 p-0" :disabled="!status || file.file_type === 'loading'"
-            @click="downloadFile(file.fid)"
+            @click="downloadFileFid(file.fid)"
           >
             <span class="icon-[lucide--download] text-sm" />
           </el-button>

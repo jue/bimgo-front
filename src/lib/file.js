@@ -33,3 +33,11 @@ export async function downloadFile(file) {
   if (res.code === 200)
     FileSaver.saveAs(`https://bimgo-files.nipao.com${res.data.file_path}?_upt=${res.data.upt}`, res.data.file_name)
 }
+
+export async function downloadFileFid(fid) {
+  const { data: res } = await http.post('/file/url', {
+    fid,
+  })
+  if (res.code === 200)
+    FileSaver.saveAs(`https://bimgo-files.nipao.com${res.data.file_path}?_upt=${res.data.upt}`, res.data.file_name)
+}

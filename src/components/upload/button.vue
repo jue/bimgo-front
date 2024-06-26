@@ -22,7 +22,7 @@ const emit = defineEmits(['add', 'update', 'uploaded'])
 const toast = useToast()
 
 const op = ref(null)
-function toggle(event) {
+function toggle (event) {
   op.value.toggle(event)
 }
 
@@ -44,7 +44,7 @@ const value = ref('')
 // 选择上传
 const uploadInput = ref(null)
 
-function hangleChange() {
+function hangleChange () {
   if (value.value === 'local') {
     uploadInput.value.click()
   }
@@ -57,7 +57,7 @@ function hangleChange() {
 // 本地上传
 const loading = ref(false)
 const files = ref([])
-async function uploader(event) {
+async function uploader (event) {
   emit('add', {
     file_name: event.target.files[0].name,
     file_type: 'loading',
@@ -105,7 +105,8 @@ async function uploader(event) {
 <template>
   <div class="space-x-2 flex items-center">
     <span @click="toggle">
-      <slot><Button icon="icon-[lucide--arrow-up-from-line]" size="small" plain text :loading="loading" label="上传附件" /></slot>
+      <slot><Button icon="icon-[lucide--arrow-up-from-line]" size="small" plain text :loading="loading" label="上传附件" />
+      </slot>
     </span>
 
     <OverlayPanel ref="op" @show="value = ''" @hide="hangleChange">

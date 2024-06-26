@@ -98,6 +98,10 @@
 .el-button {
   @apply !px-3;
 }
+
+.el-button [class^="icon-"] {
+  @apply !text-base mr-0.5;
+}
 .el-dropdown-menu {
   @apply !p-1 min-w-32;
 }
