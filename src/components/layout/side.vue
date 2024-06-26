@@ -72,7 +72,7 @@ function handleInvitation() {
     :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
   >
     <template v-if="!sideCollapsed">
-      <div class="h-14 flex items-center px-2 justify-between  border-b shrink-0 bg-white">
+      <div class="h-14 flex items-center px-2 justify-between shrink-0 bg-white box-shadow-bottom">
         <Logo class="w-12" />
         <span v-tooltip.bottom="'收起侧边栏'" class="icon-[lucide--panel-left-close] text-neutral-400 text-xl cursor-pointer" @click="changeSideCollapsed()" />
       </div>

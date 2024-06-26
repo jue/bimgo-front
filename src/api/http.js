@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElNotification } from 'element-plus'
 import { getToken } from '@/lib/token'
 
 const http = axios.create({
@@ -10,6 +10,11 @@ const http = axios.create({
 function handleError(response) {
   const err = (text) => {
     ElMessage.error(response?.data?.message ?? text)
+    // ElNotification({
+    //   title: '错误',
+    //   message: response?.data?.message ?? text,
+    //   type: 'error',
+    // })
   }
   if (!response.data) {
     err('请求超时，服务器无响应！')

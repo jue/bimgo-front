@@ -157,12 +157,16 @@
   @apply mb-1 !important;
 }
 
+.el-form--large.el-form--label-top .el-form-item .el-form-item__label {
+  @apply mb-1 !important;
+}
+
 .el-date-editor.el-input {
   @apply w-full !important;
 }
 
 .el-message-box{
-  @apply p-6 !important;
+  @apply p-4 !important;
 }
 
 .el-breadcrumb__separator {
@@ -173,6 +177,10 @@
 }
 .el-popper__arrow {
   @apply hidden;
+}
+
+.el-table__empty-text {
+  @apply py-10;
 }
 
 /* 以下为修改element-plus样式 结束 */

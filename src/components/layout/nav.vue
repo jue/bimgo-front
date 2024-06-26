@@ -6,7 +6,7 @@ const route = useRoute()
 </script>
 
 <template>
-  <div class="h-14 flex items-center justify-between px-4 border-b bg-white">
+  <div class="h-14 flex items-center justify-between px-4 bg-white box-shadow-bottom">
     <div class="flex items-center space-x-4">
       <Button v-if="sideCollapsed" v-tooltip="'展开侧边栏'" plain text class="ring-0" @click="changeSideCollapsed()">
         <span class="icon-[lucide--menu] text-xl" />

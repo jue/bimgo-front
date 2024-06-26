@@ -3,13 +3,15 @@ const { sideWidth } = storeToRefs(useSettingsStore())
 </script>
 
 <template>
-  <div class="h-screen flex  bg-[#f3f6fd]">
+  <div class="h-screen flex bg-gray-50">
     <LayoutSide />
-    <div class="app-container" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
+    <div class="app-container h-screen" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <LayoutNav />
-      <el-scrollbar class="app-body bg-white my-4 mr-4 rounded-md">
-        <RouterView />
-      </el-scrollbar>
+      <div class="app-body h-full px-4 py-4">
+        <div class="app-container bg-white rounded-md border w-fit max-w-full">
+          <RouterView />
+        </div>
+      </div>
     </div>
   </div>
 
