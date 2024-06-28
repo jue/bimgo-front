@@ -55,6 +55,7 @@ import dialog from './dialog';
 import overlaypanel from './overlaypanel';
 import sidebar from './sidebar';
 import tooltip from './tooltip';
+import fileupload from './fileupload';
 import breadcrumb from './breadcrumb';
 import contextmenu from './contextmenu';
 import dock from './dock';
@@ -65,7 +66,6 @@ import panelmenu from './panelmenu';
 import steps from './steps';
 import tabmenu from './tabmenu';
 import tieredmenu from './tieredmenu';
-import fileupload from './fileupload';
 import message from './message';
 import inlinemessage from './inlinemessage';
 import toast from './toast';
@@ -149,6 +149,7 @@ export default {
     dialog,
     overlaypanel,
     sidebar,
+    fileupload,
     breadcrumb,
     contextmenu,
     dock,
@@ -159,7 +160,6 @@ export default {
     steps,
     tabmenu,
     tieredmenu,
-    fileupload,
     message,
     inlinemessage,
     toast,
