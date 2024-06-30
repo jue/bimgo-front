@@ -51,6 +51,7 @@ export const useTaskStore = defineStore('task', {
       this.cate = newCate
       this.columns = []
       this.unexpandedKeys = []
+      this.selectedGids = []
       this.openedGid = ''
 
       const logs = useLogsStore()

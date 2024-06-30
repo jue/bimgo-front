@@ -287,8 +287,8 @@ const { logs } = storeToRefs(useLogsStore())
 const taskPanleVisible = ref(false)
 const taskPanelRef = ref(null)
 function handleOpenPanel(gid) {
-  openedGid.value = props.data.gid
-  return false
+  // openedGid.value = props.data.gid
+  // return false
   taskPanleVisible.value = true
   nextTick(() => {
     taskPanelRef.value.getData(gid)

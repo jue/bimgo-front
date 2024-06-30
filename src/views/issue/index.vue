@@ -13,11 +13,36 @@ const viewOptions = ref([
 ])
 
 const taskStore = useTaskStore()
-const { payload_issue: payload, tasks, openedGid, cate } = storeToRefs(taskStore)
+const { payload_issue: payload, tasks, openedGid, cate, selectedGids } = storeToRefs(taskStore)
 
 onMounted(async () => {
   await taskStore.getTasks()
 })
+
+function handleDelete(val) {
+  const arr = toRaw(val)
+
+  ElMessageBox.confirm(
+    '确定删除所选的问题吗?',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    },
+  ).then(async () => {
+    const { data: res } = await http.post('/issue/delete', {
+      gids: arr,
+    })
+    if (res.code === 200) {
+      ElMessage.success('删除成功')
+      selectedGids.value = []
+      taskStore.getTasks()
+    }
+  }).catch(() => {
+    ElMessage.info('已取消删除')
+  })
+}
 </script>
 
 <template>
@@ -27,8 +52,28 @@ onMounted(async () => {
         问题列表
       </div>
       <div class="flex items-center space-x-4">
-        <FilterList cate="issue" />
-        <FilterGroup cate="issue" />
+        <template v-if="selectedGids.length">
+          <span><span class="font-bold">{{ selectedGids.length }}</span>个项目已选择</span>
+          <el-button
+            type="danger"
+            @click="handleDelete(selectedGids)"
+          >
+            <span class="icon-[lucide--trash-2]" />
+            <span>批量删除</span>
+          </el-button>
+          <el-button
+            type="into"
+            @click="selectedGids = []"
+          >
+            <!-- <span class="icon-[lucide--trash-2]" /> -->
+            <span>取消全选</span>
+          </el-button>
+        </template>
+
+        <template v-else>
+          <FilterList cate="issue" />
+          <FilterGroup cate="issue" />
+        </template>
       </div>
     </div>
 
