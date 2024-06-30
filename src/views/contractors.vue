@@ -67,17 +67,17 @@ function deleteContractor(data) {
         </div>
 
         <div class="space-y-1">
-          <div
+          <!-- <div
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-            :class="{ 'bg-gray-100 text-blue-600': activeGroup === 'all' }"
+            :class="{ 'bg-gray-100 text-emerald-500': activeGroup === 'all' }"
             @click="selectGroup('all')"
           >
             所有使用者
-          </div>
+          </div> -->
           <div
             v-for="item in defaultUserGroup" :key="item.value"
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
-            :class="{ 'bg-gray-100 text-blue-600': item.value === activeGroup }"
+            :class="{ 'bg-gray-100 text-emerald-500': item.value === activeGroup }"
             @click="selectGroup(item.value)"
           >
             {{ item.label }}
@@ -103,7 +103,7 @@ function deleteContractor(data) {
           <div
             v-for="item in contractors" :key="item.value"
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md group"
-            :class="{ 'bg-gray-100 text-blue-600': item.contractor_id === activeGroup }"
+            :class="{ 'bg-gray-100 text-emerald-500': item.contractor_id === activeGroup }"
             @click="selectContractor(item.contractor_id)"
           >
             <div class="flex-1">
