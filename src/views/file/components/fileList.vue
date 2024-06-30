@@ -220,7 +220,7 @@ watch(() => props.keyword, () => {
             :type="scope.row?.file_type || 'folder'"
             class="h-8 shrink-0 cursor-pointer !p-1 bg-transparent"
           />
-          <div class="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-500 cursor-pointer" :title="scope.row?.dir_name || scope.row?.file_name">
+          <div class="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:text-emerald-500 cursor-pointer" :title="scope.row?.dir_name || scope.row?.file_name">
             <div v-if="scope.row?.edit === 'create_folder' || scope.row?.edit === 'edit_file_name' || scope.row?.edit === 'edit_folder_name'" class="flex items-center space-x-2" @click.stop>
               <el-input ref="inputRef" v-model="input" size="small" class="w-1/2 border bg-white" placeholder="请输入" @keyup.enter="submitName(scope.row)" />
               <el-button class="w-6 h-6" type="primary" size="small" @click.stop="submitName(scope.row)">
@@ -236,13 +236,13 @@ watch(() => props.keyword, () => {
           </div>
           <div v-if="!scope.row?.edit" class="operation shrink-0 hidden">
             <el-button text class="w-6 h-6 p-0" title="下载" @click.stop="downloadFile(scope.row)">
-              <span class="icon-[lucide--download] text-blue-600" />
+              <span class="icon-[lucide--download] text-emerald-600" />
             </el-button>
             <el-button text class="w-6 h-6 p-0" title="删除" @click.stop="handleDelete([scope.row])">
-              <span class="icon-[lucide--trash-2] text-blue-600" />
+              <span class="icon-[lucide--trash-2] text-emerald-600" />
             </el-button>
             <el-button text class="w-6 h-6 p-0" title="重命名" @click.stop="handleRename(scope.row)">
-              <span class="icon-[lucide--text-cursor-input] text-blue-600" />
+              <span class="icon-[lucide--text-cursor-input] text-emerald-600" />
             </el-button>
           </div>
         </div>

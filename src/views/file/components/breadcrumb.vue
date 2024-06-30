@@ -50,7 +50,7 @@ watch(() => props.dirId, () => {
     <el-divider v-if="dataList.length > 1" direction="vertical" />
     <el-breadcrumb separator="/">
       <el-breadcrumb-item v-for="(item, index) in dataList" :key="item.dir_id" class="text-xs">
-        <span :class="{ 'font-medium text-zinc-800': dataList.length === 1, 'text-blue-500': index <= dataList.length - 2 }" class="cursor-pointer" @click="setDirID(item.dir_id)">{{ item.dir_name }}</span>
+        <span :class="{ 'font-medium text-zinc-800': dataList.length === 1, 'text-emerald-500': index <= dataList.length - 2 }" class="cursor-pointer" @click="setDirID(item.dir_id)">{{ item.dir_name }}</span>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>

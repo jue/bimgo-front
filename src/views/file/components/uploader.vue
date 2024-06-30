@@ -23,7 +23,7 @@ async function uploader(event) {
 </script>
 
 <template>
-  <el-button type="primary" bg :loading="loading" :disabled="loading" class="rounded-full" @click="seletFile">
+  <el-button type="primary" bg :loading="loading" :disabled="loading" @click="seletFile">
     <div class="space-x-2 flex items-center">
       <span v-if="!loading" class="icon-[lucide--file-plus-2]" />
       <span>上传文件</span>

@@ -83,7 +83,7 @@ async function handleMove() {
               type="folder"
               class="h-8 shrink-0 cursor-pointer !p-1 bg-transparent"
             />
-            <div class="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-500">
+            <div class="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:text-emerald-500">
               {{ folder.dir_name }}
             </div>
           </div>

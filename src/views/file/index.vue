@@ -28,8 +28,8 @@ function openFolderDialog() {
 </script>
 
 <template>
-  <div class="flex flex-col h-full px-4 py-4">
-    <div class="flex items-center justify-between py-1 shrink-0">
+  <div class="app-container bg-white border rounded-md">
+    <div class="flex items-center justify-between py-1 shrink-0 h-12 px-4">
       <div v-if="selections.length" class="flex items-center">
         <el-button-group>
           <el-button class="rounded-full" type="primary" plain @click="openFolderDialog">
@@ -56,7 +56,7 @@ function openFolderDialog() {
       </div>
       <div v-else class="flex items-baseline space-x-3">
         <Uploader @uploaded="fileListRef.getDataList()" />
-        <el-button text bg class="rounded-full" @click="addFolder">
+        <el-button @click="addFolder">
           <div class="space-x-2 flex items-center">
             <span class="icon-[lucide--folder-plus]" />
             <span>新建文件夹</span>
