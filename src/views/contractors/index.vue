@@ -110,12 +110,11 @@ defineExpose({
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <div class="px-11">
+  <div class="app-container">
+    <div class="px-4">
       <div class="h-11 flex items-center justify-between">
-        <div class="text-xl font-bold">
+        <div class="text-lg font-semibold">
           <span>成员列表</span> <span class="text-zinc-500">({{ form.total }})</span>
-          <user-invitation />
         </div>
       </div>
       <!-- <div v-if="route.query.contractor">
@@ -212,9 +211,9 @@ defineExpose({
         </el-table-column>
       </el-table>
     </div>
-    <div class="py-1 flex justify-end">
+    <div class="py-1 flex justify-end h-12 px-4">
       <el-pagination
-        v-model:current-page="form.page" v-model:page-size="form.pageSize" background small
+        v-model:current-page="form.page" v-model:page-size="form.pageSize" background
         :total="form.total" layout="total, prev, pager, next" @current-change="getUsers"
       />
     </div>
