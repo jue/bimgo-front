@@ -4,15 +4,12 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
 })
 
 const { issue_columns_v2, task_columns } = storeToRefs(useUserStore())
+const { cate } = storeToRefs(useTaskStore())
 const itemValue = computed(() => {
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return issue_columns_v2.value.find(item => item.value === 'priority').options.find(item => item.value === props.value)
   else
     return task_columns.value.find(item => item.value === 'priority').options.find(item => item.value === props.value)

@@ -10,10 +10,6 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
   field: {
     type: String,
     default: '',
@@ -21,6 +17,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+const { cate } = storeToRefs(useTaskStore())
 
 const value = ref(props.modelValue ? new Date(props.modelValue) : '')
 watch(() => props.modelValue, (val) => {
@@ -33,16 +30,16 @@ function toggle(event) {
 }
 
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return `/task/update/date`
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return `/issue/update/date`
 })
 
 const apiClearUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return `/task/time/clear`
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return `/issue/time/clear`
 })
 
@@ -62,12 +59,10 @@ async function saveData() {
     time: dayjs(value.value).format('YYYY-MM-DD'),
   })
 
-  if (res.code === 200) {
+  if (res.code === 200)
     emit('update:modelValue', dayjs(value.value).format('YYYY-MM-DD'))
-    const { getLogs } = useLogsStore()
-    getLogs(props.data.gid, props.cate)
-  }
-  else { value.value = props.modelValue ? new Date(props.modelValue) : '' }
+
+  else value.value = props.modelValue ? new Date(props.modelValue) : ''
 }
 
 // 清除日期
@@ -77,12 +72,10 @@ async function clear() {
     gid: props.data.gid,
   })
 
-  if (res.code === 200) {
+  if (res.code === 200)
     emit('update:modelValue', '')
-    const { getLogs } = useLogsStore()
-    getLogs(props.data.gid, props.cate)
-  }
-  else { value.value = props.modelValue ? new Date(props.modelValue) : '' }
+
+  else value.value = props.modelValue ? new Date(props.modelValue) : ''
 
   op.value.hide()
 }

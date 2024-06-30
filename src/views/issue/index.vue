@@ -1,6 +1,4 @@
 <script setup>
-import Panel from 'primevue/panel'
-
 const router = useRouter()
 const viewType = ref('table')
 const viewOptions = ref([
@@ -15,7 +13,7 @@ const viewOptions = ref([
 ])
 
 const taskStore = useTaskStore()
-const { payload_issue: payload, tasks } = storeToRefs(taskStore)
+const { payload_issue: payload, tasks, openedGid, cate } = storeToRefs(taskStore)
 
 onMounted(async () => {
   await taskStore.getTasks()
@@ -23,24 +21,23 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div class="app-container bg-white border rounded-md">
     <div class="px-5 space-x-3 flex items-center justify-between min-h-12 shrink-0">
-      <div class="flex items-center space-x-2">
-        <!-- <SelectButton v-model="viewType" :options="viewOptions" option-label="label" option-value="value" /> -->
-        <!-- <FilterBtn cate="isuue" /> -->
-        <!-- <InputText v-model="payload.key" type="text" class="w-80" placeholder="按问题名搜索" /> -->
-        <!-- <FilterStatus v-model="para.status" cate="issue" />
-        <FilterUids v-model="para.uids" cate="issue" /> -->
-
+      <div class="text-lg font-semibold">
+        问题列表
+      </div>
+      <div class="flex items-center space-x-4">
         <FilterList cate="issue" />
         <FilterGroup cate="issue" />
       </div>
-      <div class="flex items-center space-x-4">
-        <!-- <IssuesAdd @close="getIssues" /> -->
-      </div>
     </div>
-    <ScrollPanel class="h-10 flex-1">
+
+    <div class="app-body">
       <np-tree-header />
+      <div v-if="!tasks.length" class="flex items-center justify-center text-gray-400 text-xs h-40">
+        没有相关的数据
+      </div>
+
       <template v-if="payload.groupby_field">
         <div class="space-y-4">
           <Panel
@@ -69,10 +66,6 @@ onMounted(async () => {
                 <FilterGroupName :group="item" />
               </div>
             </template>
-
-          <!-- <template #footer>
-            <CreateData cate="issue" class="border-none" />
-          </template> -->
           </Panel>
         </div>
       </template>
@@ -81,13 +74,8 @@ onMounted(async () => {
           <np-tree-line :task="task" />
         </template>
       </template>
-    </ScrollPanel>
-    <!-- <np-tree /> -->
-
-    <pre>{{ payload }}</pre>
-    <!-- <pre>
-      {{ issues }}
-    </pre> -->
+    </div>
+    <CreateData cate="issue" class="border-t" />
   </div>
 </template>
 

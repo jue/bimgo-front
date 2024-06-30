@@ -4,16 +4,14 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
 })
 
+const { cate } = storeToRefs(useTaskStore())
+
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/title/update'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/title/update'
 })
 
@@ -25,8 +23,10 @@ watch(() => props.task, () => {
 const input = ref(null)
 
 async function saveData() {
-  if (!value.value)
+  if (!value.value || value.value === props.task.title) {
     value.value = props.task.title
+    return false
+  }
 
   const { data: res } = await http.post(apiUpdateUrl.value, {
     title: value.value,
@@ -35,7 +35,7 @@ async function saveData() {
   if (res.code === 200) {
     props.task.title = value.value
     const { getLogs } = useLogsStore()
-    getLogs(props.task.gid, props.cate)
+    getLogs(props.task.gid, cate.value)
   }
   else { value.value = props.task.title }
 }

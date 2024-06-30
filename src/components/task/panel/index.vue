@@ -2,22 +2,20 @@
 import dayjs from 'dayjs'
 
 const props = defineProps({
-  cate: {
-    type: String,
-    default: 'task',
-  },
   action: {
     type: String,
     default: 'view',
   },
 })
+const { cate } = storeToRefs(useTaskStore())
+const { getLogs } = useLogsStore()
 
 const dataList = ref([])
 
 const apiUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/detail'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/detail'
 })
 
@@ -29,6 +27,7 @@ async function getData(id) {
 
   if (res.code === 200)
     dataList.value = res.data
+    // getLogs(id, cate.value)
 }
 
 defineExpose({ getData })

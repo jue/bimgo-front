@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // 这里设置分类，cate 为 task 或 issue
-    const { cate, setCate } = useTaskStore()
+    const { cate, openedGid, setCate } = useTaskStore()
     if (to.fullPath.startsWith('/task'))
       setCate('task')
 

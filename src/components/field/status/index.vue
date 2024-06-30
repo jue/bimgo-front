@@ -8,33 +8,29 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
   inline: {
     type: Boolean,
     default: false,
   },
 })
 const emit = defineEmits(['update:modelValue'])
-
+const { cate } = storeToRefs(useTaskStore())
 const value = ref(props.modelValue)
 watch(() => props.modelValue, (val) => {
   value.value = val
 })
 
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/update/status'
 
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/update/status'
 })
 
 const { task_columns, issue_columns_v2 } = storeToRefs(useUserStore())
 const optionList = computed(() => {
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return issue_columns_v2.value.find(item => item.value === 'status')?.options
   else
     return task_columns.value.find(item => item.value === 'status')?.options
@@ -65,7 +61,7 @@ async function saveData() {
   if (res.code === 200) {
     emit('update:modelValue', value.value)
     const { getLogs } = useLogsStore()
-    getLogs(props.data.gid, props.cate)
+    getLogs(props.data.gid, cate.value)
   }
   else { value.value = props.modelValue }
 

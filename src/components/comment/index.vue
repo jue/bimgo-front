@@ -6,21 +6,19 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  cate: {
-    type: String,
-    default: '',
-  },
 })
 
 const { logs } = storeToRefs(useLogsStore())
 const { getLogs } = useLogsStore()
 
-const { issue_columns, task_columns } = storeToRefs(useUserStore())
+const { cate } = storeToRefs(useTaskStore())
+
+const { issue_columns_v2, task_columns } = storeToRefs(useUserStore())
 
 const columns = computed(() => {
-  if (props.cate === 'issue')
-    return issue_columns.value
-  if (props.cate === 'task')
+  if (cate.value === 'issue')
+    return issue_columns_v2.value
+  if (cate.value === 'task')
     return task_columns.value
 })
 
@@ -28,7 +26,8 @@ const columns = computed(() => {
 const action = ref('all')
 
 watch(() => props.id, async () => {
-  getLogs(props.id, props.cate)
+  logs.value = []
+  getLogs(props.id, cate.value)
 })
 
 async function getDataByAction(val) {
@@ -39,9 +38,9 @@ async function getDataByAction(val) {
 }
 
 const cateText = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '任务'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '问题'
 })
 
@@ -169,7 +168,7 @@ const logData = computed(() => {
                           === log.content?.newVal)?.label }}
                       </div>
                     </template>
-                    <!-- <span class="italic text-gray-300 text-xs">(仅管理员可见)</span> -->
+                    <span class="italic text-gray-300 text-xs">(仅管理员可见)</span>
                   </div>
                 </div>
 

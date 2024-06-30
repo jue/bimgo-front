@@ -8,15 +8,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col">
+  <div class="app-container bg-white border rounded-md">
     <div class="flex items-center justify-between h-12 shrink-0 px-5">
-      <div class="flex items-center h-11 shrink-0">
-        <div class="space-x-5">
-          <Button icon="icon-[lucide--plus]" />
-          <Button icon="icon-[lucide--plus]" size="small" />
-          <Button icon="icon-[lucide--plus]" size="small" label="默认按钮" plain />
-          <Button icon="icon-[lucide--plus]" size="large" severity="danger" />
-        </div>
+      <div class="text-lg font-semibold">
+        工程进度
       </div>
       <div class="flex items-center space-x-2">
         <IconField icon-position="left">
@@ -27,7 +22,6 @@ onMounted(async () => {
         </IconField>
         <Button label="树形" icon="icon-[lucide--list-tree]" outlined severity="secondary" />
         <GlobalCreate />
-        <GlobalUserAvatar class="mr-2" />
       </div>
     </div>
 

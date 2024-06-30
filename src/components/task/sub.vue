@@ -57,9 +57,8 @@ function handleDeleted(task) {
 <template>
   <!-- 测试用例 -->
   <!-- <TaskTimeline /> -->
-
   <div>
-    <div v-if="subTask.length" class="box-shadow divide-y rounded">
+    <div v-if="subTask.length" class="border divide-y rounded">
       <div v-for="(task, index) in subTask" :key="index" class="flex items-center h-10 px-2 justify-between hover:bg-gray-100/70 cursor-pointer">
         <div class="space-x-3  rounded-lg">
           <span class="text-xs text-gray-400">#{{ task?.id }}</span>

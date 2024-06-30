@@ -4,11 +4,9 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
 })
+
+const { cate } = storeToRefs(useTaskStore())
 
 const subTasks = computed(() => props.dataList.children)
 

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useLogsStore } from './logs'
 
 export const useTaskStore = defineStore('task', {
   state: () => ({
@@ -50,6 +51,10 @@ export const useTaskStore = defineStore('task', {
       this.cate = newCate
       this.columns = []
       this.unexpandedKeys = []
+      this.openedGid = ''
+
+      const logs = useLogsStore()
+      logs.initLogs()
     },
     setColumns(columns) {
       this.columns = columns

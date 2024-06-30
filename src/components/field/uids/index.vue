@@ -8,10 +8,6 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
   inline: {
     type: Boolean,
     default: false,
@@ -22,6 +18,7 @@ const emit = defineEmits(['update:modelValue'])
 const inputRef = ref(null)
 
 const { users } = storeToRefs(useSettingsStore())
+const { cate } = storeToRefs(useTaskStore())
 
 const value = ref(props.modelValue)
 watch(() => props.modelValue, (val) => {
@@ -29,10 +26,10 @@ watch(() => props.modelValue, (val) => {
 })
 
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/update/uids'
 
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/update/uids'
 })
 
@@ -65,7 +62,7 @@ async function saveData() {
   if (res.code === 200) {
     emit('update:modelValue', value.value)
     const { getLogs } = useLogsStore()
-    getLogs(props.data.gid, props.cate)
+    getLogs(props.data.gid, cate.value)
   }
   else { value.value = props.modelValue }
 }

@@ -1,14 +1,17 @@
 <script setup>
-const props = defineProps({
-  cate: {
-    type: String,
-    default: 'task',
-  },
+const { cate, payload: payload_task, payload_issue } = storeToRefs(useTaskStore())
+
+const payload = computed(() => {
+  if (cate.value === 'task')
+    return payload_task.value
+  if (cate.value === 'issue')
+    return payload_issue.value
 })
+
 const apiUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/add'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/add'
 })
 
@@ -23,16 +26,16 @@ async function addData() {
   if (res.code === 200) {
     value.value = ''
 
-    if (props.cate === 'task')
-      useTaskStore().getTasks()
-
-    if (props.cate === 'issue')
-      useIssueStore().getIssues()
+    useTaskStore().getTasks()
   }
 }
 </script>
 
 <template>
+  <!-- {{ cate }}
+  <pre>
+    {{ payload }}
+  </pre> -->
   <div class="flex items-center h-10 border-b">
     <div class="w-10 flex items-center justify-center shrink-0">
       <span class="icon-[lucide--plus] text-[#cbd5e1]" />

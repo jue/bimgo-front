@@ -4,15 +4,12 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  cate: {
-    type: String,
-    default: 'issue',
-  },
 })
 
 const files = ref([])
 
 const { user } = storeToRefs(useUserStore())
+const { cate } = storeToRefs(useTaskStore())
 
 const textareaRef = ref(null)
 const value = ref('')
@@ -45,7 +42,7 @@ function deleteFile(file) {
 async function handleSubmit() {
   const { data: res } = await http.post('/logs/create', {
     id: props.id,
-    cate: props.cate,
+    cate: cate.value,
     content: value.value,
     files: files.value,
   })
@@ -56,7 +53,7 @@ async function handleSubmit() {
     files.value = []
 
     const { getLogs } = useLogsStore()
-    getLogs(props.id, 'iisue')
+    getLogs(props.id, cate.value)
   }
 }
 </script>
@@ -100,7 +97,7 @@ async function handleSubmit() {
           />
           <div class="flex items-end justify-between">
             <div class="space-x-1 flex items-center">
-              <UploadButton :id="id" cate="task" status="no-status" @add="addFile" @update="updateFile">
+              <UploadButton :id="id" :cate="cate" status="no-status" @add="addFile" @update="updateFile">
                 <Button icon="icon-[lucide--paperclip]" class="opacity-80" plain text size="small" />
               </UploadButton>
               <!-- <Button icon="icon-[lucide--at-sign]" class="opacity-80" plain text size="small" /> -->

@@ -15,41 +15,44 @@ const props = defineProps({
     default: 'task',
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
+const router = useRouter()
+const route = useRoute()
+
+const { cate } = storeToRefs(useTaskStore())
 
 const { openedGid } = storeToRefs(useTaskStore())
 
 const confirm = useConfirm()
 
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/title/update'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/title/update'
 })
 
 const apiAddUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/add'
 
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/add'
 })
 
 // 打开任务详情面板
-function handleOpenPanel() {
-  // dialog.open(TaskPanel, {
-  //   props: {
-  //     position: 'topright',
-  //     gid: props.data.gid,
-  //     cate: props.cate,
-  //   },
-  // })
-  openedGid.value = props.data.gid
+// function handleOpenPanel() {
+// dialog.open(TaskPanel, {
+//   props: {
+//     position: 'topright',
+//     gid: props.data.gid,
+//     cate: cate.value,
+//   },
+// })
+// openedGid.value = props.data.gid
 
-  // emit('openPanel', props.data.gid)
-}
+// emit('openPanel', props.data.gid)
+// }
 
 // 当前的任务标题
 const value = ref(props.modelValue)
@@ -91,7 +94,7 @@ const items = ref([
       const { copy, copied, isSupported } = useClipboard({
         legacy: true,
       })
-      copy(`${window.location.origin}/${props.cate}/detail?gid=${props.data.gid}`)
+      copy(`${window.location.origin}/${cate.value}/detail?gid=${props.data.gid}`)
     },
   },
   {
@@ -259,7 +262,7 @@ async function saveEdit() {
     emit('update:modelValue', value.value)
     try {
       const { getLogs } = useLogsStore()
-      getLogs(props.data.gid, props.cate)
+      getLogs(props.data.gid, cate.value)
     }
     catch (error) {
       console.log(error)
@@ -277,6 +280,26 @@ onMounted(() => {
     })
   }
 })
+
+// 任务面板
+const { logs } = storeToRefs(useLogsStore())
+
+const taskPanleVisible = ref(false)
+const taskPanelRef = ref(null)
+function handleOpenPanel(gid) {
+  openedGid.value = props.data.gid
+  return false
+  taskPanleVisible.value = true
+  nextTick(() => {
+    taskPanelRef.value.getData(gid)
+  })
+}
+function handlePanleHide() {
+  taskPanleVisible.value = false
+  openedGid.value = ''
+  logs.value = []
+  useTaskStore().getTasks()
+}
 </script>
 
 <template>
@@ -326,6 +349,29 @@ onMounted(() => {
       </div>
     </template>
   </div>
+
+  <Sidebar
+    v-model:visible="taskPanleVisible"
+    position="right"
+    :show-close-icon="false"
+    :modal="false"
+    class="w-[900px] relative"
+    :dismissable="false"
+    :pt="{
+      root: ({ context }) => ({
+        class: ['max-w-[900px]'],
+      }),
+      mask: ({ props }) => ({
+        class: ['!right-0 !w-[900px] !left-auto'],
+      }),
+    }"
+    @hide="handlePanleHide"
+  >
+    <template #container>
+      <TaskPanel ref="taskPanelRef" :cate="cate" />
+      <Button icon="icon-[lucide--x]" raised rounded size="small" severity="contrast" class="!absolute top-3 left-0 -translate-x-1/2" @click="taskPanleVisible = false" />
+    </template>
+  </Sidebar>
 </template>
 
 <style lang="scss" scoped>

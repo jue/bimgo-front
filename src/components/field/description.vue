@@ -11,18 +11,15 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
 })
 
 const emit = defineEmits(['update:modelValue'])
+const { cate } = storeToRefs(useTaskStore())
 
 const apiUpdateUrl = computed(() => {
-  if (props.cate === 'task')
+  if (cate.value === 'task')
     return '/task/update/description'
-  if (props.cate === 'issue')
+  if (cate.value === 'issue')
     return '/issue/update/description'
 })
 // const editorConfig = {
@@ -68,7 +65,7 @@ async function saveData() {
   if (res.code === 200) {
     emit('update:modelValue', value.value)
     const { getLogs } = useLogsStore()
-    getLogs(props.data.gid, props.cate)
+    getLogs(props.data.gid, cate.value)
   }
   else { value.value = props.modelValue }
 }

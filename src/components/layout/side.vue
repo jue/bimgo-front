@@ -64,6 +64,8 @@ function handleInvitation() {
     },
   })
 }
+
+const { logs } = storeToRefs(useLogsStore())
 </script>
 
 <template>
@@ -109,6 +111,7 @@ function handleInvitation() {
               </RouterLink>
             </div>
           </div>
+          <pre>{{ logs }}</pre>
         </div>
         <div class="h-14 flex items-center px-4">
           <Button class="w-full text-xs" severity="contrast" @click="handleInvitation">

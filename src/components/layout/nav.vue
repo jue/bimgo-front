@@ -12,9 +12,9 @@ const route = useRoute()
         <span class="icon-[lucide--menu] text-xl" />
       </Button>
 
-      <div v-if="route.meta?.title" class="text-xl font-medium">
+      <!-- <div v-if="route.meta?.title" class="text-xl font-medium">
         {{ route.meta?.title }}
-      </div>
+      </div> -->
     </div>
 
     <div class="flex items-center space-x-4">
