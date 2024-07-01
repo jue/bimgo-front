@@ -5,7 +5,7 @@ const route = useRoute()
 const settingsStore = useSettingsStore()
 const { contractors } = storeToRefs(settingsStore)
 
-const loading = ref(false)
+const loading = ref(true)
 const userData = ref([])
 const multipleTableRef = ref(null)
 

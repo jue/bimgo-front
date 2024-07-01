@@ -53,17 +53,19 @@ onBeforeMount(() => {
     getUserInfo(route.query.openid)
   }
   else {
-    location.href = `${useSettingsStore().project.api_url}/wechat/mp/authorize?redirect_uri=${encodeURIComponent(route.fullPath)}`
+    const url = `${useSettingsStore().project.wx_auth_url}/wechat/mp/authorize?redirect_uri=${encodeURIComponent(route.fullPath)}`
+    // console.log(url)
+    location.href = url
   }
 })
 </script>
 
 <template>
-  <div class="bg-white rounded-lg px-5">
-    <div class="h-11 flex items-center bg-[#fafafa] text-xs text-gray-500/60">
+  <div class="bg-white rounded-lg">
+    <div class="h-11 flex items-center bg-[#fafafa] text-xs text-gray-500/60 px-5 rounded-t-lg">
       邀请你加入:
     </div>
-    <div class="text-center pb-20 ">
+    <div class="text-center pb-20 px-5">
       <div class="text-xl font-medium py-10">
         {{ settingsStore.project.name }}
       </div>
@@ -71,7 +73,7 @@ onBeforeMount(() => {
         <div class="space-y-5">
           <div class="relative w-20 h-20 mx-auto">
             <el-avatar class="relative z-10" :size="80" :src="info?.avatar" />
-            <span class="icon-[lucide--check-circle-2] bg-green-600 text-white text-2xl absolute bottom-0 right-0 z-20" />
+            <span class="icon-[lucide--check-circle-2] bg-green-600 text-white text-2xl absolute bottom-0 right-0 z-20 " />
           </div>
           <div class="text-gray-500/60">
             你已加入

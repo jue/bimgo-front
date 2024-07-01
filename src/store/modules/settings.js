@@ -11,9 +11,11 @@ export const useSettingsStore = defineStore('settings', {
       },
     },
     project: {
-      name: '聚怡信息',
+      name: '工程管理系统',
       api_url: import.meta.env.VITE_API_URL,
+      // api_url: `https://wx.jue.sh`,
       file_url: 'https://bimgo-files.nipao.com',
+      wx_auth_url: import.meta.env.VITE_WX_AUTH_URL,
     },
     // 系统默认用户分组
     defaultUserGroup: [
