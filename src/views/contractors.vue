@@ -67,13 +67,13 @@ function deleteContractor(data) {
         </div>
 
         <div class="space-y-1">
-          <!-- <div
+          <div
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"
             :class="{ 'bg-gray-100 text-emerald-500': activeGroup === 'all' }"
             @click="selectGroup('all')"
           >
-            所有使用者
-          </div> -->
+            所有用户
+          </div>
           <div
             v-for="item in defaultUserGroup" :key="item.value"
             class="px-3 h-[34px] flex items-center hover:bg-gray-100 cursor-pointer rounded-md"

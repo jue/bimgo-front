@@ -26,8 +26,6 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  console.log(isWeixin())
-
   // // 2.如果有token，表示已经登陆，直接进入
   // if (getToken()) {
   //   // 初始化用户数据

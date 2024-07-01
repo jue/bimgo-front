@@ -45,7 +45,7 @@ export const useSettingsStore = defineStore('settings', {
         value: 1,
       },
       {
-        label: '冻结',
+        label: '已禁用',
         value: 2,
       },
       {
