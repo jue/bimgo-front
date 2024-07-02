@@ -5,7 +5,7 @@ let viewer = null
 const viewerRef = ref(null)
 
 // 炬光模型地址
-const svfURL = 'https://nipao.oss-cn-shanghai.aliyuncs.com/xian/164098048-juguangrvt/Resource/三维视图/3D/3D.svf'
+const svfURL = 'https://files.jue.sh/files/164098048-juguangrvt/Resource/三维视图/3D/3D.svf'
 
 async function initializeViewer() {
   // 动态导入 Autodesk Viewer API

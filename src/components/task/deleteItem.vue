@@ -50,5 +50,5 @@ function changeDelete() {
 
 <template>
   <np-dropdown-item v-if="!isDelete" label="删除" icon="icon-[lucide--trash]" danger @click.stop="changeDelete" />
-  <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click.stop="handleDelete" />
+  <np-dropdown-item v-else label="确定删除?" icon="icon-[lucide--check]" danger @click="handleDelete" />
 </template>

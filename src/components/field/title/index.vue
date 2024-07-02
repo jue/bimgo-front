@@ -10,10 +10,6 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
-  cate: {
-    type: String,
-    default: 'task',
-  },
 })
 const emit = defineEmits(['update:modelValue'])
 const router = useRouter()
@@ -100,10 +96,10 @@ const items = ref([
   {
     separator: true,
   },
-  {
-    label: '收藏',
-    icon: 'icon-[lucide--star]',
-  },
+  // {
+  //   label: '收藏',
+  //   icon: 'icon-[lucide--star]',
+  // },
   {
     label: '添加子任务',
     icon: 'icon-[lucide--circle-plus]',
@@ -131,29 +127,6 @@ const items = ref([
         gid: props.data.gid,
         field: 'title',
       }
-
-      confirm.require({
-        message: '确定删除任务？',
-        header: '删除任务',
-        icon: 'icon-[lucide--trash]',
-        rejectLabel: '取消',
-        rejectProps: {
-          label: '取消',
-          severity: 'secondary',
-          outlined: true,
-        },
-        acceptLabel: '确定删除',
-        acceptProps: {
-          label: 'Delete',
-          severity: 'danger',
-        },
-        accept: () => {
-          // toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 })
-        },
-        reject: () => {
-          // toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
-        },
-      })
     },
     // command: ({ originalEvent, item }) => {
     //   selectedCell.value = {
@@ -278,6 +251,12 @@ onMounted(() => {
       inputRef.value?.focus()
       return false
     })
+  }
+
+  //
+  if (cate.value === 'issue') {
+    // 删除items的第5个元素
+    items.value.splice(5, 1)
   }
 })
 
