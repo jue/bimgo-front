@@ -3,7 +3,7 @@ import Side from './components/side.vue'
 </script>
 
 <template>
-  <div class="app-container bg-white rounded-md border relative">
+  <div class="app-container relative border-y">
     <div class="flex h-full">
       <Side />
       <Bim />

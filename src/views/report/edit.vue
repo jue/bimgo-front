@@ -80,7 +80,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-container w-[1000px] bg-white rounded-md border">
+  <div class="app-container w-[1000px] border-r">
     <div class="flex items-center justify-between box-shadow-bottom h-12 px-5">
       <div class="font-bold">
         编辑报告

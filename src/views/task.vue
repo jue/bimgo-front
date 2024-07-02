@@ -8,7 +8,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="app-container bg-white border rounded-md">
+  <div class="app-container">
     <div class="flex items-center justify-between h-12 shrink-0 px-5">
       <div class="text-lg font-semibold">
         工程进度

@@ -29,6 +29,13 @@ function handleToggle(gid) {
   else
     unexpandedKeys.value.push(gid)
 }
+
+function handleSetSelectedCell(gid, field) {
+  if (field === 'id')
+    return
+
+  selectedCell.value = { gid, field }
+}
 </script>
 
 <template>
@@ -51,7 +58,7 @@ function handleToggle(gid) {
         'width': `${column.width}px`,
         'padding-left': `${cate === 'task' ? (column.value === 'title' ? tabWith : 0) : (column.value === 'title' ? 8 : 0)}px`,
       }"
-      @click="selectedCell = { gid: task.gid, field: column.value }"
+      @click="handleSetSelectedCell(task.gid, column.value)"
     >
       <div
         v-if="task.children && task.children.length > 0 && column.value === 'title'"

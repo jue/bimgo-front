@@ -3,11 +3,11 @@ const { sideWidth } = storeToRefs(useSettingsStore())
 </script>
 
 <template>
-  <div class="h-screen flex bg-gray-50">
+  <div class="h-screen flex bg-white">
     <LayoutSide />
     <div class="app-container h-screen" :style="{ width: `calc(100vw - ${sideWidth}px)` }">
       <LayoutNav />
-      <div class="app-body h-full pr-4 py-4">
+      <div class="app-body h-full">
         <RouterView />
       </div>
     </div>

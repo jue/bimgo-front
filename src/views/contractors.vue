@@ -53,7 +53,7 @@ function deleteContractor(data) {
 </script>
 
 <template>
-  <div class="app-container flex-row bg-white border rounded-md">
+  <div class="app-container flex-row bg-white border border-l-0">
     <div class="w-60 shrink-0 px-2 border-r">
       <div class="flex items-center justify-between h-12 px-2">
         <div class="font-bold text-base">

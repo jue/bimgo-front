@@ -11,11 +11,11 @@ const menus = ref([
   {
     label: '功能',
     children: [
-      {
-        icon: 'layout-dashboard',
-        name: '控制面板',
-        path: '/dashborad',
-      },
+      // {
+      //   icon: 'layout-dashboard',
+      //   name: '控制面板',
+      //   path: '/dashborad',
+      // },
       {
         icon: 'torus',
         name: '模型预览',
@@ -68,11 +68,11 @@ function handleInvitation() {
 
 <template>
   <div
-    class="shrink-0 flex flex-col h-screen]"
+    class="shrink-0 flex flex-col h-screen] bg-[#f9fafb] border-r"
     :style="{ width: `${sideWidth}px`, transition: 'width 0.2s' }"
   >
     <template v-if="!sideCollapsed">
-      <div class="h-14 flex items-center px-2 justify-between shrink-0 bg-white box-shadow-bottom">
+      <div class="h-14 flex items-center px-2 justify-between shrink-0">
         <router-link to="/" class="flex items-center space-x-2">
           <Logo class="w-12" />
         </router-link>
@@ -80,7 +80,7 @@ function handleInvitation() {
       </div>
       <div class="app-container">
         <div class="app-body">
-          <div class="px-4 space-y-1 py-4">
+          <!-- <div class="px-4 space-y-1 py-4">
             <SearchButton class="mb-5" />
             <div
               class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-2 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
@@ -94,8 +94,19 @@ function handleInvitation() {
               <span class="icon-[lucide--check-circle]" />
               <div>已分配给我的</div>
             </div>
+          </div> -->
+          <div class="px-4 space-y-1 py-4">
+            <RouterLink to="/dashborad">
+              <div
+                class="flex items-center space-x-2 text-neutral-700 cursor-pointer h-8 px-4 rounded-lg hover:text-neutral-900 hover:bg-neutral-500/10"
+                :class="{ 'bg-neutral-500/10': route.fullPath.startsWith('/dashborad') }"
+              >
+                <span class="icon-[lucide--layout-dashboard]" />
+                <div>控制面板</div>
+              </div>
+            </RouterLink>
           </div>
-          <div v-for="(cate, index) in menus" :key="index" class="px-4 space-y-[8px] py-3">
+          <div v-for="(cate, index) in menus" :key="index" class="px-4 space-y-[8px] py-2">
             <div class="flex items-center text-neutral-400 px-3 h-6 mb-2 text-xs">
               {{ cate.label }}
             </div>

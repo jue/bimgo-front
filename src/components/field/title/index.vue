@@ -72,7 +72,7 @@ const items = ref([
     label: '查看详细信息',
     icon: '',
     command: () => {
-      handleOpenPanel()
+      handleOpenPanel(props.data.gid)
     },
   },
 
@@ -80,7 +80,7 @@ const items = ref([
     label: '新窗口打开',
     icon: 'icon-[lucide--external-link]',
     command: () => {
-      window.open(`/task/detail?gid=${props.data.gid}`)
+      window.open(`/${cate.value}/detail?gid=${props.data.gid}`)
     },
   },
   {

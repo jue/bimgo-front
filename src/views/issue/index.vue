@@ -46,7 +46,7 @@ function handleDelete(val) {
 </script>
 
 <template>
-  <div class="app-container bg-white border rounded-md">
+  <div class="app-container">
     <div class="px-5 space-x-3 flex items-center justify-between min-h-12 shrink-0">
       <div class="text-lg font-semibold">
         问题列表
