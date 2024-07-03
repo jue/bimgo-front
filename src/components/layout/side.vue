@@ -61,6 +61,9 @@ function handleInvitation() {
     props: {
       header: '邀请人员加入',
       modal: true,
+      style: {
+        width: '300px',
+      },
     },
   })
 }

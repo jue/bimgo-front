@@ -70,6 +70,7 @@ onMounted(() => {
   {
     meta: {
       layout: 'wechat',
+      title: '问题详情',
     },
   }
 </route>
