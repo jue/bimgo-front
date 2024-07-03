@@ -1,12 +1,14 @@
-<template>
-  <div>issue detail</div>
-</template>
+<script setup>
+const route = useRoute()
+const taskPanelRef = ref(null)
 
-<route>
-  {
-    meta: {
-      layout: 'wechat',
-    },
-    name: 'issue-detail',
-  }
-</route>
+onMounted(() => {
+  taskPanelRef.value.getData(route.query.gid)
+})
+</script>
+
+<template>
+  <div class="container h-full border-x p-0">
+    <TaskPanel ref="taskPanelRef" />
+  </div>
+</template>

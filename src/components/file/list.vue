@@ -15,7 +15,7 @@ function deletedFile(file) {
 </script>
 
 <template>
-  <div v-if="files.length" class="grid grid-cols-2 gap-2">
+  <div v-if="files.length" class="grid gap-2 md:grid-cols-2 sm:grid-cols-1">
     <FileItem v-for="(file, index) in files" :key="index" :file="file" @deleted="deletedFile(file)" />
   </div>
   <div v-else class="flex items-center justify-center h-10 border border-dashed rounded">

@@ -45,7 +45,7 @@ const subTaskRef = ref(null)
       </div>
 
       <!-- 子任务 -->
-      <div>
+      <div v-if="cate === 'task'">
         <div class="flex items-center py-3">
           <span class="text-base font-bold">子任务</span>
           <Divider layout="vertical" class="!h-4 !p-0 !mx-3" />
