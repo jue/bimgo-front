@@ -1,14 +1,38 @@
+<script setup>
+import C1 from './components/c1.vue'
+import C2 from './components/c2.vue'
+
+const data1 = ref([
+  {
+    name: '人员数',
+    active: 9,
+    total: 10,
+  },
+  {
+    name: '任务统计',
+    active: 12,
+    total: 47,
+  },
+  {
+    name: '问题处理',
+    active: 124,
+    total: 167,
+  },
+])
+</script>
+
 <template>
   <div>
     <div class="flex space-x-5 p-4">
-      <div v-for="i in 4" :key="i" class="flex-1 px-4 py-3 border rounded-lg">
+      <div v-for="(item, index) in data1" :key="index" class="flex-1 px-4 py-3 border rounded-lg">
         <div class="text-gray-400 font-semibold">
-          人员数
+          {{ item.name }}
         </div>
         <div class="py-3">
-          <div class="font-bold text-2xl">
-            34,789
-          </div>
+          <span class="font-bold text-3xl mr-0.5">
+            {{ item.active }}
+          </span>
+          <span class="text-gray-400">/{{ item.total }}</span>
         </div>
         <div class="text-xs text-gray-400">
           数据截止到今天
@@ -17,22 +41,8 @@
     </div>
 
     <div class="flex space-x-5 p-4">
-      <div v-for="i in 2" :key="i" class="flex-1 px-4 py-3 border rounded-lg">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <div class="icon-[lucide--pie-chart]" />
-            <div class="font-semibold">
-              任务统计
-            </div>
-          </div>
-          <div class="card flex justify-content-center">
-            <ButtonGroup>
-              <Button label="今日" icon="icon-[lucide--pie-chart]" outlined severity="success" />
-              <Button label="今日" icon="icon-[lucide--pie-chart]" outlined />
-            </ButtonGroup>
-          </div>
-        </div>
-      </div>
+      <C1 />
+      <C2 />
     </div>
   </div>
 </template>

@@ -26,7 +26,7 @@ async function preview() {
     fid: props.file.fid,
   })
   if (res.code === 200)
-    fileUrl.value = `${project.file_url}${res.data.path}?_upt=${res.data.upt}`
+    fileUrl.value = `${project.file_url}${res.data.file_path}?_upt=${res.data.upt}`
 }
 
 function close() {

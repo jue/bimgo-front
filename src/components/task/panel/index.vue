@@ -34,7 +34,7 @@ defineExpose({ getData })
 </script>
 
 <template>
-  <div class="flex h-full">
+  <div class="flex h-full flex-col md:flex-row">
     <div class="flex-1">
       <TaskPanelView :data-list="dataList" :cate="cate" />
     </div>

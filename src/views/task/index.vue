@@ -7,7 +7,7 @@ const { setTableWidth } = useTaskStore()
 const route = useRoute()
 
 onMounted(async () => {
-  await taskStore.getTasks()
+  await useTaskStore().getTasks()
 
   nextTick(() => {
     const { width } = useElementSize(ganttRef)
@@ -29,8 +29,8 @@ onMounted(async () => {
           </InputIcon>
           <InputText v-model="payload.key" placeholder="标题或描述" />
         </IconField>
-        <Button label="树形" icon="icon-[lucide--list-tree]" outlined severity="secondary" />
-        <GlobalCreate />
+        <!-- <Button label="树形" icon="icon-[lucide--list-tree]" outlined severity="secondary" />
+        <GlobalCreate /> -->
       </div>
     </div>
 
@@ -44,6 +44,7 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+  <GlobalCreate />
 </template>
 
 <route>
